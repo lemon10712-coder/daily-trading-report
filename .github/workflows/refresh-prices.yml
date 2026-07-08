@@ -1,0 +1,33 @@
+name: Refresh live prices
+
+on:
+  schedule:
+    # 09:00-12:55 Taipei (UTC+8) = 01:00-04:55 UTC, every 5 min, Mon-Fri
+    - cron: '*/5 1-4 * * 1-5'
+    # 13:00-13:30 Taipei = 05:00-05:30 UTC, every 5 min, Mon-Fri
+    - cron: '0,5,10,15,20,25,30 5 * * 1-5'
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Fetch quotes and write prices.json
+        run: node scripts/refresh-prices.js
+
+      - name: Commit and push if changed
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add data/prices.json
+          git diff --cached --quiet || git commit -m "Update live prices"
+          git push
