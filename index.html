@@ -149,6 +149,22 @@
     line-height: 1.7;
   }
   .refresh-note { font-size: 11px; color: var(--text-soft); text-align: right; margin-top: 4px; }
+  .warning-banner {
+    background: #fdecea;
+    border: 1px solid #e8a49c;
+    color: #8a3a2e;
+    border-radius: 12px;
+    padding: 12px 14px;
+    font-size: 13px;
+    line-height: 1.6;
+    margin-bottom: 16px;
+  }
+  .warning-banner .title { font-weight: 700; margin-bottom: 4px; }
+  @media (prefers-color-scheme: dark) {
+    .warning-banner { background: #3a2320; border-color: #6b3a30; color: #f0b8ab; }
+  }
+  :root[data-theme="dark"] .warning-banner { background: #3a2320; border-color: #6b3a30; color: #f0b8ab; }
+  :root[data-theme="light"] .warning-banner { background: #fdecea; border-color: #e8a49c; color: #8a3a2e; }
 </style>
 </head>
 <body>
@@ -251,6 +267,12 @@ async function main() {
   const prices = priceData ? priceData.prices : null;
 
   let html = '';
+
+  const warnings = (report.data_quality && report.data_quality.warnings) || [];
+  if (warnings.length) {
+    html += '<div class="warning-banner"><div class="title">⚠️ 資料可能不完整</div>' +
+      warnings.map(w => `<div>${w}</div>`).join('') + '</div>';
+  }
 
   if (report.summary && (report.summary.safe_pick || report.summary.aggressive_pick)) {
     html += '<div class="section-title">今日結論</div><div class="pick-grid">';
