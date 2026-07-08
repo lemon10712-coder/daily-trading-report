@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>台股當沖報告</title>
+<style>
+  :root {
+    --apricot: #f2a26a;
+    --apricot-dark: #d97f45;
+    --apricot-light: #fce4cc;
+    --bg: #fffaf3;
+    --card-bg: #ffffff;
+    --text: #3a2e22;
+    --text-soft: #7a6a58;
+    --border: #f0ddc4;
+    --green: #2f8a4b;
+    --red: #d1453b;
+    --safe: #4f9d69;
+    --aggressive: #d9743a;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #1c1712;
+      --card-bg: #262019;
+      --text: #f3e9dd;
+      --text-soft: #b8a893;
+      --border: #3a2f24;
+      --apricot-light: #3f2f20;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #1c1712;
+    --card-bg: #262019;
+    --text: #f3e9dd;
+    --text-soft: #b8a893;
+    --border: #3a2f24;
+    --apricot-light: #3f2f20;
+  }
+  :root[data-theme="light"] {
+    --bg: #fffaf3;
+    --card-bg: #ffffff;
+    --text: #3a2e22;
+    --text-soft: #7a6a58;
+    --border: #f0ddc4;
+    --apricot-light: #fce4cc;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang TC", "Microsoft JhengHei", sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    padding-bottom: 40px;
+  }
+  header {
+    background: linear-gradient(135deg, var(--apricot), var(--apricot-dark));
+    color: #fff;
+    padding: 20px 16px 24px;
+    border-radius: 0 0 20px 20px;
+  }
+  header h1 { margin: 0 0 4px; font-size: 20px; }
+  header .date { font-size: 14px; opacity: 0.95; }
+  header .updated { font-size: 12px; opacity: 0.85; margin-top: 6px; }
+  .badge {
+    display: inline-block;
+    background: rgba(255,255,255,0.25);
+    padding: 2px 8px;
+    border-radius: 10px;
+    font-size: 11px;
+    margin-left: 6px;
+  }
+  main { max-width: 640px; margin: 0 auto; padding: 16px; }
+  .section-title {
+    font-size: 15px;
+    font-weight: 700;
+    margin: 24px 0 10px;
+    color: var(--apricot-dark);
+  }
+  .pick-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+  @media (max-width: 420px) {
+    .pick-grid { grid-template-columns: 1fr; }
+  }
+  .card {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 14px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+  }
+  .pick-card { border-top: 4px solid var(--apricot); }
+  .pick-card.safe { border-top-color: var(--safe); }
+  .pick-card.aggressive { border-top-color: var(--aggressive); }
+  .pick-label {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    color: var(--text-soft);
+    text-transform: uppercase;
+  }
+  .pick-name { font-size: 18px; font-weight: 700; margin: 4px 0; }
+  .pick-reason { font-size: 13px; color: var(--text-soft); margin-bottom: 10px; line-height: 1.5; }
+  .price-row { display: flex; justify-content: space-between; font-size: 13px; padding: 3px 0; }
+  .price-row .label { color: var(--text-soft); }
+  .live-price { font-size: 22px; font-weight: 700; margin: 6px 0; }
+  .live-price .pct { font-size: 13px; margin-left: 6px; font-weight: 600; }
+  .up { color: var(--red); }
+  .down { color: var(--green); }
+  .candidate {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 14px;
+    margin-bottom: 10px;
+  }
+  .candidate .name { font-weight: 700; font-size: 15px; }
+  .candidate .meta { font-size: 12px; color: var(--text-soft); margin: 4px 0 8px; }
+  .plan { font-size: 13px; margin-top: 6px; }
+  .plan-title { font-weight: 700; color: var(--apricot-dark); font-size: 12px; margin-top: 8px; }
+  .risk-tag {
+    display: inline-block;
+    font-size: 11px;
+    padding: 2px 8px;
+    border-radius: 8px;
+    background: var(--apricot-light);
+    color: var(--apricot-dark);
+    margin-top: 6px;
+  }
+  .news-item { padding: 10px 0; border-bottom: 1px solid var(--border); font-size: 13px; line-height: 1.6; }
+  .news-item:last-child { border-bottom: none; }
+  .news-title { font-weight: 700; margin-bottom: 4px; }
+  .empty-state {
+    text-align: center;
+    color: var(--text-soft);
+    padding: 40px 20px;
+    font-size: 14px;
+    line-height: 1.8;
+  }
+  footer {
+    text-align: center;
+    font-size: 11px;
+    color: var(--text-soft);
+    margin-top: 30px;
+    padding: 0 20px;
+    line-height: 1.7;
+  }
+  .refresh-note { font-size: 11px; color: var(--text-soft); text-align: right; margin-top: 4px; }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>📈 台股當沖推薦報告</h1>
+  <div class="date" id="report-date">載入中...</div>
+  <div class="updated" id="report-updated"></div>
+</header>
+
+<main id="main-content">
+  <div class="empty-state">報告載入中，請稍候...</div>
+</main>
+
+<footer>
+  本報告由自動化流程產生，僅供參考，不構成投資建議。<br>
+  盤中價格每 5 分鐘更新一次；每日選股報告於台北時間 08:30 產生。
+</footer>
+
+<script>
+async function loadJSON(path) {
+  try {
+    const res = await fetch(path + '?t=' + Date.now());
+    if (!res.ok) return null;
+    return await res.json();
+  } catch (e) {
+    return null;
+  }
+}
+
+function fmtPct(p) {
+  if (p === undefined || p === null) return '';
+  const sign = p > 0 ? '+' : '';
+  return sign + p.toFixed(2) + '%';
+}
+
+function pctClass(p) {
+  if (p === undefined || p === null) return '';
+  return p > 0 ? 'up' : (p < 0 ? 'down' : '');
+}
+
+function renderPickCard(pick, kind, prices) {
+  if (!pick) return '';
+  const live = prices && prices[pick.symbol];
+  const liveHtml = live ? `<div class="live-price">${live.price}<span class="pct ${pctClass(live.change_pct)}">${fmtPct(live.change_pct)}</span></div>` : '';
+  return `
+    <div class="card pick-card ${kind}">
+      <div class="pick-label">${kind === 'safe' ? '安全牌' : '衝最快'}</div>
+      <div class="pick-name">${pick.name}（${pick.symbol}）</div>
+      ${liveHtml}
+      <div class="pick-reason">${pick.reason || ''}</div>
+      <div class="price-row"><span class="label">進場價</span><span>${pick.entry ?? '-'}</span></div>
+      <div class="price-row"><span class="label">停利點</span><span>${pick.take_profit ?? '-'}</span></div>
+      <div class="price-row"><span class="label">目標價</span><span>${pick.target ?? '-'}</span></div>
+      <div class="price-row"><span class="label">停損點</span><span>${pick.stop_loss ?? '-'}</span></div>
+      ${pick.risk_tag ? `<div class="risk-tag">${pick.risk_tag}</div>` : ''}
+    </div>`;
+}
+
+function renderCandidate(c, prices) {
+  const live = prices && prices[c.symbol];
+  const liveHtml = live ? `<span class="pct ${pctClass(live.change_pct)}">${live.price} ${fmtPct(live.change_pct)}</span>` : '';
+  return `
+    <div class="candidate">
+      <div class="name">${c.rank ? c.rank + '. ' : ''}${c.name}（${c.symbol}） ${liveHtml}</div>
+      <div class="meta">${c.category || ''}</div>
+      <div class="plan">${c.summary || ''}</div>
+      ${c.plan_a ? `<div class="plan-title">A 計畫</div><div class="plan">${c.plan_a}</div>` : ''}
+      ${c.plan_b ? `<div class="plan-title">B 計畫</div><div class="plan">${c.plan_b}</div>` : ''}
+      ${c.risk_tag ? `<div class="risk-tag">${c.risk_tag}</div>` : ''}
+    </div>`;
+}
+
+function renderNews(n) {
+  return `<div class="news-item"><div class="news-title">${n.title}</div><div>${n.summary}</div></div>`;
+}
+
+async function main() {
+  const [report, priceData] = await Promise.all([
+    loadJSON('data/latest.json'),
+    loadJSON('data/prices.json')
+  ]);
+
+  if (!report) {
+    document.getElementById('main-content').innerHTML =
+      '<div class="empty-state">目前還沒有報告資料。<br>第一份報告會在台北時間早上 08:30 自動產生。</div>';
+    document.getElementById('report-date').textContent = '尚無資料';
+    return;
+  }
+
+  document.getElementById('report-date').textContent =
+    (report.date || '') + (report.provisional ? ' ' : '');
+  if (report.provisional) {
+    document.getElementById('report-date').innerHTML += '<span class="badge">暫定，待更新</span>';
+  }
+  document.getElementById('report-updated').textContent =
+    '報告產生時間：' + (report.generated_at || '-') +
+    (priceData ? '　股價更新時間：' + (priceData.updated_at || '-') : '');
+
+  const prices = priceData ? priceData.prices : null;
+
+  let html = '';
+
+  if (report.summary && (report.summary.safe_pick || report.summary.aggressive_pick)) {
+    html += '<div class="section-title">今日結論</div><div class="pick-grid">';
+    html += renderPickCard(report.summary.safe_pick, 'safe', prices);
+    html += renderPickCard(report.summary.aggressive_pick, 'aggressive', prices);
+    html += '</div>';
+  }
+
+  if (report.candidates && report.candidates.length) {
+    html += '<div class="section-title">完整排行</div>';
+    html += report.candidates.map(c => renderCandidate(c, prices)).join('');
+  }
+
+  if (report.news && report.news.length) {
+    html += '<div class="section-title">新聞與延伸分析</div><div class="card">';
+    html += report.news.map(renderNews).join('');
+    html += '</div>';
+  }
+
+  document.getElementById('main-content').innerHTML = html || '<div class="empty-state">報告內容為空。</div>';
+}
+
+main();
+</script>
+
+</body>
+</html>
