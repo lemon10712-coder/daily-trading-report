@@ -260,9 +260,11 @@ async function main() {
   if (report.provisional) {
     document.getElementById('report-date').innerHTML += '<span class="badge">暫定，待更新</span>';
   }
+  const priceTypeLabel = priceData && priceData.price_type === 'intraday' ? '（盤中即時）' :
+    priceData && priceData.price_type === 'close' ? '（最後收盤參考，非即時）' : '';
   document.getElementById('report-updated').textContent =
     '報告產生時間：' + (report.generated_at || '-') +
-    (priceData ? '　股價更新時間：' + (priceData.updated_at || '-') : '');
+    (priceData ? '　股價更新時間：' + (priceData.updated_at || '-') + priceTypeLabel : '');
 
   const prices = priceData ? priceData.prices : null;
 

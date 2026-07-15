@@ -32,6 +32,21 @@ async function fetchQuote(symbol) {
   return { price: Math.round(price * 100) / 100, change_pct: Math.round(changePct * 100) / 100 };
 }
 
+// 2026-07-16 新增：標注這批價格是「盤中即時」還是「收盤參考」，讓前端可以誠實顯示，
+// 不要讓使用者誤以為看到的是即時報價（參考 CHARLES AGENT Firebase 那套系統踩過「收盤後
+// 還顯示盤中舊價」的坑，這裡用時間判斷而不是留白讓人猜）。
+function currentPriceType() {
+  const parts = new Intl.DateTimeFormat('en-US', {
+    timeZone: 'Asia/Taipei', hour: '2-digit', minute: '2-digit', hour12: false
+  }).formatToParts(new Date());
+  const hour = parseInt(parts.find(p => p.type === 'hour').value, 10);
+  const minute = parseInt(parts.find(p => p.type === 'minute').value, 10);
+  const minutesSinceMidnight = hour * 60 + minute;
+  const marketOpen = 9 * 60; // 09:00
+  const marketClose = 13 * 60 + 30; // 13:30
+  return (minutesSinceMidnight >= marketOpen && minutesSinceMidnight <= marketClose) ? 'intraday' : 'close';
+}
+
 async function main() {
   if (!fs.existsSync(LATEST_PATH)) {
     console.log('No latest.json yet, skipping price refresh.');
@@ -50,6 +65,7 @@ async function main() {
   }
   const out = {
     updated_at: new Date().toLocaleString('zh-TW', { timeZone: 'Asia/Taipei' }),
+    price_type: currentPriceType(),
     prices
   };
   fs.writeFileSync(PRICES_PATH, JSON.stringify(out, null, 2) + '\n');

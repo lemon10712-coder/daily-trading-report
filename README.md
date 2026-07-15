@@ -6,10 +6,10 @@
 
 - `index.html` — 手機板網頁（杏色主題），讀取 `data/latest.json` 與 `data/prices.json` 顯示。
 - `data/latest.json` — 每日選股報告（含結論、完整排行、新聞分析），由每天早上 8:30 的雲端排程 agent 產生並覆寫。
-- `data/prices.json` — 開盤後每 5 分鐘更新一次的即時股價，由 GitHub Actions（`.github/workflows/refresh-prices.yml`）產生，抓證交所公開報價 API，不使用 AI。
+- `data/prices.json` — 開盤後每 5 分鐘更新一次的即時股價，由 GitHub Actions（`.github/workflows/refresh-prices.yml`）產生，抓證交所公開報價 API，不使用 AI。含 `price_type` 欄位（`intraday`／`close`），前端會標示「盤中即時」或「最後收盤參考」，避免誤把收盤後的舊資料當即時報價看。
 - `.github/workflows/refresh-prices.yml` — GitHub Actions 排程，Mon-Fri 台股開盤時間內每 5 分鐘跑一次。
 - `daily-report-prompt.md` — 每日 8:30 雲端排程 agent 使用的完整自給自足指令（方法論從 `daily-daytrading-report` skill 搬過來，改寫成不依賴本機環境）。
-- `scripts/validate-report.js` — 發布前健檢腳本，拿每檔進場/停利/目標/停損價跟證交所當天官方漲跌停價比對，抓「漲停算錯」這類錯誤；`daily-report-prompt.md` 規定 commit 前一定要先跑過、沒有錯誤才能 push。
+- `scripts/validate-report.js` — 發布前健檢腳本，拿每檔進場/停利/目標/停損價跟證交所當天官方漲跌停價比對，抓「漲停算錯」這類錯誤；`daily-report-prompt.md` 規定 commit 前一定要先跑過、沒有錯誤才能 push。2026-07-16 追加三條防呆（參考 CHARLES AGENT Firebase 那套系統修過的坑）：單張成本超過 60 萬要標註、貼近漲停不能悄悄當主推薦、新聞則數/類別多樣性太少要提醒。
 
 ## 免費資源
 

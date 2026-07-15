@@ -12,6 +12,12 @@ const LATEST_PATH = path.join(DATA_DIR, 'latest.json');
 const LIMIT_PCT = 0.10;
 const TOLERANCE_PCT = 0.01; // 抓到剛好卡在邊界、四捨五入造成的誤差，多留 1% 緩衝
 
+// 2026-07-16 新增：參考 CHARLES AGENT Firebase 那套系統踩過的坑補上的兩條防呆規則
+const CAPITAL_CAP = 600000; // 單張成本上限（進場價 × 1000），超過只警告不擋
+const NEAR_LIMIT_PCT = 0.97; // 進場/停利/目標價落在漲停價 97% 以上，視為「貼近漲停」
+const MIN_NEWS_COUNT = 8;
+const MIN_NEWS_CATEGORIES = 5;
+
 function httpGetJson(url) {
   // 用內建 https 模組而不是 fetch()：在部分 Node/Windows 組合下，fetch() 底層的 undici
   // 連線池會讓 process.exit() 在收尾時觸發 libuv assertion crash（跟這支腳本的邏輯無關，
@@ -100,6 +106,28 @@ function checkPick(label, pick, limits, errors, warnings, requireFields) {
   if (parsed.entry !== undefined && parsed.target !== undefined && parsed.target <= parsed.entry) {
     errors.push(`${label}（${pick.symbol} ${pick.name || ''}）目標價 ${parsed.target} 沒有高於進場價 ${parsed.entry}，邏輯不合理`);
   }
+
+  // 以下兩條只對 safe_pick/aggressive_pick 這種正式主推薦做，candidates 排行僅供參考不用管
+  if (requireFields && parsed.entry !== undefined) {
+    const perLotCost = parsed.entry * 1000;
+    if (perLotCost > CAPITAL_CAP) {
+      const hasNote = /資金|成本|門檻/.test(pick.risk_tag || '');
+      if (!hasNote) {
+        warnings.push(`${label}（${pick.symbol} ${pick.name || ''}）單張成本約 ${Math.round(perLotCost / 10000)} 萬，超過 ${CAPITAL_CAP / 10000} 萬門檻，risk_tag 沒有註明資金門檻`);
+      }
+    }
+  }
+
+  if (requireFields && limits) {
+    const nearLimitBound = limits.upper * NEAR_LIMIT_PCT;
+    const nearLimitFields = Object.entries(parsed).filter(([, val]) => val >= nearLimitBound);
+    if (nearLimitFields.length > 0) {
+      const hasNote = /貼近漲停|鎖漲停|追價風險/.test(pick.risk_tag || '');
+      if (!hasNote) {
+        warnings.push(`${label}（${pick.symbol} ${pick.name || ''}）${nearLimitFields.map(([k]) => k).join('/')} 貼近漲停價（${limits.upper.toFixed(2)}），但 risk_tag 沒有註明追價風險，確認是否該降級為觀察`);
+      }
+    }
+  }
 }
 
 async function main() {
@@ -124,6 +152,16 @@ async function main() {
     if (report.date !== today) {
       warnings.push(`report.date=${report.date} 跟今天（台北時間 ${today}）不一致，確認是不是忘記更新`);
     }
+  }
+
+  // 新聞多樣性檢查（2026-07-16 新增）：則數太少、或集中在同一個類別，只警告不擋
+  const news = Array.isArray(report.news) ? report.news : [];
+  if (news.length < MIN_NEWS_COUNT) {
+    warnings.push(`news 只有 ${news.length} 則，建議至少 ${MIN_NEWS_COUNT} 則`);
+  }
+  const categories = new Set(news.map(n => n.category).filter(Boolean));
+  if (categories.size > 0 && categories.size < MIN_NEWS_CATEGORIES) {
+    warnings.push(`新聞只橫跨 ${categories.size} 個類別（${[...categories].join('、')}），建議至少 ${MIN_NEWS_CATEGORIES} 個不同類別，不要太集中`);
   }
 
   const picks = [];
