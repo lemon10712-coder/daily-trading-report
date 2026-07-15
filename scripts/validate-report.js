@@ -7,6 +7,7 @@ const https = require('https');
 
 const DATA_DIR = path.join(__dirname, '..', 'data');
 const LATEST_PATH = path.join(DATA_DIR, 'latest.json');
+const RESULT_PATH = path.join(__dirname, '..', '.validate-result.json');
 
 // 台股一般股票漲跌幅上限 ±10%，當作查不到 TWSE 官方 u/w 欄位時的備用估算
 const LIMIT_PCT = 0.10;
@@ -192,12 +193,19 @@ async function main() {
   if (errors.length) {
     console.log('\n--- 錯誤（會擋發布，必須修正）---');
     errors.forEach(e => console.log('✗ ' + e));
-    process.exit(1);
+  } else {
+    console.log('\n沒有發現漲跌停或邏輯錯誤，可以發布。');
   }
-  console.log('\n沒有發現漲跌停或邏輯錯誤，可以發布。');
+
+  // 結構化結果另外寫一份檔案，給 GitHub Actions 那層「連得到網路的複核」讀取用，
+  // 不用去 parse 印出來的文字（脆弱），2026-07-16 新增。
+  fs.writeFileSync(RESULT_PATH, JSON.stringify({ errors, warnings }, null, 2));
+
+  if (errors.length) process.exit(1);
 }
 
 main().catch(e => {
   console.error('健檢腳本本身出錯：', e.message);
+  fs.writeFileSync(RESULT_PATH, JSON.stringify({ errors: ['健檢腳本本身出錯：' + e.message], warnings: [] }, null, 2));
   process.exit(1);
 });
