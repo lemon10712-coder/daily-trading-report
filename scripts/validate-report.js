@@ -140,6 +140,14 @@ async function main() {
   const errors = [];
   const warnings = [];
 
+  // 2026-07-16 新增：今天休市（market_open: false）是合法狀態，不用照一般交易日的結構檢查，
+  // 起因是 2026-07-10 颱風休市那天報告完全沒查交易日曆、照樣生出一份無效的進場建議。
+  if (report.market_open === false) {
+    console.log('今日休市（' + (report.market_closed_reason || '原因未註明') + '），略過一般交易日的結構健檢。');
+    fs.writeFileSync(RESULT_PATH, JSON.stringify({ errors: [], warnings: [] }, null, 2));
+    return;
+  }
+
   // 結構檢查
   if (!report.date || report.date === '尚未產生') errors.push('date 欄位是預設值，報告還沒真的產生過');
   if (!report.generated_at) warnings.push('generated_at 是空的');

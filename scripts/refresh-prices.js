@@ -16,20 +16,38 @@ function collectSymbols(report) {
   return [...symbols];
 }
 
-async function fetchQuote(symbol) {
+const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+
+// 2026-07-16 新增：單次查價偶爾會被 TWSE API 瞬間擋下（無錯誤訊息，純粹查無資料），
+// 加重試機制避免單次暫時性問題就讓這檔股票整批消失。
+async function fetchQuoteOnce(symbol) {
   const query = `tse_${symbol}.tw|otc_${symbol}.tw`;
   const url = `https://mis.twse.com.tw/stock/api/getStockInfo.jsp?ex_ch=${query}&json=1&delay=0&_=${Date.now()}`;
   const res = await fetch(url, { headers: { 'User-Agent': 'Mozilla/5.0' } });
-  if (!res.ok) return null;
+  if (!res.ok) throw new Error(`HTTP ${res.status}`);
   const json = await res.json();
   const arr = json.msgArray || [];
   const q = arr.find(entry => entry.z && entry.z !== '-' && entry.y && entry.y !== '-');
-  if (!q) return null;
+  if (!q) throw new Error('no matching quote in msgArray');
   const price = parseFloat(q.z);
   const prevClose = parseFloat(q.y);
-  if (!price || !prevClose) return null;
+  if (!price || !prevClose) throw new Error('unparseable price fields');
   const changePct = ((price - prevClose) / prevClose) * 100;
   return { price: Math.round(price * 100) / 100, change_pct: Math.round(changePct * 100) / 100 };
+}
+
+async function fetchQuote(symbol, attempts = 3) {
+  let lastError;
+  for (let i = 1; i <= attempts; i++) {
+    try {
+      return await fetchQuoteOnce(symbol);
+    } catch (e) {
+      lastError = e;
+      if (i < attempts) await sleep(400 * i);
+    }
+  }
+  console.error(`Failed to fetch ${symbol} after ${attempts} attempts:`, lastError.message);
+  return null;
 }
 
 // 2026-07-16 新增：標注這批價格是「盤中即時」還是「收盤參考」，讓前端可以誠實顯示，
@@ -56,13 +74,22 @@ async function main() {
   const symbols = collectSymbols(report);
   const prices = {};
   for (const symbol of symbols) {
-    try {
-      const q = await fetchQuote(symbol);
-      if (q) prices[symbol] = q;
-    } catch (e) {
-      console.error(`Failed to fetch ${symbol}:`, e.message);
-    }
+    const q = await fetchQuote(symbol);
+    if (q) prices[symbol] = q;
   }
+
+  const successCount = Object.keys(prices).length;
+  console.log(`Fetched ${successCount}/${symbols.length} symbols.`);
+
+  // 2026-07-16 新增：如果全部查價都失敗（例如 API 瞬間限流），不要把空結果寫進
+  // prices.json 蓋掉上一次的正確資料——寧可讓使用者看到稍舊但正確的價格，也不要
+  // 讓一次暫時性失敗把畫面變成空白。只要有查到至少 1 檔就照常寫入。
+  if (symbols.length > 0 && successCount === 0) {
+    console.error('All quote fetches failed this run — keeping previous prices.json untouched.');
+    process.exitCode = 1;
+    return;
+  }
+
   const out = {
     updated_at: new Date().toLocaleString('zh-TW', { timeZone: 'Asia/Taipei' }),
     price_type: currentPriceType(),
