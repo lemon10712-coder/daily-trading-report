@@ -1,7 +1,7 @@
 {
   "date": "2026-07-16",
   "generated_at": "2026-07-16 08:45",
-  "provisional": true,
+  "provisional": false,
   "data_quality": {
     "warnings": [
       "網路存取限制（與近期報告相同，本次再次確認）：本次雲端沙盒環境對所有一般外部網域（mis.taifex.com.tw、www.twse.com.tw、tw.stock.yahoo.com、stockwarden.com 等）的 curl 與 WebFetch 皆回傳 403（經 curl -v 與 agentproxy status 端點確認為 gateway 主動拒絕，非暫時性錯誤；WebFetch 也對這些網域一律403），只有 WebSearch 可用。第1步「TAIFEX個股期貨成交量排行（近月合約通常250-300筆、分3頁）」本次同樣完全無法依原方法論執行，也無法核對『共N筆/第X頁共Y頁』是否抓取完整。",
