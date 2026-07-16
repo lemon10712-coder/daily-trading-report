@@ -255,6 +255,16 @@ async function main() {
     return;
   }
 
+  if (report.market_open === false) {
+    document.getElementById('main-content').innerHTML =
+      '<div class="empty-state">📅 ' + (report.date || '') + ' 今日休市' +
+      (report.market_closed_reason ? '<br>' + report.market_closed_reason : '') +
+      '<br><br>沒有當沖建議，下一個交易日再回來看。</div>';
+    document.getElementById('report-date').textContent = (report.date || '') + '（休市）';
+    document.getElementById('report-updated').textContent = '報告產生時間：' + (report.generated_at || '-');
+    return;
+  }
+
   document.getElementById('report-date').textContent =
     (report.date || '') + (report.provisional ? ' ' : '');
   if (report.provisional) {
