@@ -165,6 +165,19 @@
   }
   :root[data-theme="dark"] .warning-banner { background: #3a2320; border-color: #6b3a30; color: #f0b8ab; }
   :root[data-theme="light"] .warning-banner { background: #fdecea; border-color: #e8a49c; color: #8a3a2e; }
+
+  .backtest-card {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 14px;
+    margin-bottom: 10px;
+  }
+  .backtest-row { display: flex; justify-content: space-between; align-items: center; font-size: 13px; padding: 6px 0; border-bottom: 1px solid var(--border); }
+  .backtest-row:last-child { border-bottom: none; }
+  .backtest-row .bt-name { font-weight: 700; }
+  .backtest-row .bt-detail { color: var(--text-soft); font-size: 12px; }
+  .backtest-narrative { font-size: 13px; color: var(--text-soft); line-height: 1.6; margin-top: 8px; white-space: pre-line; }
 </style>
 </head>
 <body>
@@ -181,7 +194,7 @@
 
 <footer>
   本報告由自動化流程產生，僅供參考，不構成投資建議。<br>
-  盤中價格每 5 分鐘更新一次；每日選股報告於台北時間 08:30 產生。
+  盤中價格每 5 分鐘更新一次；每日選股報告於台北時間 08:30 產生；回測結果於收盤後（約 14:10 起）自動比對更新。
 </footer>
 
 <script>
@@ -242,10 +255,29 @@ function renderNews(n) {
   return `<div class="news-item"><div class="news-title">${n.title}</div><div>${n.summary}</div></div>`;
 }
 
+function renderBacktestRow(p) {
+  if (!p) return '';
+  return `<div class="backtest-row">
+    <div><div class="bt-name">${p.name}（${p.symbol}）</div><div class="bt-detail">收盤 ${p.close ?? '無資料'}${p.pct_vs_entry != null ? `　較進場區中點 ${p.pct_vs_entry > 0 ? '+' : ''}${p.pct_vs_entry}%` : ''}</div></div>
+    <div>${p.label}</div>
+  </div>`;
+}
+
+function renderBacktest(backtest, reportDate) {
+  if (!backtest || backtest.date !== reportDate) return '';
+  let html = '<div class="section-title">📊 今日回測（收盤後自動比對）</div><div class="backtest-card">';
+  html += renderBacktestRow(backtest.picks && backtest.picks.safe_pick);
+  html += renderBacktestRow(backtest.picks && backtest.picks.aggressive_pick);
+  if (backtest.narrative) html += `<div class="backtest-narrative">${backtest.narrative}</div>`;
+  html += '</div>';
+  return html;
+}
+
 async function main() {
-  const [report, priceData] = await Promise.all([
+  const [report, priceData, backtest] = await Promise.all([
     loadJSON('data/latest.json'),
-    loadJSON('data/prices.json')
+    loadJSON('data/prices.json'),
+    loadJSON('data/backtest-latest.json')
   ]);
 
   if (!report) {
@@ -292,6 +324,8 @@ async function main() {
     html += renderPickCard(report.summary.aggressive_pick, 'aggressive', prices);
     html += '</div>';
   }
+
+  html += renderBacktest(backtest, report.date);
 
   if (report.candidates && report.candidates.length) {
     html += '<div class="section-title">完整排行</div>';

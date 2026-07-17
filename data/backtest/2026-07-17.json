@@ -1,0 +1,125 @@
+{
+  "date": "2026-07-17",
+  "generated_at": "2026/7/17 下午5:42:15",
+  "price_snapshot_at": "2026/7/17 下午5:19:24",
+  "picks": {
+    "safe_pick": {
+      "symbol": "1301",
+      "name": "台塑",
+      "status": "stop_loss",
+      "label": "❌ 觸及停損",
+      "pct_vs_entry": -3.38,
+      "close": 62.8,
+      "entry_mid": 65,
+      "stop_loss": 63,
+      "take_profit": 68,
+      "target": 70
+    },
+    "aggressive_pick": {
+      "symbol": "6770",
+      "name": "力積電",
+      "status": "stop_loss",
+      "label": "❌ 觸及停損",
+      "pct_vs_entry": -9.64,
+      "close": 68.9,
+      "entry_mid": 76.25,
+      "stop_loss": 72.5,
+      "take_profit": 80,
+      "target": 82
+    }
+  },
+  "candidates": [
+    {
+      "symbol": "6505",
+      "name": "台塑化",
+      "rank": 1,
+      "status": "up_no_exit",
+      "label": "🟡 上漲但未達停利",
+      "pct_vs_entry": 2.91,
+      "close": 81.3,
+      "entry_mid": 79,
+      "stop_loss": 73,
+      "take_profit": 84,
+      "target": 86.5
+    },
+    {
+      "symbol": "2408",
+      "name": "南亞科",
+      "rank": 2,
+      "status": "stop_loss",
+      "label": "❌ 觸及停損",
+      "pct_vs_entry": -8.02,
+      "close": 395.5,
+      "entry_mid": 430,
+      "stop_loss": 410,
+      "take_profit": 448,
+      "target": 465
+    },
+    {
+      "symbol": "2344",
+      "name": "華邦電",
+      "rank": 3,
+      "status": "stop_loss",
+      "label": "❌ 觸及停損",
+      "pct_vs_entry": -8.82,
+      "close": 155,
+      "entry_mid": 170,
+      "stop_loss": 160,
+      "take_profit": 178,
+      "target": 184
+    },
+    {
+      "symbol": "1303",
+      "name": "南亞",
+      "rank": 4,
+      "status": "stop_loss",
+      "label": "❌ 觸及停損",
+      "pct_vs_entry": -8.72,
+      "close": 199,
+      "entry_mid": 218,
+      "stop_loss": 208,
+      "take_profit": 226,
+      "target": 234
+    },
+    {
+      "symbol": "2330",
+      "name": "台積電",
+      "rank": 5,
+      "status": "stop_loss",
+      "label": "❌ 觸及停損",
+      "pct_vs_entry": -4.78,
+      "close": 2290,
+      "entry_mid": 2405,
+      "stop_loss": 2350,
+      "take_profit": 2440,
+      "target": 2480
+    },
+    {
+      "symbol": "6770",
+      "name": "力積電",
+      "rank": 6,
+      "status": "stop_loss",
+      "label": "❌ 觸及停損",
+      "pct_vs_entry": -9.64,
+      "close": 68.9,
+      "entry_mid": 76.25,
+      "stop_loss": 72.5,
+      "take_profit": 80,
+      "target": 82
+    },
+    {
+      "symbol": "1301",
+      "name": "台塑",
+      "rank": 7,
+      "status": "stop_loss",
+      "label": "❌ 觸及停損",
+      "pct_vs_entry": -3.38,
+      "close": 62.8,
+      "entry_mid": 65,
+      "stop_loss": 63,
+      "take_profit": 68,
+      "target": 70
+    }
+  ],
+  "narrative": "安全牌 台塑（1301）：收盤 62.8，❌ 觸及停損（較進場區中點 -3.38%）。\n衝最快 力積電（6770）：收盤 68.9，❌ 觸及停損（較進場區中點 -9.64%）。\n總評：兩檔正式推薦今天都觸及停損，是失準的一天。"
+}
