@@ -1,12 +1,11 @@
 name: Refresh live prices
 
 on:
-  schedule:
-    # 09:00-12:55 Taipei (UTC+8) = 01:00-04:55 UTC, every 5 min, Mon-Fri
-    - cron: '*/5 1-4 * * 1-5'
-    # 13:00-13:30 Taipei = 05:00-05:30 UTC, every 5 min, Mon-Fri
-    - cron: '0,5,10,15,20,25,30 5 * * 1-5'
   workflow_dispatch: {}
+
+concurrency:
+  group: refresh-prices
+  cancel-in-progress: false
 
 permissions:
   contents: write
