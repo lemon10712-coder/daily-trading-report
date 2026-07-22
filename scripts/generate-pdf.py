@@ -137,7 +137,7 @@ def pick_rows(report: dict):
     return rows
 
 
-def build_story(report: dict, backtest: dict | None = None):
+def build_story(report: dict, backtest: dict | None = None, learning: dict | None = None):
     report_date = report.get("date", "unknown")
     edition = "收盤回測版" if backtest and backtest.get("date") == report_date else "08:30 晨報版"
     story = [
@@ -251,17 +251,38 @@ def build_story(report: dict, backtest: dict | None = None):
         else:
             story.append(p("目前沒有足夠資料形成共通修正規則。"))
 
+        if learning:
+            summary = learning.get("summary") or {}
+            story.append(p("七、累積回測經驗", "H1CJ"))
+            story.append(p(
+                f"目前累積 {summary.get('trading_days', 0)} 個交易日、評分 {summary.get('total_reviewed_symbols', 0)} 檔；"
+                f"平均策略分數 {summary.get('average_strategy_score', '--')}。主推薦 {summary.get('main_pick_count', 0)} 次，"
+                f"觸發 {summary.get('main_pick_triggered', 0)} 次，獲利 {summary.get('main_pick_wins', 0)} 次、"
+                f"虧損 {summary.get('main_pick_losses', 0)} 次。",
+                "GoodCJ",
+            ))
+            story.append(p(
+                f"規則升級門檻：至少 {learning.get('minimum_days_before_rule_change', 20)} 個交易日，"
+                f"同一教訓至少出現 {learning.get('rule_promotion_threshold_days', 5)} 天，才進入人工審查；不會因單日結果自動改策略。",
+                "SmallCJ",
+            ))
+            lesson_rows = [["累積教訓", "出現天數", "影響檔次", "狀態"]]
+            status_names = {"observation": "觀察中", "candidate_rule": "候選規則", "eligible_for_review": "可人工審查"}
+            for item in (learning.get("recurring_lessons") or [])[:8]:
+                lesson_rows.append([item.get("rule", ""), item.get("occurrence_days", 0), item.get("affected_symbols_total", 0), status_names.get(item.get("status"), item.get("status", ""))])
+            if len(lesson_rows) > 1:
+                story.append(styled_table(lesson_rows, [105*mm, 22*mm, 22*mm, 31*mm]))
+
     story.extend([
-        Spacer(1, 8),
-        p("驗收聲明", "H1CJ"),
-        p("只有資料日期、JSON驗證、PDF生成與逐頁渲染檢查全部通過，系統才可標記本日產出成功。", "GoodCJ"),
+        Spacer(1, 5),
+        p("驗收聲明：只有資料日期、JSON驗證、PDF生成與逐頁渲染檢查全部通過，系統才可標記本日產出成功。", "SmallCJ"),
     ])
     return story, edition
 
 
-def generate(report: dict, output_path: Path, backtest: dict | None = None):
+def generate(report: dict, output_path: Path, backtest: dict | None = None, learning: dict | None = None):
     output_path.parent.mkdir(parents=True, exist_ok=True)
-    story, edition = build_story(report, backtest)
+    story, edition = build_story(report, backtest, learning)
     doc = BaseDocTemplate(
         str(output_path), pagesize=A4,
         leftMargin=MARGIN, rightMargin=MARGIN, topMargin=14*mm, bottomMargin=16*mm,
@@ -290,6 +311,7 @@ def main():
     compact = date.replace("-", "")
     output_dir = Path(args.output_root) / f"{compact}日報"
     backtest = read_json(Path(args.backtest), required=False)
+    learning = read_json(DATA / "strategy-learning.json", required=False)
     has_backtest = backtest.get("date") == date and int(backtest.get("schema_version", 0)) >= 3 and bool(backtest.get("strategy_review"))
     generated = {}
 
@@ -301,7 +323,7 @@ def main():
         if not has_backtest:
             raise RuntimeError("Final PDF requested but matching schema v3 strategy review is unavailable")
         final = output_dir / f"{compact}日報_含回測.pdf"
-        generate(report, final, backtest)
+        generate(report, final, backtest, learning)
         generated["final_pdf"] = final.relative_to(ROOT).as_posix()
 
     manifest_path = DATA / "pdf-latest.json"

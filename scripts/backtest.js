@@ -4,6 +4,7 @@
 
 const fs = require('fs');
 const path = require('path');
+const { updateStrategyLearning } = require('./strategy-learning');
 
 const DATA_DIR = path.join(__dirname, '..', 'data');
 const LATEST_PATH = path.join(DATA_DIR, 'latest.json');
@@ -326,6 +327,7 @@ async function main() {
       && existingPicks.length > 0
       && existingPicks.every((item) => !String(item.intraday_source || '').includes('unavailable'));
     if (isComplete) {
+      updateStrategyLearning(existing);
       console.log(`Schema v3 strategy-quality backtest for ${report.date} is already complete; skip duplicate run.`);
       return;
     }
@@ -349,8 +351,10 @@ async function main() {
   if (!fs.existsSync(BACKTEST_DIR)) fs.mkdirSync(BACKTEST_DIR, { recursive: true });
   fs.writeFileSync(BACKTEST_LATEST_PATH, `${JSON.stringify(result, null, 2)}\n`);
   fs.writeFileSync(path.join(BACKTEST_DIR, `${report.date}.json`), `${JSON.stringify(result, null, 2)}\n`);
+  const learning = updateStrategyLearning(result);
   console.log('Backtest written for', report.date);
   console.log(result.narrative);
+  console.log(`Strategy learning now contains ${learning?.summary?.trading_days || 0} trading day(s).`);
 }
 
 if (require.main === module) main().catch((error) => { console.error(error); process.exitCode = 1; });
