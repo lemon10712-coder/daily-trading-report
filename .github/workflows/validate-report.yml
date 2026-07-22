@@ -4,6 +4,7 @@ name: Server-side validate report
 # GitHub Actions 的 runner 連得到（refresh-prices.yml 這幾週都跑得很順），所以在報告
 # push 上來之後，用這裡重新做一次真正連網的健檢，抓到問題就自動補上顯眼警示。
 on:
+  workflow_dispatch: {}
   push:
     paths:
       - 'data/latest.json'
@@ -34,5 +35,10 @@ jobs:
           git config user.name "report-validate-bot"
           git config user.email "report-validate-bot@users.noreply.github.com"
           git add data/latest.json
-          git diff --cached --quiet || git commit -m "Auto-flag: server-side validation found issues"
-          git diff --cached --quiet || git push
+          git diff --cached --quiet && exit 0
+          git commit -m "Auto-flag: server-side validation found issues"
+          for attempt in 1 2 3; do
+            git pull --rebase && git push && exit 0
+            sleep $((attempt * 10))
+          done
+          exit 1

@@ -2,6 +2,10 @@ name: Refresh live prices
 
 on:
   workflow_dispatch: {}
+  schedule:
+    # Taipei 09:00-12:55 and 13:00-13:30, every five minutes on weekdays.
+    - cron: '*/5 1-4 * * 1-5'
+    - cron: '0-30/5 5 * * 1-5'
 
 concurrency:
   group: refresh-prices
@@ -28,5 +32,10 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git add data/prices.json
-          git diff --cached --quiet || git commit -m "Update live prices"
-          git push
+          git diff --cached --quiet && exit 0
+          git commit -m "Update live prices"
+          for attempt in 1 2 3; do
+            git pull --rebase && git push && exit 0
+            sleep $((attempt * 10))
+          done
+          exit 1
