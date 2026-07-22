@@ -115,6 +115,80 @@ function round(value, digits = 2) {
   return Math.round(value * factor) / factor;
 }
 
+function pct(from, to) {
+  return Number.isFinite(from) && from !== 0 && Number.isFinite(to) ? ((to - from) / from) * 100 : null;
+}
+
+function analyzeRecommendation(pick, result, bars) {
+  if (!bars.length) return {
+    score: null, verdict: '資料不足', selection: '無法評分', direction: '無法評分',
+    entry: '無法評分', risk: '無法評分', reasons: ['缺少分鐘線，不能判斷推薦品質'],
+    improvements: ['資料補齊前不得把這檔列入策略勝率'],
+  };
+  const open = bars[0].open;
+  const close = bars.at(-1).close;
+  const high = Math.max(...bars.map((bar) => bar.high).filter(Number.isFinite));
+  const low = Math.min(...bars.map((bar) => bar.low).filter(Number.isFinite));
+  const closePct = pct(open, close);
+  const upsidePct = pct(open, high);
+  const downsidePct = pct(open, low);
+  const rangePct = pct(low, high);
+  const entryRange = parseRange(pick.entry);
+  const plannedEntry = entryRange ? (entryRange.low + entryRange.high) / 2 : null;
+  const plannedStop = parseNum(pick.stop_loss);
+  const plannedTakeProfit = parseNum(pick.take_profit);
+  const plannedRR = Number.isFinite(plannedEntry) && Number.isFinite(plannedStop) && plannedEntry > plannedStop
+    ? (plannedTakeProfit - plannedEntry) / (plannedEntry - plannedStop) : null;
+
+  let direction = '混合';
+  if (closePct >= 1 || (upsidePct >= 2 && upsidePct > Math.abs(downsidePct) * 1.25)) direction = '正確';
+  if (closePct <= -1 || (downsidePct <= -2 && Math.abs(downsidePct) > upsidePct * 1.25)) direction = '錯誤';
+  const selection = rangePct < 1.5 ? '波動不足' : direction === '正確' ? '有效' : direction === '錯誤' ? '不佳' : '普通';
+  let entry = result.entry_triggered ? (result.net_pct > 0 ? '成功捕捉' : '有成交但位置不佳') : '未成交';
+  if (!result.entry_triggered && entryRange) {
+    if (low > entryRange.high && direction === '正確') entry = '太保守，錯過上漲';
+    else if (high < entryRange.low && direction === '錯誤') entry = '成功避開下跌';
+    else if (direction === '混合') entry = '未成交，沒有明顯損失';
+  }
+  let risk = '未成交，不適用';
+  if (result.entry_triggered) {
+    if (['stop_loss', 'ambiguous_stop'].includes(result.status)) risk = '停損有執行，但策略失敗';
+    else if (result.net_pct > 0) risk = '風控有效';
+    else risk = '收盤出場仍虧損，停損／時效需調整';
+  }
+
+  let score = 50;
+  score += direction === '正確' ? 20 : direction === '錯誤' ? -20 : 0;
+  score += selection === '有效' ? 10 : selection === '波動不足' ? -10 : selection === '不佳' ? -10 : 0;
+  score += entry === '成功捕捉' ? 15 : entry === '成功避開下跌' ? 10 : entry === '太保守，錯過上漲' ? -10 : entry === '有成交但位置不佳' ? -15 : 0;
+  if (result.entry_triggered) score += result.net_pct > 0 ? 5 : -5;
+  score = Math.max(0, Math.min(100, Math.round(score)));
+  const verdict = score >= 75 ? '正確' : score >= 55 ? '部分正確' : '需要改善';
+  const reasons = [];
+  const improvements = [];
+  if (direction === '錯誤') {
+    reasons.push(`做多方向錯誤：收盤相對開盤 ${round(closePct)}%，最大下行 ${round(downsidePct)}%`);
+    improvements.push('降低前一日大漲後的延續假設；開盤跌破 VWAP／首 15 分鐘低點時取消做多');
+  } else if (direction === '正確') reasons.push(`做多方向成立：最大上行 ${round(upsidePct)}%，收盤相對開盤 ${round(closePct)}%`);
+  else reasons.push(`盤勢多空混合：最大上行 ${round(upsidePct)}%、最大下行 ${round(downsidePct)}%`);
+  if (selection === '波動不足') {
+    reasons.push(`全日振幅僅 ${round(rangePct)}%，不符合當沖效率`);
+    improvements.push('候選股加入預估振幅與早盤量能門檻，振幅不足時降級為觀察股');
+  }
+  if (entry === '太保守，錯過上漲') improvements.push('保留拉回價，但增加突破回測後的小部位 B 計畫，禁止直接追價');
+  if (entry === '有成交但位置不佳') improvements.push('進場需增加 VWAP、首 15 分鐘結構與量能確認，避免只因價格碰區間就進場');
+  if (plannedRR != null && plannedRR < 2) {
+    reasons.push(`計畫風報比僅 ${round(plannedRR)}，低於 2`);
+    improvements.push('調整進場、停損或第一停利，使計畫風報比至少 2');
+  }
+  if (!improvements.length) improvements.push('保留規則，持續累積至少 20 個交易日樣本再調整參數');
+  return {
+    score, verdict, selection, direction, entry, risk,
+    market: { open: round(open), high: round(high), low: round(low), close: round(close), close_pct: round(closePct), upside_pct: round(upsidePct), downside_pct: round(downsidePct), range_pct: round(rangePct) },
+    planned_risk_reward: round(plannedRR), reasons, improvements,
+  };
+}
+
 function noTradeResult(pick, close, reason, source) {
   const range = parseRange(pick.entry);
   return {
@@ -208,13 +282,36 @@ function buildNarrative(result) {
   const noTrades = picks.filter((item) => !item.entry_triggered);
   const lines = picks.map((item) => `${item.name}（${item.symbol}）：${item.label}${item.entry_triggered ? `，淨報酬 ${item.net_pct}%` : ''}`);
   lines.push(`總評：推薦 ${picks.length} 檔，實際觸發 ${triggered.length} 檔，未進場 ${noTrades.length} 檔；獲利 ${wins.length}、虧損 ${losses.length}。`);
+  if (result.strategy_review) lines.push(`策略品質：${result.strategy_review.verdict}，平均 ${result.strategy_review.average_score} 分。`);
   return lines.join('\n');
 }
 
 async function evaluateNamedPick(pick, date) {
   if (!pick?.symbol) return null;
   const { bars, source } = await fetchYahooBarsForSymbol(pick.symbol, date);
-  return { symbol: pick.symbol, name: pick.name, ...evaluatePickIntraday(pick, bars, DEFAULT_COSTS, source) };
+  const trade = evaluatePickIntraday(pick, bars, DEFAULT_COSTS, source);
+  return { symbol: pick.symbol, name: pick.name, ...trade, quality_review: analyzeRecommendation(pick, trade, bars) };
+}
+
+function buildStrategyReview(result) {
+  const unique = new Map();
+  for (const item of [...Object.values(result.picks || {}), ...(result.candidates || [])].filter(Boolean)) {
+    if (!unique.has(item.symbol)) unique.set(item.symbol, item);
+  }
+  const reviewed = [...unique.values()].filter((item) => Number.isFinite(item.quality_review?.score));
+  const averageScore = reviewed.length ? round(reviewed.reduce((sum, item) => sum + item.quality_review.score, 0) / reviewed.length, 1) : null;
+  const correct = reviewed.filter((item) => item.quality_review.verdict === '正確').length;
+  const needsImprovement = reviewed.filter((item) => item.quality_review.verdict === '需要改善').length;
+  const recurring = new Map();
+  for (const item of reviewed) for (const improvement of item.quality_review.improvements || []) recurring.set(improvement, (recurring.get(improvement) || 0) + 1);
+  const priorityImprovements = [...recurring.entries()].sort((a, b) => b[1] - a[1]).slice(0, 5).map(([rule, count]) => ({ rule, affected_count: count }));
+  return {
+    reviewed_symbols: reviewed.length, average_score: averageScore,
+    verdict: averageScore >= 75 ? '推薦與策略整體正確' : averageScore >= 55 ? '部分正確，需調整' : '整體需要改善',
+    correct_count: correct, needs_improvement_count: needsImprovement,
+    priority_improvements: priorityImprovements,
+    scoring_note: '0-100；綜合方向、當沖波動、進場捕捉與交易結果。未成交不直接算虧損。',
+  };
 }
 
 async function main() {
@@ -225,17 +322,17 @@ async function main() {
     const existing = JSON.parse(fs.readFileSync(BACKTEST_LATEST_PATH, 'utf8'));
     const existingPicks = Object.values(existing.picks || {}).filter(Boolean);
     const isComplete = existing.date === report.date
-      && Number(existing.schema_version) >= 2
+      && Number(existing.schema_version) >= 3
       && existingPicks.length > 0
       && existingPicks.every((item) => !String(item.intraday_source || '').includes('unavailable'));
     if (isComplete) {
-      console.log(`Schema v2 backtest for ${report.date} is already complete; skip duplicate run.`);
+      console.log(`Schema v3 strategy-quality backtest for ${report.date} is already complete; skip duplicate run.`);
       return;
     }
   }
   const result = {
-    schema_version: 2,
-    methodology: 'one-minute entry/exit sequence; same-bar ambiguity uses conservative stop',
+    schema_version: 3,
+    methodology: 'one-minute entry/exit sequence plus recommendation, selection, direction, entry and risk-quality review; same-bar ambiguity uses conservative stop',
     date: report.date,
     generated_at: new Date().toLocaleString('zh-TW', { timeZone: 'Asia/Taipei' }),
     price_snapshot_at: null,
@@ -247,6 +344,7 @@ async function main() {
   if (summary.aggressive_pick) result.picks.aggressive_pick = await evaluateNamedPick(summary.aggressive_pick, report.date);
   for (const candidate of report.candidates || []) result.candidates.push(await evaluateNamedPick(candidate, report.date));
   result.price_snapshot_at = result.picks.safe_pick?.intraday_source || result.picks.aggressive_pick?.intraday_source || null;
+  result.strategy_review = buildStrategyReview(result);
   result.narrative = buildNarrative(result);
   if (!fs.existsSync(BACKTEST_DIR)) fs.mkdirSync(BACKTEST_DIR, { recursive: true });
   fs.writeFileSync(BACKTEST_LATEST_PATH, `${JSON.stringify(result, null, 2)}\n`);
@@ -257,4 +355,4 @@ async function main() {
 
 if (require.main === module) main().catch((error) => { console.error(error); process.exitCode = 1; });
 
-module.exports = { parseRange, parseEarlyStop, entryFillForBar, evaluatePickIntraday, tradeNetPnl, buildNarrative };
+module.exports = { parseRange, parseEarlyStop, entryFillForBar, evaluatePickIntraday, tradeNetPnl, analyzeRecommendation, buildStrategyReview, buildNarrative };

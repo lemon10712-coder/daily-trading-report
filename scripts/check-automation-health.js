@@ -19,7 +19,7 @@ const failures = [];
 if (report.date !== today) failures.push(`latest.json is ${report.date}, expected ${today}`);
 if (pdf.date !== today || !pdf.morning_pdf) failures.push('morning PDF is missing or stale');
 if (hour >= 15 && report.market_open !== false) {
-  if (backtest.date !== today || Number(backtest.schema_version) < 2) failures.push('schema v2 intraday backtest is missing or stale');
+  if (backtest.date !== today || Number(backtest.schema_version) < 3 || !backtest.strategy_review) failures.push('schema v3 strategy-quality backtest is missing or stale');
   if (pdf.date !== today || !pdf.final_pdf) failures.push('final PDF with backtest is missing or stale');
 }
 

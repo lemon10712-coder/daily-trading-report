@@ -211,6 +211,46 @@ def build_story(report: dict, backtest: dict | None = None):
         story.append(styled_table(rows, [18*mm, 30*mm, 38*mm, 24*mm, 26*mm, 21*mm, 21*mm]))
         story.append(p(f"方法：{backtest.get('methodology', '未提供')}。成本假設：{json.dumps(backtest.get('cost_assumptions', {}), ensure_ascii=False)}", "SmallCJ"))
 
+        review = backtest.get("strategy_review") or {}
+        story.extend([PageBreak(), p("六、推薦／選股／策略品質檢討", "H1CJ")])
+        story.append(p(
+            f"整體判定：{review.get('verdict', '尚未評分')}｜平均 {review.get('average_score', '--')} 分｜"
+            f"評分 {review.get('reviewed_symbols', 0)} 檔｜正確 {review.get('correct_count', 0)} 檔｜"
+            f"需要改善 {review.get('needs_improvement_count', 0)} 檔。",
+            "GoodCJ" if review.get("average_score", 0) >= 55 else "WarnCJ",
+        ))
+        story.append(p(review.get("scoring_note", ""), "SmallCJ"))
+
+        reviewed = []
+        seen = set()
+        for item in list((backtest.get("picks") or {}).values()) + list(backtest.get("candidates") or []):
+            if not item or item.get("symbol") in seen:
+                continue
+            seen.add(item.get("symbol"))
+            reviewed.append(item)
+        quality_rows = [["股票", "分數／判定", "選股／方向", "進場／風控", "主要原因與改善"]]
+        for item in reviewed:
+            quality = item.get("quality_review") or {}
+            reasons = "；".join(quality.get("reasons") or [])
+            improvements = "；".join(quality.get("improvements") or [])
+            quality_rows.append([
+                f"{item.get('name', '')}\n{item.get('symbol', '')}",
+                f"{quality.get('score', '--')}\n{quality.get('verdict', '--')}",
+                f"選股：{quality.get('selection', '--')}\n方向：{quality.get('direction', '--')}",
+                f"進場：{quality.get('entry', '--')}\n風控：{quality.get('risk', '--')}",
+                f"原因：{reasons}\n改善：{improvements}",
+            ])
+        if len(quality_rows) > 1:
+            story.append(styled_table(quality_rows, [27*mm, 25*mm, 31*mm, 36*mm, 61*mm]))
+
+        priorities = review.get("priority_improvements") or []
+        story.append(p("下次日報優先調整", "H2CJ"))
+        if priorities:
+            for index, item in enumerate(priorities, 1):
+                story.append(p(f"{index}. {item.get('rule', '')}（影響 {item.get('affected_count', 0)} 檔）"))
+        else:
+            story.append(p("目前沒有足夠資料形成共通修正規則。"))
+
     story.extend([
         Spacer(1, 8),
         p("驗收聲明", "H1CJ"),
@@ -250,7 +290,7 @@ def main():
     compact = date.replace("-", "")
     output_dir = Path(args.output_root) / f"{compact}日報"
     backtest = read_json(Path(args.backtest), required=False)
-    has_backtest = backtest.get("date") == date and int(backtest.get("schema_version", 0)) >= 2
+    has_backtest = backtest.get("date") == date and int(backtest.get("schema_version", 0)) >= 3 and bool(backtest.get("strategy_review"))
     generated = {}
 
     if args.mode in {"morning", "auto", "both"}:
@@ -259,7 +299,7 @@ def main():
         generated["morning_pdf"] = morning.relative_to(ROOT).as_posix()
     if args.mode in {"final", "both"} or (args.mode == "auto" and has_backtest):
         if not has_backtest:
-            raise RuntimeError("Final PDF requested but matching schema v2 backtest is unavailable")
+            raise RuntimeError("Final PDF requested but matching schema v3 strategy review is unavailable")
         final = output_dir / f"{compact}日報_含回測.pdf"
         generate(report, final, backtest)
         generated["final_pdf"] = final.relative_to(ROOT).as_posix()

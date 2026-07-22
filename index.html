@@ -263,8 +263,11 @@ function renderBacktestRow(p) {
   const detail = p.entry_triggered === false
     ? `全天未碰進場區，損益 0%`
     : `進場 ${p.entry_price ?? p.entry_mid ?? '-'}（${p.entry_time || '-'}）　平均出場 ${p.average_exit ?? p.close ?? '-'}（${p.exit_time || '-'}）　淨報酬 ${p.net_pct ?? p.pct_vs_entry ?? '-'}%`;
+  const quality = p.quality_review
+    ? `<div class="bt-detail">策略評分 ${p.quality_review.score ?? '-'}｜${p.quality_review.verdict}｜選股 ${p.quality_review.selection}｜方向 ${p.quality_review.direction}｜進場 ${p.quality_review.entry}</div>`
+    : '';
   return `<div class="backtest-row">
-    <div><div class="bt-name">${p.name}（${p.symbol}）</div><div class="bt-detail">${detail}</div></div>
+    <div><div class="bt-name">${p.name}（${p.symbol}）</div><div class="bt-detail">${detail}</div>${quality}</div>
     <div>${p.label}</div>
   </div>`;
 }
@@ -283,6 +286,13 @@ function renderBacktest(backtest, reportDate) {
   html += renderBacktestRow(backtest.picks && backtest.picks.safe_pick);
   html += renderBacktestRow(backtest.picks && backtest.picks.aggressive_pick);
   if (backtest.narrative) html += `<div class="backtest-narrative">${backtest.narrative}</div>`;
+  const review = backtest.strategy_review;
+  if (review) {
+    html += `<div class="backtest-narrative"><strong>選股與策略總評：${review.verdict}（平均 ${review.average_score} 分）</strong></div>`;
+    if (review.priority_improvements && review.priority_improvements.length) {
+      html += `<div class="backtest-narrative">優先改善：\n${review.priority_improvements.map((item, index) => `${index + 1}. ${item.rule}`).join('\n')}</div>`;
+    }
+  }
   html += '</div>';
   return html;
 }

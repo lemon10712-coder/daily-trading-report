@@ -1,8 +1,8 @@
 {
-  "schema_version": 2,
+  "schema_version": 3,
   "methodology": "one-minute entry/exit sequence; same-bar ambiguity uses conservative stop",
   "date": "2026-07-22",
-  "generated_at": "2026/7/23 上午2:57:46",
+  "generated_at": "2026/7/23 上午3:38:15",
   "price_snapshot_at": "Yahoo Finance 2303.TW 1m",
   "cost_assumptions": {
     "commissionRate": 0.001425,
@@ -25,7 +25,34 @@
       "stop_loss": 129,
       "take_profit": 142,
       "target": 146,
-      "intraday_source": "Yahoo Finance 2303.TW 1m"
+      "intraday_source": "Yahoo Finance 2303.TW 1m",
+      "quality_review": {
+        "score": 20,
+        "verdict": "需要改善",
+        "selection": "不佳",
+        "direction": "錯誤",
+        "entry": "未成交",
+        "risk": "未成交，不適用",
+        "market": {
+          "open": 140.5,
+          "high": 145,
+          "low": 137.5,
+          "close": 139,
+          "close_pct": -1.07,
+          "upside_pct": 3.2,
+          "downside_pct": -2.14,
+          "range_pct": 5.45
+        },
+        "planned_risk_reward": 1.6,
+        "reasons": [
+          "做多方向錯誤：收盤相對開盤 -1.07%，最大下行 -2.14%",
+          "計畫風報比僅 1.6，低於 2"
+        ],
+        "improvements": [
+          "降低前一日大漲後的延續假設；開盤跌破 VWAP／首 15 分鐘低點時取消做多",
+          "調整進場、停損或第一停利，使計畫風報比至少 2"
+        ]
+      }
     },
     "aggressive_pick": {
       "symbol": "2408",
@@ -42,7 +69,34 @@
       "stop_loss": 388,
       "take_profit": 424,
       "target": 438,
-      "intraday_source": "Yahoo Finance 2408.TW 1m"
+      "intraday_source": "Yahoo Finance 2408.TW 1m",
+      "quality_review": {
+        "score": 70,
+        "verdict": "部分正確",
+        "selection": "有效",
+        "direction": "正確",
+        "entry": "太保守，錯過上漲",
+        "risk": "未成交，不適用",
+        "market": {
+          "open": 435,
+          "high": 445.5,
+          "low": 431.5,
+          "close": 445.5,
+          "close_pct": 2.41,
+          "upside_pct": 2.41,
+          "downside_pct": -0.8,
+          "range_pct": 3.24
+        },
+        "planned_risk_reward": 1.4,
+        "reasons": [
+          "做多方向成立：最大上行 2.41%，收盤相對開盤 2.41%",
+          "計畫風報比僅 1.4，低於 2"
+        ],
+        "improvements": [
+          "保留拉回價，但增加突破回測後的小部位 B 計畫，禁止直接追價",
+          "調整進場、停損或第一停利，使計畫風報比至少 2"
+        ]
+      }
     }
   },
   "candidates": [
@@ -61,7 +115,34 @@
       "stop_loss": 3550,
       "take_profit": 3800,
       "target": 3950,
-      "intraday_source": "Yahoo Finance 2454.TW 1m"
+      "intraday_source": "Yahoo Finance 2454.TW 1m",
+      "quality_review": {
+        "score": 20,
+        "verdict": "需要改善",
+        "selection": "不佳",
+        "direction": "錯誤",
+        "entry": "未成交",
+        "risk": "未成交，不適用",
+        "market": {
+          "open": 4000,
+          "high": 4000,
+          "low": 3830,
+          "close": 3850,
+          "close_pct": -3.75,
+          "upside_pct": 0,
+          "downside_pct": -4.25,
+          "range_pct": 4.44
+        },
+        "planned_risk_reward": 1.08,
+        "reasons": [
+          "做多方向錯誤：收盤相對開盤 -3.75%，最大下行 -4.25%",
+          "計畫風報比僅 1.08，低於 2"
+        ],
+        "improvements": [
+          "降低前一日大漲後的延續假設；開盤跌破 VWAP／首 15 分鐘低點時取消做多",
+          "調整進場、停損或第一停利，使計畫風報比至少 2"
+        ]
+      }
     },
     {
       "symbol": "2327",
@@ -78,7 +159,34 @@
       "stop_loss": 638,
       "take_profit": 700,
       "target": 725,
-      "intraday_source": "Yahoo Finance 2327.TW 1m"
+      "intraday_source": "Yahoo Finance 2327.TW 1m",
+      "quality_review": {
+        "score": 20,
+        "verdict": "需要改善",
+        "selection": "不佳",
+        "direction": "錯誤",
+        "entry": "未成交",
+        "risk": "未成交，不適用",
+        "market": {
+          "open": 713,
+          "high": 730,
+          "low": 676,
+          "close": 703,
+          "close_pct": -1.4,
+          "upside_pct": 2.38,
+          "downside_pct": -5.19,
+          "range_pct": 7.99
+        },
+        "planned_risk_reward": 1.53,
+        "reasons": [
+          "做多方向錯誤：收盤相對開盤 -1.4%，最大下行 -5.19%",
+          "計畫風報比僅 1.53，低於 2"
+        ],
+        "improvements": [
+          "降低前一日大漲後的延續假設；開盤跌破 VWAP／首 15 分鐘低點時取消做多",
+          "調整進場、停損或第一停利，使計畫風報比至少 2"
+        ]
+      }
     },
     {
       "symbol": "2408",
@@ -95,7 +203,34 @@
       "stop_loss": 388,
       "take_profit": 424,
       "target": 438,
-      "intraday_source": "Yahoo Finance 2408.TW 1m"
+      "intraday_source": "Yahoo Finance 2408.TW 1m",
+      "quality_review": {
+        "score": 70,
+        "verdict": "部分正確",
+        "selection": "有效",
+        "direction": "正確",
+        "entry": "太保守，錯過上漲",
+        "risk": "未成交，不適用",
+        "market": {
+          "open": 435,
+          "high": 445.5,
+          "low": 431.5,
+          "close": 445.5,
+          "close_pct": 2.41,
+          "upside_pct": 2.41,
+          "downside_pct": -0.8,
+          "range_pct": 3.24
+        },
+        "planned_risk_reward": 1.4,
+        "reasons": [
+          "做多方向成立：最大上行 2.41%，收盤相對開盤 2.41%",
+          "計畫風報比僅 1.4，低於 2"
+        ],
+        "improvements": [
+          "保留拉回價，但增加突破回測後的小部位 B 計畫，禁止直接追價",
+          "調整進場、停損或第一停利，使計畫風報比至少 2"
+        ]
+      }
     },
     {
       "symbol": "2330",
@@ -126,7 +261,35 @@
       "early_stop": 2370,
       "take_profit": 2480,
       "target": 2600,
-      "intraday_source": "Yahoo Finance 2330.TW 1m"
+      "intraday_source": "Yahoo Finance 2330.TW 1m",
+      "quality_review": {
+        "score": 0,
+        "verdict": "需要改善",
+        "selection": "不佳",
+        "direction": "錯誤",
+        "entry": "有成交但位置不佳",
+        "risk": "收盤出場仍虧損，停損／時效需調整",
+        "market": {
+          "open": 2440,
+          "high": 2445,
+          "low": 2385,
+          "close": 2400,
+          "close_pct": -1.64,
+          "upside_pct": 0.2,
+          "downside_pct": -2.25,
+          "range_pct": 2.52
+        },
+        "planned_risk_reward": 1.73,
+        "reasons": [
+          "做多方向錯誤：收盤相對開盤 -1.64%，最大下行 -2.25%",
+          "計畫風報比僅 1.73，低於 2"
+        ],
+        "improvements": [
+          "降低前一日大漲後的延續假設；開盤跌破 VWAP／首 15 分鐘低點時取消做多",
+          "進場需增加 VWAP、首 15 分鐘結構與量能確認，避免只因價格碰區間就進場",
+          "調整進場、停損或第一停利，使計畫風報比至少 2"
+        ]
+      }
     },
     {
       "symbol": "2303",
@@ -143,8 +306,61 @@
       "stop_loss": 129,
       "take_profit": 142,
       "target": 146,
-      "intraday_source": "Yahoo Finance 2303.TW 1m"
+      "intraday_source": "Yahoo Finance 2303.TW 1m",
+      "quality_review": {
+        "score": 20,
+        "verdict": "需要改善",
+        "selection": "不佳",
+        "direction": "錯誤",
+        "entry": "未成交",
+        "risk": "未成交，不適用",
+        "market": {
+          "open": 140.5,
+          "high": 145,
+          "low": 137.5,
+          "close": 139,
+          "close_pct": -1.07,
+          "upside_pct": 3.2,
+          "downside_pct": -2.14,
+          "range_pct": 5.45
+        },
+        "planned_risk_reward": 1.6,
+        "reasons": [
+          "做多方向錯誤：收盤相對開盤 -1.07%，最大下行 -2.14%",
+          "計畫風報比僅 1.6，低於 2"
+        ],
+        "improvements": [
+          "降低前一日大漲後的延續假設；開盤跌破 VWAP／首 15 分鐘低點時取消做多",
+          "調整進場、停損或第一停利，使計畫風報比至少 2"
+        ]
+      }
     }
   ],
-  "narrative": "聯電（2303）：⚪ 未觸發進場\n南亞科（2408）：⚪ 未觸發進場\n總評：推薦 2 檔，實際觸發 0 檔，未進場 2 檔；獲利 0、虧損 0。"
+  "strategy_review": {
+    "reviewed_symbols": 5,
+    "average_score": 26,
+    "verdict": "整體需要改善",
+    "correct_count": 0,
+    "needs_improvement_count": 4,
+    "priority_improvements": [
+      {
+        "rule": "調整進場、停損或第一停利，使計畫風報比至少 2",
+        "affected_count": 5
+      },
+      {
+        "rule": "降低前一日大漲後的延續假設；開盤跌破 VWAP／首 15 分鐘低點時取消做多",
+        "affected_count": 4
+      },
+      {
+        "rule": "保留拉回價，但增加突破回測後的小部位 B 計畫，禁止直接追價",
+        "affected_count": 1
+      },
+      {
+        "rule": "進場需增加 VWAP、首 15 分鐘結構與量能確認，避免只因價格碰區間就進場",
+        "affected_count": 1
+      }
+    ],
+    "scoring_note": "0-100；綜合方向、當沖波動、進場捕捉與交易結果。未成交不直接算虧損。"
+  },
+  "narrative": "聯電（2303）：⚪ 未觸發進場\n南亞科（2408）：⚪ 未觸發進場\n總評：推薦 2 檔，實際觸發 0 檔，未進場 2 檔；獲利 0、虧損 0。\n策略品質：整體需要改善，平均 26 分。"
 }

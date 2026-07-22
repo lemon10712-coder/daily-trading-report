@@ -1,6 +1,6 @@
 const assert = require('node:assert/strict');
 const test = require('node:test');
-const { evaluatePickIntraday } = require('../scripts/backtest');
+const { evaluatePickIntraday, analyzeRecommendation, buildStrategyReview } = require('../scripts/backtest');
 
 const zeroCosts = { commissionRate: 0, sellTaxRate: 0, slippageRate: 0 };
 
@@ -38,4 +38,24 @@ test('同一分鐘同時碰停利與停損採保守停損', () => {
   assert.equal(result.status, 'ambiguous_stop');
   assert.equal(result.ambiguous, true);
   assert.equal(result.average_exit, 98);
+});
+
+test('推薦品質能辨識做多方向錯誤與進場位置不佳', () => {
+  const pick = { entry: '100-102', stop_loss: '98', take_profit: '108', target: '110' };
+  const bars = [
+    { time: '09:00', open: 101, high: 102, low: 100, close: 101 },
+    { time: '13:30', open: 96, high: 97, low: 94, close: 95 },
+  ];
+  const trade = evaluatePickIntraday(pick, bars, zeroCosts);
+  const review = analyzeRecommendation(pick, trade, bars);
+  assert.equal(review.direction, '錯誤');
+  assert.equal(review.verdict, '需要改善');
+  assert.ok(review.improvements.some((item) => item.includes('VWAP')));
+});
+
+test('整體策略評分會依股票代號去重', () => {
+  const item = { symbol: '2303', quality_review: { score: 80, verdict: '正確', improvements: ['保留規則'] } };
+  const review = buildStrategyReview({ picks: { safe_pick: item }, candidates: [item] });
+  assert.equal(review.reviewed_symbols, 1);
+  assert.equal(review.average_score, 80);
 });
