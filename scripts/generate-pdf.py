@@ -40,13 +40,15 @@ MARGIN = 15 * mm
 def find_fonts() -> tuple[str, str, int]:
     candidates = [
         (r"C:\Windows\Fonts\msjh.ttc", r"C:\Windows\Fonts\msjhbd.ttc", 0),
+        # WenQuanYi uses TrueType outlines; ReportLab can embed it on Ubuntu.
+        ("/usr/share/fonts/truetype/wqy/wqy-zenhei.ttc", "/usr/share/fonts/truetype/wqy/wqy-zenhei.ttc", 0),
         ("/usr/share/fonts/opentype/noto/NotoSansCJK-Regular.ttc", "/usr/share/fonts/opentype/noto/NotoSansCJK-Bold.ttc", 0),
         ("/usr/share/fonts/opentype/noto/NotoSansCJKtc-Regular.otf", "/usr/share/fonts/opentype/noto/NotoSansCJKtc-Bold.otf", 0),
     ]
     for regular, bold, subfont in candidates:
         if Path(regular).exists() and Path(bold).exists():
             return regular, bold, subfont
-    raise RuntimeError("No Traditional Chinese font found. Install fonts-noto-cjk on Linux.")
+    raise RuntimeError("No ReportLab-compatible Traditional Chinese font found.")
 
 
 REGULAR_FONT, BOLD_FONT, SUBFONT = find_fonts()
