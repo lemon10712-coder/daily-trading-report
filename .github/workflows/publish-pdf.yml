@@ -1,0 +1,78 @@
+name: Publish daily PDF
+
+on:
+  push:
+    paths:
+      - 'data/latest.json'
+      - 'data/backtest-latest.json'
+      - 'scripts/generate-pdf.py'
+  workflow_dispatch: {}
+
+concurrency:
+  group: publish-daily-pdf
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+
+jobs:
+  pdf:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install PDF runtime
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y fonts-noto-cjk poppler-utils
+          python -m pip install --disable-pip-version-check reportlab pypdf
+
+      - name: Generate morning or final PDF
+        run: python scripts/generate-pdf.py --mode auto
+
+      - name: Render and verify every generated page
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          from pypdf import PdfReader
+          manifest = json.loads(Path('data/pdf-latest.json').read_text(encoding='utf-8'))
+          checked = 0
+          for key in ('morning_pdf', 'final_pdf'):
+              value = manifest.get(key)
+              if not value:
+                  continue
+              path = Path(value)
+              reader = PdfReader(path)
+              assert len(reader.pages) > 0, f'{path} has no pages'
+              assert path.stat().st_size > 10_000, f'{path} is too small'
+              text = ''.join((page.extract_text() or '') for page in reader.pages)
+              assert manifest['date'] in text, f'{path} does not contain report date'
+              checked += 1
+          assert checked > 0, 'No PDF found in manifest'
+          PY
+          mkdir -p /tmp/pdf-render
+          while IFS= read -r pdf; do
+            stem=$(basename "$pdf" .pdf)
+            pdftoppm -png -r 72 "$pdf" "/tmp/pdf-render/$stem" >/dev/null
+          done < <(find reports -type f -name '*.pdf')
+          test -n "$(find /tmp/pdf-render -type f -name '*.png' -print -quit)"
+
+      - name: Commit PDFs and manifest
+        run: |
+          git config user.name "daily-pdf-bot"
+          git config user.email "daily-pdf-bot@users.noreply.github.com"
+          git add reports/ data/pdf-latest.json
+          git diff --cached --quiet && exit 0
+          git commit -m "Publish PDF for $(python -c "import json;print(json.load(open('data/pdf-latest.json'))['date'])")"
+          for attempt in 1 2 3; do
+            git pull --rebase && git push && exit 0
+            sleep $((attempt * 10))
+          done
+          exit 1

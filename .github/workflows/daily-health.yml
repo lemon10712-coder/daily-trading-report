@@ -1,0 +1,17 @@
+name: Daily automation health
+
+on:
+  schedule:
+    # 09:20 and 16:00 Taipei: verify morning report/PDF and post-close backtest.
+    - cron: '20 1 * * 1-5'
+    - cron: '0 8 * * 1-5'
+  workflow_dispatch: {}
+
+jobs:
+  health:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Verify current trading-day artifacts
+        run: node scripts/check-automation-health.js

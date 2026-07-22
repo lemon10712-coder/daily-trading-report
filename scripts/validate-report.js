@@ -68,7 +68,7 @@ function parsePrice(str) {
   return match ? parseFloat(match[0]) : null;
 }
 
-function checkPick(label, pick, limits, errors, warnings, requireFields, isMainPick) {
+function checkPick(label, pick, limits, errors, warnings, requireFields, isMainPick, schemaVersion = 1) {
   if (!pick || !pick.symbol) return;
   const fieldNames = ['entry', 'take_profit', 'target', 'stop_loss'];
   const parsed = {};
@@ -86,6 +86,36 @@ function checkPick(label, pick, limits, errors, warnings, requireFields, isMainP
       continue;
     }
     parsed[key] = val;
+  }
+
+  // v2 把風控提升為機器可驗證欄位；v1 舊日報仍維持相容。
+  if (schemaVersion >= 2) {
+    for (const field of ['early_stop', 'risk_reward_ratio', 'invalidation_reason']) {
+      if (!(field in pick) || pick[field] === '') {
+        errors.push(`${label}（${pick.symbol || '無代號'}）缺少 v2 必填欄位 ${field}`);
+      }
+    }
+
+    const rr = Number(pick.risk_reward_ratio);
+    if (!Number.isFinite(rr) || rr < 2) {
+      errors.push(`${label}（${pick.symbol || '無代號'}）risk_reward_ratio 必須至少為 2`);
+    }
+
+    if (pick.early_stop !== null && pick.early_stop !== undefined && pick.early_stop !== '') {
+      const earlyStop = parsePrice(pick.early_stop);
+      if (!Number.isFinite(earlyStop) || !Number.isFinite(parsed.entry) ||
+          !Number.isFinite(parsed.stop_loss) || earlyStop <= parsed.stop_loss || earlyStop >= parsed.entry) {
+        errors.push(`${label}（${pick.symbol || '無代號'}）early_stop 必須介於 stop_loss 與 entry 之間`);
+      }
+    }
+
+    const priorChange = Number(pick.prior_day_change_pct);
+    if (Number.isFinite(priorChange) && priorChange <= -7) {
+      const strategyText = `${pick.plan_a || ''} ${pick.invalidation_reason || ''}`;
+      if (!/09:15|9:15|九點十五/.test(strategyText)) {
+        errors.push(`${label}（${pick.symbol || '無代號'}）前日重挫，策略必須明寫 09:15 前禁止做多`);
+      }
+    }
   }
 
   if (Object.keys(parsed).length > 0) {
@@ -214,7 +244,7 @@ async function main() {
         limitsCache[pick.symbol] = null;
       }
     }
-    checkPick(label, pick, limitsCache[pick.symbol], errors, warnings, requireFields, isMainPick);
+    checkPick(label, pick, limitsCache[pick.symbol], errors, warnings, requireFields, isMainPick, Number(report.schema_version || 1));
   }
 
   console.log(`健檢完成：${picks.length} 檔，${errors.length} 個錯誤，${warnings.length} 個警告`);

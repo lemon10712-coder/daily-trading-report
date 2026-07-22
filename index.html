@@ -178,6 +178,9 @@
   .backtest-row .bt-name { font-weight: 700; }
   .backtest-row .bt-detail { color: var(--text-soft); font-size: 12px; }
   .backtest-narrative { font-size: 13px; color: var(--text-soft); line-height: 1.6; margin-top: 8px; white-space: pre-line; }
+  .pdf-actions { display:flex; flex-wrap:wrap; gap:10px; margin:16px 0 4px; }
+  .pdf-link { display:inline-flex; align-items:center; padding:9px 14px; border-radius:999px; background:var(--accent); color:white; text-decoration:none; font-size:13px; font-weight:700; }
+  .pdf-link.secondary { background:#52666d; }
 </style>
 </head>
 <body>
@@ -257,10 +260,21 @@ function renderNews(n) {
 
 function renderBacktestRow(p) {
   if (!p) return '';
+  const detail = p.entry_triggered === false
+    ? `全天未碰進場區，損益 0%`
+    : `進場 ${p.entry_price ?? p.entry_mid ?? '-'}（${p.entry_time || '-'}）　平均出場 ${p.average_exit ?? p.close ?? '-'}（${p.exit_time || '-'}）　淨報酬 ${p.net_pct ?? p.pct_vs_entry ?? '-'}%`;
   return `<div class="backtest-row">
-    <div><div class="bt-name">${p.name}（${p.symbol}）</div><div class="bt-detail">收盤 ${p.close ?? '無資料'}${p.pct_vs_entry != null ? `　較進場區中點 ${p.pct_vs_entry > 0 ? '+' : ''}${p.pct_vs_entry}%` : ''}</div></div>
+    <div><div class="bt-name">${p.name}（${p.symbol}）</div><div class="bt-detail">${detail}</div></div>
     <div>${p.label}</div>
   </div>`;
+}
+
+function renderPdfLinks(pdf, reportDate) {
+  if (!pdf || pdf.date !== reportDate) return '';
+  const links = [];
+  if (pdf.morning_pdf) links.push(`<a class="pdf-link" href="${pdf.morning_pdf}" target="_blank" rel="noopener">下載晨報 PDF</a>`);
+  if (pdf.final_pdf) links.push(`<a class="pdf-link secondary" href="${pdf.final_pdf}" target="_blank" rel="noopener">下載含回測 PDF</a>`);
+  return links.length ? `<div class="pdf-actions">${links.join('')}</div>` : '';
 }
 
 function renderBacktest(backtest, reportDate) {
@@ -274,10 +288,11 @@ function renderBacktest(backtest, reportDate) {
 }
 
 async function main() {
-  const [report, priceData, backtest] = await Promise.all([
+  const [report, priceData, backtest, pdf] = await Promise.all([
     loadJSON('data/latest.json'),
     loadJSON('data/prices.json'),
-    loadJSON('data/backtest-latest.json')
+    loadJSON('data/backtest-latest.json'),
+    loadJSON('data/pdf-latest.json')
   ]);
 
   if (!report) {
@@ -311,6 +326,7 @@ async function main() {
   const prices = priceData ? priceData.prices : null;
 
   let html = '';
+  html += renderPdfLinks(pdf, report.date);
 
   const warnings = (report.data_quality && report.data_quality.warnings) || [];
   if (warnings.length) {

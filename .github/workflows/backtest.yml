@@ -2,10 +2,15 @@ name: Daily backtest
 
 on:
   schedule:
-    # 14:10 / 14:20 / 14:30 Taipei (UTC+8) = 06:10 / 06:20 / 06:30 UTC，收盤後留緩衝重試三次，
-    # 避免單次執行時 prices.json 的收盤快照還沒 commit 完成就撲空。
-    - cron: '10,20,30 6 * * 1-5'
+    # 14:20 / 14:40 / 15:00 Taipei. The script is idempotent; later runs
+    # provide automatic retry if the minute-data source is temporarily late.
+    - cron: '20,40 6 * * 1-5'
+    - cron: '0 7 * * 1-5'
   workflow_dispatch: {}
+
+concurrency:
+  group: daily-backtest
+  cancel-in-progress: false
 
 permissions:
   contents: write
@@ -20,6 +25,9 @@ jobs:
         with:
           node-version: '20'
 
+      - name: Run regression tests
+        run: node --test tests/backtest.test.js
+
       - name: Run backtest
         run: node scripts/backtest.js
 
@@ -28,5 +36,10 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git add data/backtest-latest.json data/backtest/
-          git diff --cached --quiet || git commit -m "Backtest for $(date +%Y-%m-%d)"
-          git push
+          git diff --cached --quiet && exit 0
+          git commit -m "Backtest for $(date +%Y-%m-%d)"
+          for attempt in 1 2 3; do
+            git pull --rebase && git push && exit 0
+            sleep $((attempt * 10))
+          done
+          exit 1
