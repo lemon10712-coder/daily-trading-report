@@ -86,6 +86,9 @@ function updateStrategyLearning(backtest, outputPath = DEFAULT_PATH) {
   };
   if (fs.existsSync(outputPath)) history = { ...history, ...JSON.parse(fs.readFileSync(outputPath, 'utf8')) };
   const snapshot = dailySnapshot(backtest);
+  const previous = (history.daily_reviews || []).find((item) => item.date === snapshot.date);
+  if (previous) snapshot.recorded_at = previous.recorded_at;
+  if (previous && JSON.stringify(previous) === JSON.stringify(snapshot)) return history;
   history.daily_reviews = (history.daily_reviews || []).filter((item) => item.date !== snapshot.date);
   history.daily_reviews.push(snapshot);
   history.daily_reviews.sort((a, b) => a.date.localeCompare(b.date));

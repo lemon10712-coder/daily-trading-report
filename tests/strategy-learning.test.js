@@ -1,6 +1,9 @@
 const assert = require('node:assert/strict');
 const test = require('node:test');
-const { dailySnapshot, rebuildSummary } = require('../scripts/strategy-learning');
+const fs = require('node:fs');
+const os = require('node:os');
+const path = require('node:path');
+const { dailySnapshot, rebuildSummary, updateStrategyLearning } = require('../scripts/strategy-learning');
 
 const lesson = '開盤跌破 VWAP 時取消做多';
 const backtest = {
@@ -35,4 +38,13 @@ test('滿 20 天且同一教訓至少出現 5 天才可進人工審查', () => {
   for (let day = 1; day <= 20; day += 1) history.daily_reviews.push({ ...base, date: `2026-06-${String(day).padStart(2, '0')}`, lessons: day <= 5 ? base.lessons : [] });
   rebuildSummary(history);
   assert.equal(history.recurring_lessons[0].status, 'eligible_for_review');
+});
+
+test('同一天相同回測重跑不改寫學習檔', () => {
+  const output = path.join(os.tmpdir(), `strategy-learning-${Date.now()}.json`);
+  updateStrategyLearning(backtest, output);
+  const first = fs.readFileSync(output, 'utf8');
+  updateStrategyLearning(backtest, output);
+  const second = fs.readFileSync(output, 'utf8');
+  assert.equal(second, first);
 });
