@@ -6,6 +6,9 @@ on:
       - 'data/latest.json'
       - 'data/backtest-latest.json'
       - 'scripts/generate-pdf.py'
+  workflow_run:
+    workflows: ['Daily backtest']
+    types: [completed]
   workflow_dispatch: {}
 
 concurrency:
@@ -17,6 +20,14 @@ permissions:
 
 jobs:
   pdf:
+    # "Daily backtest" commits data/backtest-latest.json using the default
+    # GITHUB_TOKEN, and GitHub does not let GITHUB_TOKEN-authored pushes
+    # trigger other workflows (anti-recursion protection). That silently
+    # broke the push trigger above for the backtest file, so the final
+    # (backtest-included) PDF never regenerated after the morning PDF ran.
+    # This workflow_run trigger closes that gap by reacting to the backtest
+    # workflow's completion directly, independent of who made the push.
+    if: github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
