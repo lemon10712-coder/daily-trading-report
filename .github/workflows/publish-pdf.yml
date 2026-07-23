@@ -76,14 +76,33 @@ jobs:
           test -n "$(find /tmp/pdf-render -type f -name '*.png' -print -quit)"
 
       - name: Commit PDFs and manifest
+        id: commit
         run: |
           git config user.name "daily-pdf-bot"
           git config user.email "daily-pdf-bot@users.noreply.github.com"
           git add reports/ data/pdf-latest.json
           git diff --cached --quiet && exit 0
+          echo "changed=true" >> "$GITHUB_OUTPUT"
           git commit -m "Publish PDF for $(python -c "import json;print(json.load(open('data/pdf-latest.json'))['date'])")"
           for attempt in 1 2 3; do
             git pull --rebase && git push && exit 0
             sleep $((attempt * 10))
           done
           exit 1
+
+      - name: Notify LINE
+        if: steps.commit.outputs.changed == 'true'
+        env:
+          LINE_CHANNEL_ACCESS_TOKEN: ${{ secrets.LINE_CHANNEL_ACCESS_TOKEN }}
+        run: |
+          node -e "
+          const fs = require('fs');
+          const pdf = JSON.parse(fs.readFileSync('data/pdf-latest.json', 'utf8'));
+          const hasBacktest = fs.existsSync('data/backtest-latest.json') &&
+            JSON.parse(fs.readFileSync('data/backtest-latest.json', 'utf8')).date === pdf.date;
+          const url = 'https://lemon10712-coder.github.io/daily-trading-report/';
+          const msg = (hasBacktest && pdf.final_pdf)
+            ? '📊 今天的回測與策略評分已經算完，完整報告（含回測）已經更新：' + url
+            : '📈 今天的當沖報告已經產生：' + url;
+          require('child_process').execSync('node scripts/notify-line.js ' + JSON.stringify(msg), { stdio: 'inherit' });
+          "
