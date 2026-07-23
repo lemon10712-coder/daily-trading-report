@@ -297,12 +297,35 @@ function renderBacktest(backtest, reportDate) {
   return html;
 }
 
+function renderStrategyLearning(learning) {
+  if (!learning || !learning.daily_reviews || !learning.daily_reviews.length) return '';
+  const days = learning.daily_reviews.length;
+  const threshold = learning.minimum_days_before_rule_change || 20;
+  const lessons = learning.recurring_lessons || [];
+  const eligible = lessons.filter(l => l.status === 'eligible_for_review');
+  const candidates = lessons.filter(l => l.status === 'candidate_rule');
+  let html = '<div class="section-title">🧠 策略學習（已累積 ' + days + ' / ' + threshold + ' 個交易日）</div><div class="backtest-card">';
+  if (eligible.length) {
+    html += '<div class="warning-banner"><div class="title">📌 有教訓重複出現，建議確認是否要調整策略</div>' +
+      eligible.map(l => `<div>「${l.rule}」已連續出現在 ${l.occurrence_days} 天的回測裡（${l.first_seen} ～ ${l.last_seen}）</div>`).join('') +
+      '<div style="margin-top:6px;font-size:13px;">這些教訓不會自動套用，需要人工確認後才會真的修改報告邏輯。</div></div>';
+  } else if (candidates.length) {
+    html += '<div class="backtest-narrative">觀察中的教訓（尚未到建議調整的門檻）：\n' +
+      candidates.map(l => `・「${l.rule}」已出現 ${l.occurrence_days} 天`).join('\n') + '</div>';
+  } else {
+    html += '<div class="backtest-narrative">目前累積的交易日還不夠多，尚無重複出現的教訓，繼續累積中。</div>';
+  }
+  html += '</div>';
+  return html;
+}
+
 async function main() {
-  const [report, priceData, backtest, pdf] = await Promise.all([
+  const [report, priceData, backtest, pdf, learning] = await Promise.all([
     loadJSON('data/latest.json'),
     loadJSON('data/prices.json'),
     loadJSON('data/backtest-latest.json'),
-    loadJSON('data/pdf-latest.json')
+    loadJSON('data/pdf-latest.json'),
+    loadJSON('data/strategy-learning.json')
   ]);
 
   if (!report) {
@@ -352,6 +375,7 @@ async function main() {
   }
 
   html += renderBacktest(backtest, report.date);
+  html += renderStrategyLearning(learning);
 
   if (report.candidates && report.candidates.length) {
     html += '<div class="section-title">完整排行</div>';
