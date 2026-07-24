@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026/7/24 下午12:10:33",
+  "updated_at": "2026/7/24 下午12:15:31",
   "price_type": "intraday",
   "quote_status": {
     "expected": 3,
@@ -15,14 +15,14 @@
       "stale": false
     },
     "2408": {
-      "price": 409,
-      "change_pct": -3.99,
-      "source": "yahoo_finance_tw",
+      "price": 402.5,
+      "change_pct": -5.52,
+      "source": "twse_mis",
       "stale": false
     },
     "3231": {
-      "price": 180,
-      "change_pct": 3.75,
+      "price": 179.5,
+      "change_pct": 3.46,
       "source": "yahoo_finance_tw",
       "stale": false
     }
