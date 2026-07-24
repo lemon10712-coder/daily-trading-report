@@ -225,7 +225,7 @@ function pctClass(p) {
 function renderPickCard(pick, kind, prices) {
   if (!pick) return '';
   const live = prices && prices[pick.symbol];
-  const liveHtml = live ? `<div class="live-price">${live.price}<span class="pct ${pctClass(live.change_pct)}">${fmtPct(live.change_pct)}</span></div>` : '';
+  const liveHtml = live ? `<div class="live-price">${live.price}<span class="pct ${pctClass(live.change_pct)}">${fmtPct(live.change_pct)}</span>${live.stale ? '<span class="badge">舊價／未確認</span>' : ''}</div>` : '';
   return `
     <div class="card pick-card ${kind}">
       <div class="pick-label">${kind === 'safe' ? '安全牌' : '衝最快'}</div>
@@ -242,7 +242,7 @@ function renderPickCard(pick, kind, prices) {
 
 function renderCandidate(c, prices) {
   const live = prices && prices[c.symbol];
-  const liveHtml = live ? `<span class="pct ${pctClass(live.change_pct)}">${live.price} ${fmtPct(live.change_pct)}</span>` : '';
+  const liveHtml = live ? `<span class="pct ${pctClass(live.change_pct)}">${live.price} ${fmtPct(live.change_pct)}${live.stale ? '（舊價／未確認）' : ''}</span>` : '';
   return `
     <div class="candidate">
       <div class="name">${c.rank ? c.rank + '. ' : ''}${c.name}（${c.symbol}） ${liveHtml}</div>
@@ -360,6 +360,14 @@ async function main() {
 
   let html = '';
   html += renderPdfLinks(pdf, report.date);
+
+  if (!priceData || !priceData.quote_status || priceData.quote_status.is_complete !== true) {
+    const missing = priceData && priceData.quote_status && priceData.quote_status.missing_symbols;
+    html += '<div class="warning-banner"><div class="title">⚠️ 即時價格資料不完整</div>' +
+      '<div>目前價格不可視為最新成交價，請勿只依這個頁面下單。' +
+      (missing && missing.length ? ' 缺少代號：' + missing.join('、') : '') +
+      '</div></div>';
+  }
 
   const warnings = (report.data_quality && report.data_quality.warnings) || [];
   if (warnings.length) {
