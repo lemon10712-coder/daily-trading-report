@@ -1,10 +1,10 @@
 name: Daily automation health
 
 on:
-  schedule:
-    # 09:20 and 16:00 Taipei: verify morning report/PDF and post-close backtest.
-    - cron: '20 1 * * 1-5'
-    - cron: '0 8 * * 1-5'
+  # GitHub's native schedule trigger runs unreliably late in practice (same
+  # issue fixed for refresh-prices.yml on 2026-07-16, and for backtest.yml on
+  # 2026-07-24). Dispatched externally by cron-job.org instead at 09:20 and
+  # 16:00 Taipei; see charles-agent/.secrets/cron-job-org.md.
   workflow_dispatch: {}
 
 jobs:

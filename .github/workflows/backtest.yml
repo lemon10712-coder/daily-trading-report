@@ -1,11 +1,12 @@
 name: Daily backtest
 
 on:
-  schedule:
-    # 14:20 / 14:40 / 15:00 Taipei. The script is idempotent; later runs
-    # provide automatic retry if the minute-data source is temporarily late.
-    - cron: '20,40 6 * * 1-5'
-    - cron: '0 7 * * 1-5'
+  # GitHub's native schedule trigger runs this ~6 hours late in practice
+  # (observed: intended 14:20/14:40/15:00 Taipei, actual ~20:12-20:15 Taipei
+  # every day) — same unreliability already fixed for refresh-prices.yml on
+  # 2026-07-16. Dispatched externally by cron-job.org instead; see
+  # charles-agent/.secrets/cron-job-org.md. The script is idempotent, so the
+  # external service can retry the same three time slots if needed.
   workflow_dispatch: {}
 
 concurrency:

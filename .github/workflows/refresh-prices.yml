@@ -1,11 +1,14 @@
 name: Refresh live prices
 
 on:
+  # GitHub's native schedule trigger was already replaced by cron-job.org's
+  # external dispatch on 2026-07-16 for reliability. The schedule block
+  # below was left in as a backup but never actually fires in practice
+  # (every observed run is workflow_dispatch) — it was also the root cause
+  # of the git-push race condition fixed on 2026-07-24 (two trigger paths
+  # occasionally overlapping). Removed rather than left as dead, misleading
+  # config.
   workflow_dispatch: {}
-  schedule:
-    # Taipei 09:00-12:55 and 13:00-13:30, every five minutes on weekdays.
-    - cron: '*/5 1-4 * * 1-5'
-    - cron: '0-30/5 5 * * 1-5'
 
 concurrency:
   group: refresh-prices
