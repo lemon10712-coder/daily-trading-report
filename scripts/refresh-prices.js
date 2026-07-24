@@ -142,6 +142,10 @@ async function main() {
 
   const out = {
     updated_at: new Date().toLocaleString('zh-TW', { timeZone: 'Asia/Taipei' }),
+    // Machine-parseable companion to updated_at (which is a locale display
+    // string, not reliable to parse back into a Date across browsers) — the
+    // frontend uses this to compute a live "N 分鐘前" freshness display.
+    updated_at_iso: new Date().toISOString(),
     price_type: currentPriceType(),
     quote_status: {
       expected: symbols.length,

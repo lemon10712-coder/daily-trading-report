@@ -178,6 +178,12 @@
   .backtest-row .bt-name { font-weight: 700; }
   .backtest-row .bt-detail { color: var(--text-soft); font-size: 12px; }
   .backtest-narrative { font-size: 13px; color: var(--text-soft); line-height: 1.6; margin-top: 8px; white-space: pre-line; }
+  .score-chart { display:flex; align-items:flex-end; gap:10px; padding:4px 2px 0; overflow-x:auto; }
+  .score-bar-col { display:flex; flex-direction:column; align-items:center; flex:none; width:30px; cursor:default; }
+  .score-bar-value { font-size:11px; color:var(--text-soft); margin-bottom:4px; font-variant-numeric:tabular-nums; }
+  .score-bar-track { width:100%; height:80px; display:flex; align-items:flex-end; border-bottom:1px solid var(--border); }
+  .score-bar { width:100%; background:var(--apricot-dark); border-radius:4px 4px 0 0; min-height:2px; }
+  .score-bar-date { font-size:10.5px; color:var(--text-soft); margin-top:5px; white-space:nowrap; }
   .pdf-actions { display:flex; flex-wrap:wrap; gap:10px; margin:16px 0 4px; }
   .pdf-link { display:inline-flex; align-items:center; padding:9px 14px; border-radius:999px; background:var(--accent); color:white; text-decoration:none; font-size:13px; font-weight:700; }
   .pdf-link.secondary { background:#52666d; }
@@ -297,6 +303,29 @@ function renderBacktest(backtest, reportDate) {
   return html;
 }
 
+function renderScoreTrend(dailyReviews) {
+  // Below ~3 points a bar chart would just be noise, not a trend — say so
+  // plainly instead of drawing a chart that implies a pattern that isn't
+  // there yet.
+  if (dailyReviews.length < 3) {
+    return `<div class="backtest-narrative">分數趨勢圖需要至少 3 個交易日才有參考意義，目前累積 ${dailyReviews.length} 天，還在累積中。</div>`;
+  }
+  const recent = dailyReviews.slice(-14); // last ~14 trading days keeps bars readable on a phone screen
+  const maxTrackPx = 80;
+  const cols = recent.map((r) => {
+    const score = Math.max(0, Math.min(100, Number(r.average_score) || 0));
+    const barPx = Math.max(2, Math.round((score / 100) * maxTrackPx));
+    const shortDate = (r.date || '').slice(5).replace('-', '/');
+    const title = `${r.date}：${score} 分（${r.verdict || ''}）`;
+    return `<div class="score-bar-col" title="${title}">
+      <div class="score-bar-value">${score}</div>
+      <div class="score-bar-track"><div class="score-bar" style="height:${barPx}px"></div></div>
+      <div class="score-bar-date">${shortDate}</div>
+    </div>`;
+  }).join('');
+  return `<div class="score-chart">${cols}</div>`;
+}
+
 function renderStrategyLearning(learning) {
   if (!learning || !learning.daily_reviews || !learning.daily_reviews.length) return '';
   const days = learning.daily_reviews.length;
@@ -305,6 +334,7 @@ function renderStrategyLearning(learning) {
   const eligible = lessons.filter(l => l.status === 'eligible_for_review');
   const candidates = lessons.filter(l => l.status === 'candidate_rule');
   let html = '<div class="section-title">🧠 策略學習（已累積 ' + days + ' / ' + threshold + ' 個交易日）</div><div class="backtest-card">';
+  html += renderScoreTrend(learning.daily_reviews);
   if (eligible.length) {
     html += '<div class="warning-banner"><div class="title">📌 有教訓重複出現，建議確認是否要調整策略</div>' +
       eligible.map(l => `<div>「${l.rule}」已連續出現在 ${l.occurrence_days} 天的回測裡（${l.first_seen} ～ ${l.last_seen}）</div>`).join('') +
@@ -317,6 +347,39 @@ function renderStrategyLearning(learning) {
   }
   html += '</div>';
   return html;
+}
+
+// "YYYY-MM-DD HH:MM" from the report generator has no timezone attached;
+// browsers parse it as the VIEWER's local time, which is wrong for anyone
+// not in Taipei. Pin it to +08:00 explicitly instead of trusting new Date().
+function parseTaipeiTimestamp(str) {
+  if (!str) return null;
+  const d = new Date(str.replace(' ', 'T') + '+08:00');
+  return Number.isNaN(d.getTime()) ? null : d;
+}
+
+function relativeTimeLabel(date) {
+  if (!date) return '';
+  const diffMin = Math.floor((Date.now() - date.getTime()) / 60000);
+  if (diffMin < 1) return '剛剛';
+  if (diffMin < 60) return diffMin + ' 分鐘前';
+  const diffHour = Math.floor(diffMin / 60);
+  if (diffHour < 24) return diffHour + ' 小時前';
+  return Math.floor(diffHour / 24) + ' 天前';
+}
+
+function renderFreshnessText(report, priceData) {
+  const priceTypeLabel = priceData && priceData.price_type === 'intraday' ? '（盤中即時）' :
+    priceData && priceData.price_type === 'close' ? '（最後收盤參考，非即時）' : '';
+  const reportTime = parseTaipeiTimestamp(report.generated_at);
+  const priceTime = priceData && priceData.updated_at_iso ? new Date(priceData.updated_at_iso) : null;
+  let text = '報告產生時間：' + (report.generated_at || '-');
+  if (reportTime) text += '（' + relativeTimeLabel(reportTime) + '）';
+  if (priceData) {
+    text += '　股價更新時間：' + (priceData.updated_at || '-') + priceTypeLabel;
+    if (priceTime) text += '（' + relativeTimeLabel(priceTime) + '）';
+  }
+  return text;
 }
 
 async function main() {
@@ -350,11 +413,11 @@ async function main() {
   if (report.provisional) {
     document.getElementById('report-date').innerHTML += '<span class="badge">暫定，待更新</span>';
   }
-  const priceTypeLabel = priceData && priceData.price_type === 'intraday' ? '（盤中即時）' :
-    priceData && priceData.price_type === 'close' ? '（最後收盤參考，非即時）' : '';
-  document.getElementById('report-updated').textContent =
-    '報告產生時間：' + (report.generated_at || '-') +
-    (priceData ? '　股價更新時間：' + (priceData.updated_at || '-') + priceTypeLabel : '');
+  const updateFreshness = () => {
+    document.getElementById('report-updated').textContent = renderFreshnessText(report, priceData);
+  };
+  updateFreshness();
+  setInterval(updateFreshness, 30000); // keeps "N 分鐘前" honest without a page reload
 
   const prices = priceData ? priceData.prices : null;
 
