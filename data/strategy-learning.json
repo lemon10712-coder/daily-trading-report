@@ -61,32 +61,59 @@
           "affected_symbols": 4
         }
       ]
+    },
+    {
+      "date": "2026-07-24",
+      "recorded_at": "2026-07-24T08:30:41.477Z",
+      "reviewed_symbols": 3,
+      "average_score": 56.7,
+      "verdict": "部分正確，需調整",
+      "direction_correct": 1,
+      "direction_wrong": 1,
+      "main_pick_count": 2,
+      "main_pick_triggered": 2,
+      "main_pick_wins": 2,
+      "main_pick_losses": 0,
+      "lessons": [
+        {
+          "rule": "調整進場、停損或第一停利，使計畫風報比至少 2",
+          "affected_symbols": 3
+        },
+        {
+          "rule": "降低前一日大漲後的延續假設；開盤跌破 VWAP／首 15 分鐘低點時取消做多",
+          "affected_symbols": 1
+        },
+        {
+          "rule": "進場需增加 VWAP、首 15 分鐘結構與量能確認，避免只因價格碰區間就進場",
+          "affected_symbols": 1
+        }
+      ]
     }
   ],
   "recurring_lessons": [
     {
       "rule": "調整進場、停損或第一停利，使計畫風報比至少 2",
-      "occurrence_days": 2,
-      "affected_symbols_total": 10,
+      "occurrence_days": 3,
+      "affected_symbols_total": 13,
       "first_seen": "2026-07-22",
-      "last_seen": "2026-07-23",
-      "status": "observation"
+      "last_seen": "2026-07-24",
+      "status": "candidate_rule"
     },
     {
       "rule": "降低前一日大漲後的延續假設；開盤跌破 VWAP／首 15 分鐘低點時取消做多",
-      "occurrence_days": 2,
-      "affected_symbols_total": 9,
+      "occurrence_days": 3,
+      "affected_symbols_total": 10,
       "first_seen": "2026-07-22",
-      "last_seen": "2026-07-23",
-      "status": "observation"
+      "last_seen": "2026-07-24",
+      "status": "candidate_rule"
     },
     {
       "rule": "進場需增加 VWAP、首 15 分鐘結構與量能確認，避免只因價格碰區間就進場",
-      "occurrence_days": 2,
-      "affected_symbols_total": 5,
+      "occurrence_days": 3,
+      "affected_symbols_total": 6,
       "first_seen": "2026-07-22",
-      "last_seen": "2026-07-23",
-      "status": "observation"
+      "last_seen": "2026-07-24",
+      "status": "candidate_rule"
     },
     {
       "rule": "保留拉回價，但增加突破回測後的小部位 B 計畫，禁止直接追價",
@@ -98,15 +125,15 @@
     }
   ],
   "summary": {
-    "trading_days": 2,
-    "average_strategy_score": 17,
-    "total_reviewed_symbols": 10,
-    "main_pick_count": 4,
-    "main_pick_triggered": 2,
-    "main_pick_wins": 0,
+    "trading_days": 3,
+    "average_strategy_score": 30.2,
+    "total_reviewed_symbols": 13,
+    "main_pick_count": 6,
+    "main_pick_triggered": 4,
+    "main_pick_wins": 2,
     "main_pick_losses": 2,
-    "direction_correct": 1,
-    "direction_wrong": 9
+    "direction_correct": 2,
+    "direction_wrong": 10
   },
-  "updated_at": "2026-07-23T12:12:40.621Z"
+  "updated_at": "2026-07-24T08:30:41.477Z"
 }
