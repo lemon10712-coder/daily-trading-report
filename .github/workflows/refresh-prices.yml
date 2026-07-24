@@ -35,7 +35,23 @@ jobs:
           git diff --cached --quiet && exit 0
           git commit -m "Update live prices"
           for attempt in 1 2 3; do
-            git pull --rebase && git push && exit 0
+            if git pull --rebase; then
+              git push && exit 0
+            fi
+            # A real content conflict (two runs racing, not just a
+            # fast-forward miss) leaves the repo mid-rebase; without
+            # resolving it, every later retry fails the same way instead of
+            # making progress. prices.json is pure auto-generated data with
+            # no meaningful merge, so on conflict keep this run's freshly
+            # fetched version ("theirs" under rebase = the commit being
+            # replayed) and finish the rebase; next loop iteration pushes it.
+            if git status --short | grep -q '^UU'; then
+              git checkout --theirs data/prices.json
+              git add data/prices.json
+              git rebase --continue --no-edit || git rebase --abort
+            else
+              git rebase --abort 2>/dev/null || true
+            fi
             sleep $((attempt * 10))
           done
           exit 1
