@@ -98,11 +98,20 @@ jobs:
           node -e "
           const fs = require('fs');
           const pdf = JSON.parse(fs.readFileSync('data/pdf-latest.json', 'utf8'));
-          const hasBacktest = fs.existsSync('data/backtest-latest.json') &&
-            JSON.parse(fs.readFileSync('data/backtest-latest.json', 'utf8')).date === pdf.date;
+          const backtest = fs.existsSync('data/backtest-latest.json')
+            ? JSON.parse(fs.readFileSync('data/backtest-latest.json', 'utf8')) : null;
+          const hasBacktest = backtest && backtest.date === pdf.date;
           const url = 'https://lemon10712-coder.github.io/daily-trading-report/';
-          const msg = (hasBacktest && pdf.final_pdf)
-            ? '📊 今天的回測與策略評分已經算完，完整報告（含回測）已經更新：' + url
-            : '📈 今天的當沖報告已經產生：' + url;
+          let msg;
+          if (hasBacktest && pdf.final_pdf) {
+            const review = backtest.strategy_review || {};
+            const picks = Object.values(backtest.picks || {}).filter(Boolean);
+            const lines = picks.map((p) => p.name + '(' + p.symbol + ') ' + p.label + (p.entry_triggered ? '，淨' + p.net_pct + '%' : ''));
+            msg = '📊 今天回測算完了：\n' + lines.join('\n')
+              + '\n平均品質分數 ' + review.average_score + '/100（' + review.verdict + '）'
+              + '\n完整報告：' + url;
+          } else {
+            msg = '📈 今天的當沖報告已經產生：' + url;
+          }
           require('child_process').execSync('node scripts/notify-line.js ' + JSON.stringify(msg), { stdio: 'inherit' });
           "
