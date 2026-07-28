@@ -6,204 +6,277 @@
 <title>台股當沖報告</title>
 <style>
   :root {
-    --apricot: #f2a26a;
-    --apricot-dark: #d97f45;
-    --apricot-light: #fce4cc;
-    --bg: #fffaf3;
-    --card-bg: #ffffff;
-    --text: #3a2e22;
-    --text-soft: #7a6a58;
-    --border: #f0ddc4;
-    --green: #2f8a4b;
-    --red: #d1453b;
-    --safe: #4f9d69;
-    --aggressive: #d9743a;
-  }
-  @media (prefers-color-scheme: dark) {
-    :root {
-      --bg: #1c1712;
-      --card-bg: #262019;
-      --text: #f3e9dd;
-      --text-soft: #b8a893;
-      --border: #3a2f24;
-      --apricot-light: #3f2f20;
-    }
-  }
-  :root[data-theme="dark"] {
-    --bg: #1c1712;
-    --card-bg: #262019;
-    --text: #f3e9dd;
-    --text-soft: #b8a893;
-    --border: #3a2f24;
-    --apricot-light: #3f2f20;
+    --bg: #0a0e13; --surface: #121820; --surface-2: #19212b;
+    --border: #232c38; --border-soft: #1a212b;
+    --text: #e7edf3; --text-muted: #7c8a9a; --text-faint: #4d5a6a;
+    --accent: #22d3ee; --accent-dim: #0e7490;
+    --up: #ff5c5c; --up-bg: #2a1416;
+    --down: #34d399; --down-bg: #0f2620;
+    --warn: #fbbf24; --warn-bg: #2a2110;
+    --crit: #f87171; --crit-bg: #2a1616;
   }
   :root[data-theme="light"] {
-    --bg: #fffaf3;
-    --card-bg: #ffffff;
-    --text: #3a2e22;
-    --text-soft: #7a6a58;
-    --border: #f0ddc4;
-    --apricot-light: #fce4cc;
+    --bg: #f3f5f7; --surface: #ffffff; --surface-2: #eef1f4; --border: #dde3e9; --border-soft: #e7ebef;
+    --text: #16202b; --text-muted: #5b6b7a; --text-faint: #93a2b0;
+    --up-bg: #fdeceb; --down-bg: #e8f9f1; --warn-bg: #fdf3da; --crit-bg: #fdeceb;
   }
   * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
   body {
-    margin: 0;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang TC", "Microsoft JhengHei", sans-serif;
-    background: var(--bg);
-    color: var(--text);
-    padding-bottom: 40px;
+    background: var(--bg); color: var(--text);
+    font-family: -apple-system, "Segoe UI", "PingFang TC", "Microsoft JhengHei", sans-serif;
+    font-size: 14px; line-height: 1.5; padding-bottom: 40px;
+    background-image:
+      radial-gradient(circle at 15% 0%, rgba(34,211,238,0.06), transparent 40%),
+      radial-gradient(circle at 85% 15%, rgba(255,92,92,0.04), transparent 35%);
   }
-  header {
-    background: linear-gradient(135deg, var(--apricot), var(--apricot-dark));
-    color: #fff;
-    padding: 20px 16px 24px;
-    border-radius: 0 0 20px 20px;
-  }
-  header h1 { margin: 0 0 4px; font-size: 20px; }
-  header .date { font-size: 14px; opacity: 0.95; }
-  header .updated { font-size: 12px; opacity: 0.85; margin-top: 6px; }
-  .badge {
-    display: inline-block;
-    background: rgba(255,255,255,0.25);
-    padding: 2px 8px;
-    border-radius: 10px;
-    font-size: 11px;
-    margin-left: 6px;
-  }
-  main { max-width: 640px; margin: 0 auto; padding: 16px; }
-  .section-title {
-    font-size: 15px;
-    font-weight: 700;
-    margin: 24px 0 10px;
-    color: var(--apricot-dark);
-  }
-  .pick-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 12px;
-  }
-  @media (max-width: 420px) {
-    .pick-grid { grid-template-columns: 1fr; }
-  }
-  .card {
-    background: var(--card-bg);
-    border: 1px solid var(--border);
-    border-radius: 14px;
-    padding: 14px;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.04);
-  }
-  .pick-card { border-top: 4px solid var(--apricot); }
-  .pick-card.safe { border-top-color: var(--safe); }
-  .pick-card.aggressive { border-top-color: var(--aggressive); }
-  .pick-label {
-    font-size: 11px;
-    font-weight: 700;
-    letter-spacing: 0.05em;
-    color: var(--text-soft);
-    text-transform: uppercase;
-  }
-  .pick-name { font-size: 18px; font-weight: 700; margin: 4px 0; }
-  .pick-reason { font-size: 13px; color: var(--text-soft); margin-bottom: 10px; line-height: 1.5; }
-  .price-row { display: flex; justify-content: space-between; font-size: 13px; padding: 3px 0; }
-  .price-row .label { color: var(--text-soft); }
-  .live-price { font-size: 22px; font-weight: 700; margin: 6px 0; }
-  .live-price .pct { font-size: 13px; margin-left: 6px; font-weight: 600; }
-  .up { color: var(--red); }
-  .down { color: var(--green); }
-  .candidate {
-    background: var(--card-bg);
-    border: 1px solid var(--border);
-    border-radius: 14px;
-    padding: 14px;
-    margin-bottom: 10px;
-  }
-  .candidate .name { font-weight: 700; font-size: 15px; }
-  .candidate .meta { font-size: 12px; color: var(--text-soft); margin: 4px 0 8px; }
-  .plan { font-size: 13px; margin-top: 6px; }
-  .plan-title { font-weight: 700; color: var(--apricot-dark); font-size: 12px; margin-top: 8px; }
-  .risk-tag {
-    display: inline-block;
-    font-size: 11px;
-    padding: 2px 8px;
-    border-radius: 8px;
-    background: var(--apricot-light);
-    color: var(--apricot-dark);
-    margin-top: 6px;
-  }
-  .news-item { padding: 10px 0; border-bottom: 1px solid var(--border); font-size: 13px; line-height: 1.6; }
-  .news-item:last-child { border-bottom: none; }
-  .news-title { font-weight: 700; margin-bottom: 4px; }
-  .empty-state {
-    text-align: center;
-    color: var(--text-soft);
-    padding: 40px 20px;
-    font-size: 14px;
-    line-height: 1.8;
-  }
-  footer {
-    text-align: center;
-    font-size: 11px;
-    color: var(--text-soft);
-    margin-top: 30px;
-    padding: 0 20px;
-    line-height: 1.7;
-  }
-  .refresh-note { font-size: 11px; color: var(--text-soft); text-align: right; margin-top: 4px; }
-  .warning-banner {
-    background: #fdecea;
-    border: 1px solid #e8a49c;
-    color: #8a3a2e;
-    border-radius: 12px;
-    padding: 12px 14px;
-    font-size: 13px;
-    line-height: 1.6;
-    margin-bottom: 16px;
-  }
-  .warning-banner .title { font-weight: 700; margin-bottom: 4px; }
-  @media (prefers-color-scheme: dark) {
-    .warning-banner { background: #3a2320; border-color: #6b3a30; color: #f0b8ab; }
-  }
-  :root[data-theme="dark"] .warning-banner { background: #3a2320; border-color: #6b3a30; color: #f0b8ab; }
-  :root[data-theme="light"] .warning-banner { background: #fdecea; border-color: #e8a49c; color: #8a3a2e; }
+  main { max-width: 480px; margin: 0 auto; }
+  .mono { font-family: ui-monospace, "SF Mono", "Cascadia Code", "JetBrains Mono", Consolas, monospace; font-variant-numeric: tabular-nums; }
+  .eyebrow { font-size: 10.5px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-muted); }
 
-  .backtest-card {
-    background: var(--card-bg);
-    border: 1px solid var(--border);
-    border-radius: 14px;
-    padding: 14px;
-    margin-bottom: 10px;
+  .statusbar {
+    position: sticky; top: 0; z-index: 10;
+    background: rgba(10,14,19,0.92); backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--border); padding: 12px 16px;
+    display: flex; align-items: center; justify-content: space-between;
   }
-  .bt-row-wrap { border-bottom: 1px solid var(--border); padding: 6px 0; }
+  :root[data-theme="light"] .statusbar { background: rgba(243,245,247,0.92); }
+  .statusbar .brand { display: flex; align-items: center; gap: 8px; }
+  .statusbar .brand .dot {
+    width: 8px; height: 8px; border-radius: 50%; background: var(--down);
+    box-shadow: 0 0 8px var(--down); animation: pulse 2s ease-in-out infinite; flex-shrink: 0;
+  }
+  .statusbar .brand .dot.closed { background: var(--text-faint); box-shadow: none; animation: none; }
+  @keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: 0.4; } }
+  .statusbar .brand .name { font-weight: 800; font-size: 14px; letter-spacing: 0.02em; white-space: nowrap; }
+  .statusbar .brand .name span { color: var(--accent); }
+  .statusbar .time { font-size: 10.5px; color: var(--text-muted); text-align: right; }
+
+  .countdown-bar {
+    display: flex; align-items: center; justify-content: center; gap: 8px;
+    padding: 6px; background: var(--surface-2); border-bottom: 1px solid var(--border);
+    font-size: 11.5px; color: var(--text-muted);
+  }
+  .countdown-bar .val { color: var(--accent); font-weight: 700; font-size: 12.5px; }
+
+  .ticker-wrap { border-bottom: 1px solid var(--border); background: var(--surface); overflow: hidden; position: relative; padding: 8px 0; }
+  .ticker-wrap::before, .ticker-wrap::after { content: ""; position: absolute; top: 0; bottom: 0; width: 24px; z-index: 2; pointer-events: none; }
+  .ticker-wrap::before { left: 0; background: linear-gradient(90deg, var(--surface), transparent); }
+  .ticker-wrap::after { right: 0; background: linear-gradient(-90deg, var(--surface), transparent); }
+  .ticker-track { display: flex; gap: 26px; width: max-content; animation: ticker-scroll 24s linear infinite; }
+  @keyframes ticker-scroll { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+  .ticker-item { display: flex; align-items: baseline; gap: 6px; font-size: 12px; white-space: nowrap; padding: 0 4px; }
+  .ticker-item .t-name { color: var(--text-muted); }
+  .ticker-item .t-price { font-weight: 700; }
+  .ticker-item .t-price.up, .ticker-item .t-chg.up { color: var(--up); }
+  .ticker-item .t-price.down, .ticker-item .t-chg.down { color: var(--down); }
+  .ticker-item .t-chg::before { margin-right: 1px; }
+  .ticker-item .t-chg.up::before { content: "▲"; }
+  .ticker-item .t-chg.down::before { content: "▼"; }
+  .t-live-dot { display: inline-block; width: 5px; height: 5px; border-radius: 50%; margin-right: 4px; background: currentColor; animation: tick-pulse 1.6s ease-in-out infinite; }
+  @keyframes tick-pulse { 0%,100% { opacity: 1; } 50% { opacity: 0.25; } }
+
+  .hero { margin: 14px 16px 0; padding: 14px 16px; border-radius: 12px;
+    background: linear-gradient(135deg, rgba(34,211,238,0.1), rgba(255,92,92,0.06)); border: 1px solid var(--border); }
+  .hero .eyebrow { color: var(--accent); margin-bottom: 6px; }
+  .hero .line { font-size: 14.5px; font-weight: 700; line-height: 1.65; }
+  .hero .line b { color: var(--up); }
+  .hero .line b.bear { color: var(--down); }
+
+  .health { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--border); border-bottom: 1px solid var(--border); margin-top: 14px; }
+  .health .cell { background: var(--surface); padding: 10px 12px; }
+  .health .cell .eyebrow { margin-bottom: 4px; }
+  .health .cell .val { font-size: 17px; font-weight: 700; }
+  .health .cell .val.ok { color: var(--down); }
+  .health .cell .val.warn { color: var(--warn); }
+  .health .cell .sub { font-size: 10.5px; color: var(--text-muted); margin-top: 5px; line-height: 1.4; }
+
+  main > section, main > .std-section { padding: 16px; }
+  main > section + section, main > .std-section + .std-section, main > .std-section + section, main > section + .std-section { border-top: 1px solid var(--border-soft); }
+  .section-head { display: flex; align-items: baseline; justify-content: space-between; margin-bottom: 10px; gap: 8px; }
+  .section-head .eyebrow { color: var(--accent); }
+  .section-note { font-size: 12px; color: var(--text-faint); padding: 4px 0 0; }
+
+  .gauge-card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 16px; display: flex; flex-direction: column; align-items: center; }
+  .gauge-svg { width: 220px; max-width: 100%; }
+  .needle-group { transform-origin: 110px 110px; transition: transform 1.1s cubic-bezier(.2,.8,.2,1) 0.1s; }
+  .gauge-readout { text-align: center; margin-top: -34px; }
+  .gauge-readout .score { font-size: 26px; font-weight: 800; }
+  .gauge-readout .label { font-size: 13px; font-weight: 700; margin-top: -2px; }
+  .gauge-factors { display: flex; flex-direction: column; gap: 6px; width: 100%; margin-top: 14px; }
+  .gauge-factor { display: flex; align-items: flex-start; gap: 8px; font-size: 11.5px; color: var(--text-muted); line-height: 1.5; }
+  .gauge-factor .fdot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; margin-top: 5px; }
+  .gauge-factor .fdot.bull { background: var(--up); }
+  .gauge-factor .fdot.bear { background: var(--down); }
+  .gauge-factor .fdot.flat { background: var(--text-faint); }
+
+  .heatmap { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+  .heat-cell { border-radius: 8px; padding: 10px 8px; text-align: center; border: 1px solid var(--border); transition: transform 0.2s ease; }
+  .heat-cell:hover { transform: scale(1.045); }
+  .heat-cell .sector { font-size: 10px; color: var(--text-muted); margin-bottom: 4px; }
+  .heat-cell .stock { font-size: 12px; font-weight: 700; margin-bottom: 3px; }
+  .heat-cell .chg { font-size: 14px; font-weight: 800; }
+  .heat-flat { background: var(--surface-2); }
+  .heat-flat .chg { color: var(--text-muted); }
+  .heat-up-1 { background: rgba(255,92,92,0.10); }
+  .heat-up-2 { background: rgba(255,92,92,0.20); }
+  .heat-up-3 { background: rgba(255,92,92,0.32); border-color: rgba(255,92,92,0.5); }
+  .heat-up-1 .chg, .heat-up-2 .chg, .heat-up-3 .chg { color: var(--up); }
+  .heat-down-1 { background: rgba(52,211,153,0.10); }
+  .heat-down-2 { background: rgba(52,211,153,0.20); }
+  .heat-down-3 { background: rgba(52,211,153,0.30); border-color: rgba(52,211,153,0.5); }
+  .heat-down-1 .chg, .heat-down-2 .chg, .heat-down-3 .chg { color: var(--down); }
+
+  .narrative { display: flex; flex-direction: column; }
+  .n-item { display: flex; gap: 12px; position: relative; padding-bottom: 18px; }
+  .n-item:last-child { padding-bottom: 0; }
+  .n-rail { display: flex; flex-direction: column; align-items: center; }
+  .n-dot { width: 11px; height: 11px; border-radius: 50%; background: var(--surface-2); border: 2px solid var(--text-faint); flex-shrink: 0; margin-top: 2px; }
+  .n-item.now .n-dot { background: var(--accent); border-color: var(--accent); animation: node-pulse 2s ease-in-out infinite; }
+  @keyframes node-pulse { 0%,100% { box-shadow: 0 0 8px rgba(34,211,238,0.7); } 50% { box-shadow: 0 0 16px rgba(34,211,238,1); } }
+  .n-line { width: 2px; flex: 1; background: var(--border); margin-top: 2px; }
+  .n-item:last-child .n-line { display: none; }
+  .n-date { font-size: 10.5px; color: var(--text-faint); margin-bottom: 2px; }
+  .n-item.now .n-date { color: var(--accent); font-weight: 700; }
+  .n-text { font-size: 12.5px; line-height: 1.6; color: var(--text-muted); }
+  .n-item.now .n-text { color: var(--text); }
+  .n-badge { display: inline-block; font-size: 9.5px; font-weight: 700; letter-spacing: 0.05em; padding: 1px 6px; border-radius: 4px; margin-left: 6px; background: rgba(34,211,238,0.15); color: var(--accent); }
+
+  .picks { display: flex; flex-direction: column; gap: 12px; }
+  .pick-card { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 14px; position: relative; overflow: hidden; transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease; }
+  .pick-card:hover { transform: translateY(-3px); box-shadow: 0 10px 24px rgba(0,0,0,0.35); border-color: var(--accent-dim); }
+  .pick-card::before { content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 3px; }
+  .pick-card.safe::before { background: var(--accent); }
+  .pick-card.aggressive::before { background: var(--up); }
+  .pick-card .row1 { display: flex; align-items: center; justify-content: space-between; margin-bottom: 2px; gap: 8px; flex-wrap: wrap; }
+  .pick-card .tag { font-size: 10px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; padding: 2px 7px; border-radius: 4px; }
+  .pick-card.safe .tag { color: var(--accent); background: rgba(34,211,238,0.12); }
+  .pick-card.aggressive .tag { color: var(--up); background: var(--up-bg); }
+  .confidence { display: flex; align-items: center; gap: 6px; }
+  .confidence .cbars { display: flex; gap: 2px; }
+  .confidence .cbars i { width: 5px; height: 11px; border-radius: 1px; background: var(--surface-2); display: block; }
+  .confidence .cbars i.on { background: var(--accent); }
+  .confidence .clabel { font-size: 10.5px; font-weight: 700; color: var(--accent); }
+  .pick-card .name { font-size: 16px; font-weight: 800; margin-top: 6px; }
+  .pick-card .name .sym { color: var(--text-muted); font-weight: 500; font-size: 13px; margin-left: 4px; }
+  .pick-card .live-price { font-size: 20px; font-weight: 800; margin: 6px 0 2px; }
+  .pick-card .live-price .pct { font-size: 12.5px; margin-left: 6px; font-weight: 700; }
+  .pick-card .reason { color: var(--text-muted); font-size: 12.5px; margin: 6px 0 12px; line-height: 1.6; }
+  .pick-card .levels { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin-bottom: 10px; }
+  .pick-card .lv { background: var(--surface-2); border-radius: 6px; padding: 6px 4px; text-align: center; }
+  .pick-card .lv .eyebrow { font-size: 9px; margin-bottom: 3px; }
+  .pick-card .lv .num { font-size: 13px; font-weight: 700; }
+  .pick-card .lv.entry .num { color: var(--text); }
+  .pick-card .lv.stop .num { color: var(--down); }
+  .pick-card .lv.tp .num { color: var(--up); }
+  .pick-card .lv.target .num { color: var(--up); opacity: 0.75; }
+  .pick-card .rr { display: flex; align-items: center; gap: 6px; font-size: 11.5px; color: var(--text-muted); margin-bottom: 8px; }
+  .pick-card .rr b { color: var(--text); }
+  .risk-tag { display: flex; gap: 6px; align-items: flex-start; background: var(--warn-bg); border: 1px solid rgba(251,191,36,0.25); border-radius: 6px; padding: 7px 9px; font-size: 11.5px; color: #e2c477; line-height: 1.55; margin-top: 6px; }
+  .risk-tag .ico { color: var(--warn); flex-shrink: 0; }
+
+  .cal-strip { display: flex; gap: 10px; overflow-x: auto; padding-bottom: 2px; }
+  .cal-item { flex-shrink: 0; min-width: 140px; max-width: 200px; background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 10px 12px; transition: transform 0.2s ease; }
+  .cal-item:hover { transform: translateY(-2px); }
+  .cal-item .cal-when { font-size: 10.5px; color: var(--accent); font-weight: 700; margin-bottom: 4px; }
+  .cal-item .cal-what { font-size: 12px; font-weight: 700; margin-bottom: 2px; }
+  .cal-item .cal-detail { font-size: 10.5px; color: var(--text-muted); line-height: 1.5; }
+
+  .candidate { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 14px; margin-bottom: 10px; }
+  .candidate .name { font-weight: 700; font-size: 14.5px; }
+  .candidate .name .live { font-size: 12px; font-weight: 700; margin-left: 6px; }
+  .candidate .meta { font-size: 11.5px; color: var(--text-muted); margin: 4px 0 8px; }
+  .candidate .plan { font-size: 12.5px; margin-top: 6px; line-height: 1.6; color: var(--text-muted); }
+  .candidate .plan-title { font-weight: 700; color: var(--accent); font-size: 11px; margin-top: 8px; }
+
+  .bt-card { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 14px; margin-bottom: 10px; }
+  .bt-row-wrap { border-bottom: 1px solid var(--border-soft); padding: 8px 0; }
   .bt-row-wrap:last-child { border-bottom: none; }
-  .backtest-row { display: flex; justify-content: space-between; align-items: center; font-size: 13px; }
+  .backtest-row { display: flex; justify-content: space-between; align-items: center; font-size: 12.5px; gap: 8px; }
   .backtest-row .bt-name { font-weight: 700; }
-  .backtest-row .bt-detail { color: var(--text-soft); font-size: 12px; }
-  .bt-toggle { background: none; border: none; color: var(--apricot-dark); font-size: 12px; font-weight: 700; padding: 4px 0 0; cursor: pointer; }
+  .backtest-row .bt-detail { color: var(--text-muted); font-size: 11.5px; margin-top: 2px; }
+  .bt-toggle { background: none; border: none; color: var(--accent); font-size: 11.5px; font-weight: 700; padding: 6px 0 0; cursor: pointer; }
   .bt-expand { margin-top: 8px; padding-top: 8px; border-top: 1px dashed var(--border); }
-  .bt-expand .bt-detail { margin-bottom: 8px; }
-  .bt-expand .bt-detail:last-child { margin-bottom: 0; }
+  .bt-expand .bt-detail { margin-bottom: 8px; font-size: 11.5px; color: var(--text-muted); }
   .bt-expand strong { color: var(--text); }
-  .bt-refs { display: flex; flex-wrap: wrap; gap: 10px; font-size: 12px; color: var(--text-soft); margin-bottom: 8px; }
-  .bt-refs span { background: var(--apricot-light); border-radius: 6px; padding: 2px 8px; }
-  .backtest-narrative { font-size: 13px; color: var(--text-soft); line-height: 1.6; margin-top: 8px; white-space: pre-line; }
+  .bt-refs { display: flex; flex-wrap: wrap; gap: 8px; font-size: 11px; color: var(--text-muted); margin-bottom: 8px; }
+  .bt-refs span { background: var(--surface-2); border-radius: 6px; padding: 2px 8px; }
+  .backtest-narrative { font-size: 12.5px; color: var(--text-muted); line-height: 1.65; margin-top: 8px; white-space: pre-line; }
+
+  .bt-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 12px; }
+  .bt-stat { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 12px; }
+  .bt-stat .eyebrow { margin-bottom: 6px; }
+  .bt-stat .big { font-size: 22px; font-weight: 800; }
+  .bt-stat .sub { font-size: 10.5px; color: var(--text-muted); margin-top: 2px; }
   .score-chart { display:flex; align-items:flex-end; gap:10px; padding:4px 2px 0; overflow-x:auto; }
-  .score-bar-col { display:flex; flex-direction:column; align-items:center; flex:none; width:30px; cursor:default; }
-  .score-bar-value { font-size:11px; color:var(--text-soft); margin-bottom:4px; font-variant-numeric:tabular-nums; }
-  .score-bar-track { width:100%; height:80px; display:flex; align-items:flex-end; border-bottom:1px solid var(--border); }
-  .score-bar { width:100%; background:var(--apricot-dark); border-radius:4px 4px 0 0; min-height:2px; }
-  .score-bar-date { font-size:10.5px; color:var(--text-soft); margin-top:5px; white-space:nowrap; }
-  .pdf-actions { display:flex; flex-wrap:wrap; gap:10px; margin:16px 0 4px; }
-  .pdf-link { display:inline-flex; align-items:center; padding:9px 14px; border-radius:999px; background:var(--accent); color:white; text-decoration:none; font-size:13px; font-weight:700; }
-  .pdf-link.secondary { background:#52666d; }
+  .score-bar-col { display:flex; flex-direction:column; align-items:center; flex:none; width:30px; }
+  .score-bar-value { font-size:10.5px; color:var(--text-muted); margin-bottom:4px; }
+  .score-bar-track { width:100%; height:70px; display:flex; align-items:flex-end; border-bottom:1px solid var(--border); }
+  .score-bar { width:100%; background:var(--accent); border-radius:4px 4px 0 0; min-height:2px; }
+  .score-bar-date { font-size:10px; color:var(--text-faint); margin-top:5px; white-space:nowrap; }
+
+  .warn-center summary { cursor: pointer; list-style: none; display: flex; align-items: center; justify-content: space-between; padding: 12px 14px; background: var(--surface); border: 1px solid var(--border); border-radius: 10px; font-size: 12.5px; font-weight: 700; }
+  .warn-center summary::-webkit-details-marker { display: none; }
+  .warn-center summary .chev { transition: transform 0.2s; color: var(--text-muted); }
+  .warn-center[open] summary .chev { transform: rotate(180deg); }
+  .warn-center summary .count { background: var(--warn-bg); color: var(--warn); font-size: 11px; padding: 1px 8px; border-radius: 20px; margin-left: 8px; }
+  .warn-list { display: flex; flex-direction: column; gap: 8px; margin-top: 8px; }
+  .warn-row { display: flex; gap: 8px; padding: 9px 11px; border-radius: 8px; font-size: 12px; line-height: 1.6; border: 1px solid var(--border); background: var(--surface); color: var(--text-muted); }
+  .warn-row.crit { background: var(--crit-bg); border-color: rgba(248,113,113,0.3); color: #f3a9a9; }
+
+  .news-list { display: flex; flex-direction: column; gap: 10px; }
+  .news-item { padding: 10px 0; border-bottom: 1px solid var(--border-soft); }
+  .news-item:last-child { border-bottom: none; padding-bottom: 0; }
+  .news-item .cat { display: inline-block; font-size: 9.5px; font-weight: 700; letter-spacing: 0.06em; color: var(--accent); background: rgba(34,211,238,0.1); padding: 2px 6px; border-radius: 4px; margin-bottom: 5px; }
+  .news-item .title { font-size: 13px; font-weight: 700; margin-bottom: 3px; }
+  .news-item .summary { font-size: 12px; color: var(--text-muted); line-height: 1.6; }
+
+  .pdf-actions { display:flex; flex-wrap:wrap; gap:10px; margin: 0 0 4px; }
+  .pdf-link { display:inline-flex; align-items:center; padding:9px 14px; border-radius:999px; background:var(--accent); color:#04141a; text-decoration:none; font-size:12.5px; font-weight:700; }
+  .pdf-link.secondary { background: var(--surface-2); color: var(--text); border: 1px solid var(--border); }
+
+  .empty-state { text-align: center; color: var(--text-muted); padding: 60px 20px; font-size: 14px; line-height: 1.8; }
+  footer { text-align: center; font-size: 11px; color: var(--text-faint); margin-top: 20px; padding: 16px 20px 0; line-height: 1.7; }
+
+  .reveal { opacity: 0; transform: translateY(16px); transition: opacity 0.65s cubic-bezier(.2,.7,.2,1), transform 0.65s cubic-bezier(.2,.7,.2,1); }
+  .reveal.in-view { opacity: 1; transform: translateY(0); }
+
+  @media (prefers-reduced-motion: reduce) {
+    .statusbar .brand .dot, .t-live-dot, .n-item.now .n-dot { animation: none; }
+    .ticker-track { animation: none; flex-wrap: wrap; }
+    .reveal { opacity: 1; transform: none; transition: none; }
+    .needle-group { transition: none; }
+    .pick-card:hover, .heat-cell:hover, .cal-item:hover { transform: none; }
+  }
+
+  @media (min-width: 620px) {
+    main { max-width: 760px; }
+    .picks { flex-direction: row; }
+    .pick-card { flex: 1; }
+    .bt-row { display: grid; grid-template-columns: 1fr 1fr 1.4fr; gap: 12px; align-items: stretch; }
+    .bt-grid { grid-template-columns: 1fr; margin-bottom: 0; }
+    .heatmap { grid-template-columns: repeat(6, 1fr); }
+  }
 </style>
 </head>
 <body>
 
-<header>
-  <h1>📈 台股當沖推薦報告</h1>
-  <div class="date" id="report-date">載入中...</div>
-  <div class="updated" id="report-updated"></div>
-</header>
+<div class="statusbar">
+  <div class="brand">
+    <span class="dot" id="marketDot"></span>
+    <span class="name">當沖<span>終端</span></span>
+  </div>
+  <div class="time mono" id="report-updated">載入中...</div>
+</div>
+
+<div class="countdown-bar mono">
+  <span id="countdownLabel">距開盤</span>
+  <span class="val" id="countdownVal">--:--:--</span>
+</div>
+
+<div class="ticker-wrap" id="tickerWrap" style="display:none;">
+  <div class="ticker-track" id="tickerTrack"></div>
+</div>
 
 <main id="main-content">
   <div class="empty-state">報告載入中，請稍候...</div>
@@ -230,48 +303,256 @@ function fmtPct(p) {
   const sign = p > 0 ? '+' : '';
   return sign + p.toFixed(2) + '%';
 }
-
 function pctClass(p) {
   if (p === undefined || p === null) return '';
   return p > 0 ? 'up' : (p < 0 ? 'down' : '');
 }
+function esc(s) { return (s == null ? '' : String(s)); }
 
+/* ---------- countdown ---------- */
+function taipeiParts() {
+  const fmt = new Intl.DateTimeFormat('en-US', { timeZone: 'Asia/Taipei', hour12: false, hour: '2-digit', minute: '2-digit', second: '2-digit' });
+  const obj = {};
+  fmt.formatToParts(new Date()).forEach(p => obj[p.type] = p.value);
+  return obj;
+}
+function pad(n) { return String(n).padStart(2, '0'); }
+function updateCountdown() {
+  const p = taipeiParts();
+  const h = parseInt(p.hour, 10), m = parseInt(p.minute, 10), s = parseInt(p.second, 10);
+  const nowSec = h * 3600 + m * 60 + s;
+  const openSec = 9 * 3600, closeSec = 13 * 3600 + 30 * 60;
+  let label, diff, isOpen = false;
+  if (nowSec < openSec) { label = '距開盤'; diff = openSec - nowSec; }
+  else if (nowSec < closeSec) { label = '距收盤'; diff = closeSec - nowSec; isOpen = true; }
+  else { label = '已收盤 · 距明日開盤'; diff = (24 * 3600 - nowSec) + openSec; }
+  const hh = pad(Math.floor(diff / 3600)), mm = pad(Math.floor((diff % 3600) / 60)), ss = pad(diff % 60);
+  const lEl = document.getElementById('countdownLabel'), vEl = document.getElementById('countdownVal'), dot = document.getElementById('marketDot');
+  if (lEl) lEl.textContent = label;
+  if (vEl) vEl.textContent = hh + ':' + mm + ':' + ss;
+  if (dot) dot.classList.toggle('closed', !isOpen);
+}
+updateCountdown();
+setInterval(updateCountdown, 1000);
+
+/* ---------- ticker ---------- */
+function renderTicker(report, prices) {
+  const wrap = document.getElementById('tickerWrap');
+  const track = document.getElementById('tickerTrack');
+  if (!prices || !report) { wrap.style.display = 'none'; return; }
+  const seen = new Set();
+  const items = [];
+  const pushPick = (pick) => {
+    if (!pick || seen.has(pick.symbol)) return;
+    const live = prices[pick.symbol];
+    if (!live) return;
+    seen.add(pick.symbol);
+    items.push({ name: pick.name + ' ' + pick.symbol, price: live.price, chg: fmtPct(live.change_pct), dir: pctClass(live.change_pct) });
+  };
+  pushPick(report.summary && report.summary.safe_pick);
+  pushPick(report.summary && report.summary.aggressive_pick);
+  (report.candidates || []).forEach(c => pushPick(c));
+  if (!items.length) { wrap.style.display = 'none'; return; }
+  const renderOnce = () => items.map(t =>
+    `<div class="ticker-item"><span class="t-name">${esc(t.name)}</span>` +
+    `<span class="t-price ${t.dir} mono"><span class="t-live-dot"></span>${t.price}</span>` +
+    `<span class="t-chg ${t.dir} mono">${t.chg}</span></div>`
+  ).join('');
+  track.innerHTML = renderOnce() + renderOnce();
+  wrap.style.display = items.length ? 'block' : 'none';
+}
+
+/* ---------- hero banner ---------- */
+function renderHero(report) {
+  if (report.sentiment && report.sentiment.factors && report.sentiment.factors.length) {
+    const bullBear = report.sentiment.factors.find(f => f.type === 'bull') || report.sentiment.factors[0];
+    return `<div class="hero reveal"><div class="eyebrow">今日一句話</div><div class="line">${esc(bullBear.text)}（今日多空：<b>${esc(report.sentiment.label)}</b>）</div></div>`;
+  }
+  const safe = report.summary && report.summary.safe_pick;
+  const aggr = report.summary && report.summary.aggressive_pick;
+  if (!safe && !aggr) return '';
+  const parts = [];
+  if (safe) parts.push(`安全牌 <b>${esc(safe.name)}</b>`);
+  if (aggr) parts.push(`衝最快 <b>${esc(aggr.name)}</b>`);
+  return `<div class="hero reveal"><div class="eyebrow">今日一句話</div><div class="line">${parts.join('，')}，詳見下方進出場計畫。</div></div>`;
+}
+
+/* ---------- health strip ---------- */
+function renderHealthStrip(report, backtest) {
+  const candCount = (report.candidates || []).length;
+  const warnCount = ((report.data_quality && report.data_quality.warnings) || []).length;
+  const candClass = candCount < 8 ? 'warn' : 'ok';
+  const qualClass = warnCount > 0 ? 'warn' : 'ok';
+  let soxLabel = 'N/A', soxSub = '尚未整合';
+  if (backtest && backtest.sox_context) {
+    const c = backtest.sox_context.change_pct;
+    soxLabel = (c > 0 ? '+' : '') + c + '%';
+    soxSub = 'SOX ' + backtest.sox_context.session_date;
+  }
+  return `<div class="health reveal">
+    <div class="cell"><div class="eyebrow">候選池</div><div class="val ${candClass} mono">${candCount} 檔</div><div class="sub">${candCount < 8 ? '資料源受限，樣本偏少' : '樣本充足'}</div></div>
+    <div class="cell"><div class="eyebrow">資料品質</div><div class="val ${qualClass} mono">${warnCount > 0 ? '降級' : '正常'}</div><div class="sub">${warnCount} 則警示（見下方警示中心）</div></div>
+    <div class="cell"><div class="eyebrow">類股風險（回測）</div><div class="val mono">${esc(soxLabel)}</div><div class="sub">${esc(soxSub)}</div></div>
+  </div>`;
+}
+
+/* ---------- sentiment gauge ---------- */
+function angleForScore(score) {
+  const clamped = Math.max(0, Math.min(100, score));
+  const angleDeg = 180 - (clamped / 100) * 180; // 180=bear(left), 0=bull(right)
+  const rad = angleDeg * Math.PI / 180;
+  const x = 110 + 65 * Math.cos(rad);
+  const y = 110 - 65 * Math.sin(rad);
+  return { x, y };
+}
+function renderSentimentGauge(report) {
+  const s = report.sentiment;
+  if (!s || typeof s.score !== 'number') {
+    return `<section><div class="section-head"><div class="eyebrow">今日多空儀表板</div></div>
+      <div class="section-note">這份報告尚未包含多空情緒分數（2026-07-28 起新增的方法論欄位），下一份報告開始會顯示。</div></section>`;
+  }
+  const pt = angleForScore(s.score);
+  const factorsHtml = (s.factors || []).map(f =>
+    `<div class="gauge-factor"><span class="fdot ${f.type === 'bull' ? 'bull' : f.type === 'bear' ? 'bear' : 'flat'}"></span>${esc(f.text)}</div>`
+  ).join('');
+  const labelColor = s.score >= 56 ? 'var(--up)' : s.score <= 45 ? 'var(--down)' : 'var(--warn)';
+  return `<section>
+    <div class="section-head"><div class="eyebrow">今日多空儀表板</div><div class="mono" style="font-size:11px;color:var(--text-faint)">SENTIMENT</div></div>
+    <div class="gauge-card reveal" id="gaugeCard">
+      <svg class="gauge-svg" viewBox="0 0 220 130">
+        <path d="M20,110 A90,90 0 0,1 80.5,22.4" fill="none" stroke="#34d399" stroke-width="14" stroke-linecap="round"/>
+        <path d="M80.5,22.4 A90,90 0 0,1 139.5,22.4" fill="none" stroke="#fbbf24" stroke-width="14" stroke-linecap="round"/>
+        <path d="M139.5,22.4 A90,90 0 0,1 200,110" fill="none" stroke="#ff5c5c" stroke-width="14" stroke-linecap="round"/>
+        <g class="needle-group" id="needleGroup" data-tx="${pt.x.toFixed(1)}" data-ty="${pt.y.toFixed(1)}">
+          <line x1="110" y1="110" x2="${pt.x.toFixed(1)}" y2="${pt.y.toFixed(1)}" stroke="#e7edf3" stroke-width="3" stroke-linecap="round"/>
+          <circle cx="110" cy="110" r="7" fill="#e7edf3"/>
+        </g>
+        <text x="20" y="126" font-size="9" fill="#4d5a6a" font-family="ui-monospace,monospace">空頭</text>
+        <text x="188" y="126" font-size="9" fill="#4d5a6a" font-family="ui-monospace,monospace">多頭</text>
+      </svg>
+      <div class="gauge-readout">
+        <div class="score mono"><span data-count="${s.score}">0</span></div>
+        <div class="label" style="color:${labelColor}">${esc(s.label)}</div>
+      </div>
+      <div class="gauge-factors">${factorsHtml}</div>
+    </div>
+  </section>`;
+}
+
+/* ---------- sector heatmap (built from real candidates + real live prices) ---------- */
+function renderHeatmap(report, prices) {
+  if (!prices) return '';
+  const rows = [];
+  const pushRow = (item, isPick) => {
+    const live = prices[item.symbol];
+    if (!live) return;
+    rows.push({ sector: item.category || (isPick ? '主推薦' : '候選'), name: item.name, symbol: item.symbol, chg: live.change_pct });
+  };
+  if (report.summary) {
+    pushRow(Object.assign({ category: '主推薦' }, report.summary.safe_pick || {}), true);
+    pushRow(Object.assign({ category: '主推薦' }, report.summary.aggressive_pick || {}), true);
+  }
+  (report.candidates || []).forEach(c => pushRow(c));
+  if (!rows.length) return '';
+  const cellHtml = rows.map(r => {
+    const abs = Math.abs(r.chg);
+    let cls = 'heat-flat';
+    if (r.chg > 0) cls = abs >= 5 ? 'heat-up-3' : abs >= 2 ? 'heat-up-2' : 'heat-up-1';
+    else if (r.chg < 0) cls = abs >= 5 ? 'heat-down-3' : abs >= 2 ? 'heat-down-2' : 'heat-down-1';
+    return `<div class="heat-cell ${cls}"><div class="sector">${esc(r.sector)}</div><div class="stock">${esc(r.name)}</div><div class="chg mono">${fmtPct(r.chg)}</div></div>`;
+  }).join('');
+  return `<section><div class="section-head"><div class="eyebrow">族群熱力圖</div><div class="mono" style="font-size:11px;color:var(--text-faint)">即時</div></div>
+    <div class="heatmap reveal">${cellHtml}</div></section>`;
+}
+
+/* ---------- narrative timeline (real, from report.narrative_timeline once methodology populates it) ---------- */
+function renderNarrativeTimeline(report) {
+  const items = report.narrative_timeline;
+  if (!items || !items.length) {
+    return `<section><div class="section-head"><div class="eyebrow">產業敘事時間軸</div></div>
+      <div class="section-note">這份報告尚未包含產業敘事時間軸（2026-07-28 起新增，每天持續累積更新），下一份報告開始會顯示。</div></section>`;
+  }
+  const body = items.map(it => `
+    <div class="n-item ${it.current ? 'now' : ''}">
+      <div class="n-rail"><div class="n-dot"></div><div class="n-line"></div></div>
+      <div class="n-body"><div class="n-date mono">${esc(it.date)}${it.current ? '<span class="n-badge">目前</span>' : ''}</div>
+      <div class="n-text">${esc(it.text)}</div></div>
+    </div>`).join('');
+  return `<section><div class="section-head"><div class="eyebrow">產業敘事時間軸</div><div class="mono" style="font-size:11px;color:var(--text-faint)">LIVE</div></div>
+    <div class="narrative reveal">${body}</div></section>`;
+}
+
+/* ---------- pick cards ---------- */
+function confidenceBars(score) {
+  if (typeof score !== 'number') return '';
+  const filled = Math.max(1, Math.min(5, Math.round(score / 20)));
+  let bars = '';
+  for (let i = 0; i < 5; i++) bars += `<i class="${i < filled ? 'on' : ''}"></i>`;
+  return `<div class="confidence"><div class="cbars">${bars}</div><span class="clabel">信心 <span data-count="${score}">0</span></span></div>`;
+}
 function renderPickCard(pick, kind, prices) {
   if (!pick) return '';
   const live = prices && prices[pick.symbol];
-  const liveHtml = live ? `<div class="live-price">${live.price}<span class="pct ${pctClass(live.change_pct)}">${fmtPct(live.change_pct)}</span>${live.stale ? '<span class="badge">舊價／未確認</span>' : ''}</div>` : '';
+  const liveHtml = live ? `<div class="live-price">${live.price}<span class="pct ${pctClass(live.change_pct)}">${fmtPct(live.change_pct)}</span>${live.stale ? '<span class="eyebrow" style="margin-left:6px">舊價/未確認</span>' : ''}</div>` : '';
   return `
-    <div class="card pick-card ${kind}">
-      <div class="pick-label">${kind === 'safe' ? '安全牌' : '衝最快'}</div>
-      <div class="pick-name">${pick.name}（${pick.symbol}）</div>
+    <div class="pick-card ${kind} reveal">
+      <div class="row1">
+        <span class="tag">${kind === 'safe' ? '安全牌' : '衝最快'}</span>
+        ${confidenceBars(pick.confidence_score)}
+      </div>
+      <div class="name">${esc(pick.name)}<span class="sym mono">${esc(pick.symbol)}</span></div>
       ${liveHtml}
-      <div class="pick-reason">${pick.reason || ''}</div>
-      <div class="price-row"><span class="label">進場價</span><span>${pick.entry ?? '-'}</span></div>
-      <div class="price-row"><span class="label">停利點</span><span>${pick.take_profit ?? '-'}</span></div>
-      <div class="price-row"><span class="label">目標價</span><span>${pick.target ?? '-'}</span></div>
-      <div class="price-row"><span class="label">停損點</span><span>${pick.stop_loss ?? '-'}</span></div>
-      ${pick.risk_tag ? `<div class="risk-tag">${pick.risk_tag}</div>` : ''}
+      <div class="reason">${esc(pick.reason)}</div>
+      <div class="levels">
+        <div class="lv entry"><div class="eyebrow">進場</div><div class="num mono">${esc(pick.entry) || '-'}</div></div>
+        <div class="lv stop"><div class="eyebrow">停損</div><div class="num mono">${esc(pick.stop_loss) || '-'}</div></div>
+        <div class="lv tp"><div class="eyebrow">停利</div><div class="num mono">${esc(pick.take_profit) || '-'}</div></div>
+        <div class="lv target"><div class="eyebrow">目標</div><div class="num mono">${esc(pick.target) || '-'}</div></div>
+      </div>
+      ${pick.risk_reward_ratio ? `<div class="rr">風報比 <b class="mono">${esc(pick.risk_reward_ratio)}</b></div>` : ''}
+      ${pick.risk_tag ? `<div class="risk-tag"><span class="ico">▲</span><span>${esc(pick.risk_tag)}</span></div>` : ''}
     </div>`;
+}
+
+/* ---------- event calendar (derived from real risk_tag text mentioning 法說會) ---------- */
+function extractEarningsEvent(name, riskTag) {
+  if (!riskTag || riskTag.indexOf('法說會') === -1) return null;
+  const sentences = riskTag.split(/[。；]/).filter(s => s.indexOf('法說會') !== -1);
+  return { name, detail: sentences[0] || riskTag };
+}
+function renderEventCalendar(report) {
+  const events = [];
+  const safe = report.summary && report.summary.safe_pick;
+  const aggr = report.summary && report.summary.aggressive_pick;
+  [safe, aggr, ...(report.candidates || [])].forEach(p => {
+    if (!p) return;
+    const ev = extractEarningsEvent(p.name, p.risk_tag);
+    if (ev) events.push(ev);
+  });
+  if (!events.length) return '';
+  const items = events.map(e => `<div class="cal-item"><div class="cal-when mono">法說會</div><div class="cal-what">${esc(e.name)}</div><div class="cal-detail">${esc(e.detail)}</div></div>`).join('');
+  return `<section><div class="section-head"><div class="eyebrow">近期事件日曆</div></div><div class="cal-strip reveal">${items}</div></section>`;
 }
 
 function renderCandidate(c, prices) {
   const live = prices && prices[c.symbol];
-  const liveHtml = live ? `<span class="pct ${pctClass(live.change_pct)}">${live.price} ${fmtPct(live.change_pct)}${live.stale ? '（舊價／未確認）' : ''}</span>` : '';
+  const liveHtml = live ? `<span class="live ${pctClass(live.change_pct)} mono">${live.price} ${fmtPct(live.change_pct)}${live.stale ? '（舊價）' : ''}</span>` : '';
   return `
     <div class="candidate">
-      <div class="name">${c.rank ? c.rank + '. ' : ''}${c.name}（${c.symbol}） ${liveHtml}</div>
-      <div class="meta">${c.category || ''}</div>
-      <div class="plan">${c.summary || ''}</div>
-      ${c.plan_a ? `<div class="plan-title">A 計畫</div><div class="plan">${c.plan_a}</div>` : ''}
-      ${c.plan_b ? `<div class="plan-title">B 計畫</div><div class="plan">${c.plan_b}</div>` : ''}
-      ${c.risk_tag ? `<div class="risk-tag">${c.risk_tag}</div>` : ''}
+      <div class="name">${c.rank ? c.rank + '. ' : ''}${esc(c.name)}<span class="mono" style="color:var(--text-muted);font-weight:500;font-size:12px"> ${esc(c.symbol)}</span> ${liveHtml}</div>
+      <div class="meta">${esc(c.category)}</div>
+      <div class="plan">${esc(c.summary)}</div>
+      ${c.plan_a ? `<div class="plan-title">A 計畫</div><div class="plan">${esc(c.plan_a)}</div>` : ''}
+      ${c.plan_b ? `<div class="plan-title">B 計畫</div><div class="plan">${esc(c.plan_b)}</div>` : ''}
+      ${c.risk_tag ? `<div class="risk-tag"><span class="ico">▲</span><span>${esc(c.risk_tag)}</span></div>` : ''}
     </div>`;
 }
 
 function renderNews(n) {
-  return `<div class="news-item"><div class="news-title">${n.title}</div><div>${n.summary}</div></div>`;
+  return `<div class="news-item">${n.category ? `<span class="cat">${esc(n.category)}</span>` : ''}<div class="title">${esc(n.title)}</div><div class="summary">${esc(n.summary)}</div></div>`;
 }
 
+/* ---------- backtest (kept from existing logic, restyled) ---------- */
 const EXIT_REASON_LABEL = { take_profit: '停利', early_stop: '提前停損', stop_loss: '停損', close: '收盤平倉' };
 
 function toggleBacktestDetail(id, btn) {
@@ -287,37 +568,19 @@ function renderBacktestDetail(p, rowId) {
   const q = p.quality_review;
   const market = q && q.market;
   let html = `<div class="bt-expand" id="${rowId}" style="display:none;">`;
-
   html += '<div class="bt-refs">' +
-    `<span>停損 ${p.stop_loss ?? '-'}</span>` +
-    `<span>提前停損 ${p.early_stop ?? '-'}</span>` +
-    `<span>停利 ${p.take_profit ?? '-'}</span>` +
-    `<span>目標 ${p.target ?? '-'}</span>` +
-    '</div>';
-
+    `<span>停損 ${p.stop_loss ?? '-'}</span><span>提前停損 ${p.early_stop ?? '-'}</span>` +
+    `<span>停利 ${p.take_profit ?? '-'}</span><span>目標 ${p.target ?? '-'}</span></div>`;
   if (p.exits && p.exits.length) {
-    const exitLines = p.exits.map(e =>
-      `${e.time}　出場 ${(e.fraction * 100).toFixed(0)}%　價格 ${e.price}　（${EXIT_REASON_LABEL[e.reason] || e.reason}）`
-    ).join('<br>');
+    const exitLines = p.exits.map(e => `${e.time}　出場 ${(e.fraction * 100).toFixed(0)}%　價格 ${e.price}　（${EXIT_REASON_LABEL[e.reason] || e.reason}）`).join('<br>');
     html += `<div class="bt-detail"><strong>分批出場明細</strong><br>${exitLines}</div>`;
   }
-
   if (market) {
-    html += `<div class="bt-detail"><strong>當天股價走勢</strong><br>` +
-      `開 ${market.open}　高 ${market.high}　低 ${market.low}　收 ${market.close}（${market.close_pct}%）<br>` +
-      `最大上行 ${market.upside_pct}%　最大下行 ${market.downside_pct}%　振幅 ${market.range_pct}%</div>`;
+    html += `<div class="bt-detail"><strong>當天股價走勢</strong><br>開 ${market.open}　高 ${market.high}　低 ${market.low}　收 ${market.close}（${market.close_pct}%）<br>最大上行 ${market.upside_pct}%　最大下行 ${market.downside_pct}%　振幅 ${market.range_pct}%</div>`;
   }
-
-  if (q && q.reasons && q.reasons.length) {
-    html += `<div class="bt-detail"><strong>評分理由</strong><br>${q.reasons.join('<br>')}</div>`;
-  }
-  if (q && q.improvements && q.improvements.length) {
-    html += `<div class="bt-detail"><strong>可以怎麼改進</strong><br>${q.improvements.join('<br>')}</div>`;
-  }
-  if (p.transaction_cost_pct != null) {
-    html += `<div class="bt-detail">交易成本估計：${p.transaction_cost_pct}%（已反映在淨報酬裡）</div>`;
-  }
-
+  if (q && q.reasons && q.reasons.length) html += `<div class="bt-detail"><strong>評分理由</strong><br>${q.reasons.join('<br>')}</div>`;
+  if (q && q.improvements && q.improvements.length) html += `<div class="bt-detail"><strong>可以怎麼改進</strong><br>${q.improvements.join('<br>')}</div>`;
+  if (p.transaction_cost_pct != null) html += `<div class="bt-detail">交易成本估計：${p.transaction_cost_pct}%（已反映在淨報酬裡）</div>`;
   html += '</div>';
   return html;
 }
@@ -328,19 +591,12 @@ function renderBacktestRow(p, kind) {
     ? `全天未碰進場區，損益 0%`
     : `進場 ${p.entry_price ?? p.entry_mid ?? '-'}（${p.entry_time || '-'}）　平均出場 ${p.average_exit ?? p.close ?? '-'}（${p.exit_time || '-'}）　淨報酬 ${p.net_pct ?? p.pct_vs_entry ?? '-'}%`;
   const quality = p.quality_review
-    ? `<div class="bt-detail">策略評分 ${p.quality_review.score ?? '-'}｜${p.quality_review.verdict}｜選股 ${p.quality_review.selection}｜方向 ${p.quality_review.direction}｜進場 ${p.quality_review.entry}</div>`
-    : '';
+    ? `<div class="bt-detail">策略評分 ${p.quality_review.score ?? '-'}｜${p.quality_review.verdict}｜選股 ${p.quality_review.selection}｜方向 ${p.quality_review.direction}｜進場 ${p.quality_review.entry}</div>` : '';
   const rowId = 'bt-detail-' + kind;
-  const toggle = p.entry_triggered === false ? '' :
-    `<button class="bt-toggle" onclick="toggleBacktestDetail('${rowId}', this)">展開細節 ▾</button>`;
-  return `<div class="bt-row-wrap">
-    <div class="backtest-row">
-      <div><div class="bt-name">${p.name}（${p.symbol}）</div><div class="bt-detail">${detail}</div>${quality}</div>
-      <div>${p.label}</div>
-    </div>
-    ${toggle}
-    ${renderBacktestDetail(p, rowId)}
-  </div>`;
+  const toggle = p.entry_triggered === false ? '' : `<button class="bt-toggle" onclick="toggleBacktestDetail('${rowId}', this)">展開細節 ▾</button>`;
+  return `<div class="bt-row-wrap"><div class="backtest-row">
+      <div><div class="bt-name">${esc(p.name)}（${esc(p.symbol)}）</div><div class="bt-detail">${detail}</div>${quality}</div>
+      <div>${esc(p.label)}</div></div>${toggle}${renderBacktestDetail(p, rowId)}</div>`;
 }
 
 function renderPdfLinks(pdf, reportDate) {
@@ -353,40 +609,35 @@ function renderPdfLinks(pdf, reportDate) {
 
 function renderBacktest(backtest, reportDate) {
   if (!backtest || backtest.date !== reportDate) return '';
-  let html = '<div class="section-title">📊 今日回測（收盤後自動比對）</div><div class="backtest-card">';
+  let html = '<section><div class="section-head"><div class="eyebrow">📊 今日回測（收盤後自動比對）</div></div><div class="bt-card">';
   html += renderBacktestRow(backtest.picks && backtest.picks.safe_pick, 'safe');
   html += renderBacktestRow(backtest.picks && backtest.picks.aggressive_pick, 'aggressive');
-  if (backtest.narrative) html += `<div class="backtest-narrative">${backtest.narrative}</div>`;
+  if (backtest.narrative) html += `<div class="backtest-narrative">${esc(backtest.narrative)}</div>`;
   const review = backtest.strategy_review;
   if (review) {
-    html += `<div class="backtest-narrative"><strong>選股與策略總評：${review.verdict}（平均 ${review.average_score} 分）</strong></div>`;
+    html += `<div class="backtest-narrative"><strong>選股與策略總評：${esc(review.verdict)}（平均 ${review.average_score} 分）</strong></div>`;
     if (review.priority_improvements && review.priority_improvements.length) {
-      html += `<div class="backtest-narrative">優先改善：\n${review.priority_improvements.map((item, index) => `${index + 1}. ${item.rule}`).join('\n')}</div>`;
+      html += `<div class="backtest-narrative">優先改善：\n${review.priority_improvements.map((item, i) => `${i + 1}. ${item.rule}`).join('\n')}</div>`;
     }
   }
-  html += '</div>';
+  html += '</div></section>';
   return html;
 }
 
 function renderScoreTrend(dailyReviews) {
-  // Below ~3 points a bar chart would just be noise, not a trend — say so
-  // plainly instead of drawing a chart that implies a pattern that isn't
-  // there yet.
   if (dailyReviews.length < 3) {
     return `<div class="backtest-narrative">分數趨勢圖需要至少 3 個交易日才有參考意義，目前累積 ${dailyReviews.length} 天，還在累積中。</div>`;
   }
-  const recent = dailyReviews.slice(-14); // last ~14 trading days keeps bars readable on a phone screen
-  const maxTrackPx = 80;
+  const recent = dailyReviews.slice(-14);
+  const maxTrackPx = 70;
   const cols = recent.map((r) => {
     const score = Math.max(0, Math.min(100, Number(r.average_score) || 0));
     const barPx = Math.max(2, Math.round((score / 100) * maxTrackPx));
     const shortDate = (r.date || '').slice(5).replace('-', '/');
-    const title = `${r.date}：${score} 分（${r.verdict || ''}）`;
-    return `<div class="score-bar-col" title="${title}">
-      <div class="score-bar-value">${score}</div>
+    return `<div class="score-bar-col" title="${r.date}：${score} 分（${r.verdict || ''}）">
+      <div class="score-bar-value mono">${score}</div>
       <div class="score-bar-track"><div class="score-bar" style="height:${barPx}px"></div></div>
-      <div class="score-bar-date">${shortDate}</div>
-    </div>`;
+      <div class="score-bar-date mono">${shortDate}</div></div>`;
   }).join('');
   return `<div class="score-chart">${cols}</div>`;
 }
@@ -398,31 +649,40 @@ function renderStrategyLearning(learning) {
   const lessons = learning.recurring_lessons || [];
   const eligible = lessons.filter(l => l.status === 'eligible_for_review');
   const candidates = lessons.filter(l => l.status === 'candidate_rule');
-  let html = '<div class="section-title">🧠 策略學習（已累積 ' + days + ' / ' + threshold + ' 個交易日）</div><div class="backtest-card">';
+  let html = `<section><div class="section-head"><div class="eyebrow">🧠 策略學習（已累積 ${days} / ${threshold} 個交易日）</div></div><div class="bt-card">`;
   html += renderScoreTrend(learning.daily_reviews);
   if (eligible.length) {
-    html += '<div class="warning-banner"><div class="title">📌 有教訓重複出現，建議確認是否要調整策略</div>' +
-      eligible.map(l => `<div>「${l.rule}」已連續出現在 ${l.occurrence_days} 天的回測裡（${l.first_seen} ～ ${l.last_seen}）</div>`).join('') +
-      '<div style="margin-top:6px;font-size:13px;">這些教訓不會自動套用，需要人工確認後才會真的修改報告邏輯。</div></div>';
+    html += '<div class="risk-tag" style="margin-top:10px"><span class="ico">📌</span><span><b>有教訓重複出現，建議確認是否要調整策略</b><br>' +
+      eligible.map(l => `「${l.rule}」已連續出現在 ${l.occurrence_days} 天的回測裡（${l.first_seen} ～ ${l.last_seen}）`).join('<br>') +
+      '<br>這些教訓不會自動套用，需要人工確認後才會真的修改報告邏輯。</span></div>';
   } else if (candidates.length) {
-    html += '<div class="backtest-narrative">觀察中的教訓（尚未到建議調整的門檻）：\n' +
-      candidates.map(l => `・「${l.rule}」已出現 ${l.occurrence_days} 天`).join('\n') + '</div>';
+    html += '<div class="backtest-narrative">觀察中的教訓（尚未到建議調整的門檻）：\n' + candidates.map(l => `・「${l.rule}」已出現 ${l.occurrence_days} 天`).join('\n') + '</div>';
   } else {
     html += '<div class="backtest-narrative">目前累積的交易日還不夠多，尚無重複出現的教訓，繼續累積中。</div>';
   }
-  html += '</div>';
+  html += '</div></section>';
   return html;
 }
 
-// "YYYY-MM-DD HH:MM" from the report generator has no timezone attached;
-// browsers parse it as the VIEWER's local time, which is wrong for anyone
-// not in Taipei. Pin it to +08:00 explicitly instead of trusting new Date().
+function renderWarnCenter(report, priceData) {
+  const rows = [];
+  if (!priceData || !priceData.quote_status || priceData.quote_status.is_complete !== true) {
+    const missing = priceData && priceData.quote_status && priceData.quote_status.missing_symbols;
+    rows.push({ crit: true, text: '即時價格資料不完整，目前價格不可視為最新成交價，請勿只依這個頁面下單。' + (missing && missing.length ? ' 缺少代號：' + missing.join('、') : '') });
+  }
+  ((report.data_quality && report.data_quality.warnings) || []).forEach(w => rows.push({ crit: false, text: w }));
+  if (!rows.length) return '';
+  const list = rows.map(r => `<div class="warn-row ${r.crit ? 'crit' : ''}"><span>${r.crit ? '🔴' : '⚠'}</span><span>${esc(r.text)}</span></div>`).join('');
+  return `<section><details class="warn-center reveal"><summary><span>資料品質警示中心 <span class="count">${rows.length}</span></span><span class="chev">▾</span></summary>
+    <div class="warn-list">${list}</div></details></section>`;
+}
+
+/* ---------- freshness ---------- */
 function parseTaipeiTimestamp(str) {
   if (!str) return null;
   const d = new Date(str.replace(' ', 'T') + '+08:00');
   return Number.isNaN(d.getTime()) ? null : d;
 }
-
 function relativeTimeLabel(date) {
   if (!date) return '';
   const diffMin = Math.floor((Date.now() - date.getTime()) / 60000);
@@ -432,19 +692,52 @@ function relativeTimeLabel(date) {
   if (diffHour < 24) return diffHour + ' 小時前';
   return Math.floor(diffHour / 24) + ' 天前';
 }
-
 function renderFreshnessText(report, priceData) {
-  const priceTypeLabel = priceData && priceData.price_type === 'intraday' ? '（盤中即時）' :
-    priceData && priceData.price_type === 'close' ? '（最後收盤參考，非即時）' : '';
   const reportTime = parseTaipeiTimestamp(report.generated_at);
-  const priceTime = priceData && priceData.updated_at_iso ? new Date(priceData.updated_at_iso) : null;
-  let text = '報告產生時間：' + (report.generated_at || '-');
+  let text = (report.date || '') + '　報告 ' + (report.generated_at || '-');
   if (reportTime) text += '（' + relativeTimeLabel(reportTime) + '）';
   if (priceData) {
-    text += '　股價更新時間：' + (priceData.updated_at || '-') + priceTypeLabel;
+    const priceTime = priceData.updated_at_iso ? new Date(priceData.updated_at_iso) : null;
+    text += '　股價 ' + (priceData.updated_at || '-');
     if (priceTime) text += '（' + relativeTimeLabel(priceTime) + '）';
   }
   return text;
+}
+
+/* ---------- reveal + count-up ---------- */
+function initMotion() {
+  const reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  function animateCount(el) {
+    const target = parseFloat(el.getAttribute('data-count'));
+    if (reduceMotion || !isFinite(target)) { el.textContent = target; return; }
+    const start = performance.now(), duration = 900;
+    function step(now) {
+      const p = Math.min(1, (now - start) / duration);
+      const eased = 1 - Math.pow(1 - p, 3);
+      el.textContent = Math.round(target * eased);
+      if (p < 1) requestAnimationFrame(step);
+    }
+    requestAnimationFrame(step);
+  }
+
+  const needle = document.getElementById('needleGroup');
+  if (needle && !reduceMotion) needle.style.transform = 'rotate(-58deg)';
+
+  const revealTargets = document.querySelectorAll('.reveal');
+  const activate = (el) => {
+    el.classList.add('in-view');
+    el.querySelectorAll('[data-count]').forEach(animateCount);
+    if (el.id === 'gaugeCard' && needle) needle.style.transform = 'rotate(0deg)';
+  };
+  if (reduceMotion || !('IntersectionObserver' in window)) {
+    revealTargets.forEach(activate);
+  } else {
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(entry => { if (entry.isIntersecting) { activate(entry.target); io.unobserve(entry.target); } });
+    }, { threshold: 0.15 });
+    revealTargets.forEach(el => io.observe(el));
+  }
 }
 
 async function main() {
@@ -457,74 +750,62 @@ async function main() {
   ]);
 
   if (!report) {
-    document.getElementById('main-content').innerHTML =
-      '<div class="empty-state">目前還沒有報告資料。<br>第一份報告會在台北時間早上 08:30 自動產生。</div>';
-    document.getElementById('report-date').textContent = '尚無資料';
+    document.getElementById('main-content').innerHTML = '<div class="empty-state">目前還沒有報告資料。<br>第一份報告會在台北時間早上 08:30 自動產生。</div>';
+    document.getElementById('report-updated').textContent = '尚無資料';
     return;
   }
 
   if (report.market_open === false) {
     document.getElementById('main-content').innerHTML =
-      '<div class="empty-state">📅 ' + (report.date || '') + ' 今日休市' +
-      (report.market_closed_reason ? '<br>' + report.market_closed_reason : '') +
+      '<div class="empty-state">📅 ' + esc(report.date) + ' 今日休市' +
+      (report.market_closed_reason ? '<br>' + esc(report.market_closed_reason) : '') +
       '<br><br>沒有當沖建議，下一個交易日再回來看。</div>';
-    document.getElementById('report-date').textContent = (report.date || '') + '（休市）';
-    document.getElementById('report-updated').textContent = '報告產生時間：' + (report.generated_at || '-');
+    document.getElementById('report-updated').textContent = (report.date || '') + '（休市）';
     return;
   }
 
-  document.getElementById('report-date').textContent =
-    (report.date || '') + (report.provisional ? ' ' : '');
-  if (report.provisional) {
-    document.getElementById('report-date').innerHTML += '<span class="badge">暫定，待更新</span>';
-  }
-  const updateFreshness = () => {
-    document.getElementById('report-updated').textContent = renderFreshnessText(report, priceData);
-  };
+  const updateFreshness = () => { document.getElementById('report-updated').textContent = renderFreshnessText(report, priceData); };
   updateFreshness();
-  setInterval(updateFreshness, 30000); // keeps "N 分鐘前" honest without a page reload
+  setInterval(updateFreshness, 30000);
 
   const prices = priceData ? priceData.prices : null;
+  renderTicker(report, prices);
 
   let html = '';
   html += renderPdfLinks(pdf, report.date);
-
-  if (!priceData || !priceData.quote_status || priceData.quote_status.is_complete !== true) {
-    const missing = priceData && priceData.quote_status && priceData.quote_status.missing_symbols;
-    html += '<div class="warning-banner"><div class="title">⚠️ 即時價格資料不完整</div>' +
-      '<div>目前價格不可視為最新成交價，請勿只依這個頁面下單。' +
-      (missing && missing.length ? ' 缺少代號：' + missing.join('、') : '') +
-      '</div></div>';
-  }
-
-  const warnings = (report.data_quality && report.data_quality.warnings) || [];
-  if (warnings.length) {
-    html += '<div class="warning-banner"><div class="title">⚠️ 資料可能不完整</div>' +
-      warnings.map(w => `<div>${w}</div>`).join('') + '</div>';
-  }
+  if (html) html = `<section>${html}</section>`;
+  html += renderHero(report);
+  html += renderHealthStrip(report, backtest);
+  html += renderSentimentGauge(report);
+  html += renderHeatmap(report, prices);
+  html += renderNarrativeTimeline(report);
 
   if (report.summary && (report.summary.safe_pick || report.summary.aggressive_pick)) {
-    html += '<div class="section-title">今日結論</div><div class="pick-grid">';
+    html += `<section><div class="section-head"><div class="eyebrow">今日推薦</div></div><div class="picks">`;
     html += renderPickCard(report.summary.safe_pick, 'safe', prices);
     html += renderPickCard(report.summary.aggressive_pick, 'aggressive', prices);
-    html += '</div>';
+    html += '</div></section>';
   }
-
+  html += renderEventCalendar(report);
   html += renderBacktest(backtest, report.date);
   html += renderStrategyLearning(learning);
 
   if (report.candidates && report.candidates.length) {
-    html += '<div class="section-title">完整排行</div>';
+    html += `<section><div class="section-head"><div class="eyebrow">完整排行</div></div>`;
     html += report.candidates.map(c => renderCandidate(c, prices)).join('');
+    html += '</section>';
   }
 
+  html += renderWarnCenter(report, priceData);
+
   if (report.news && report.news.length) {
-    html += '<div class="section-title">新聞與延伸分析</div><div class="card">';
+    html += `<section><div class="section-head"><div class="eyebrow">新聞與延伸分析</div></div><div class="news-list reveal">`;
     html += report.news.map(renderNews).join('');
-    html += '</div>';
+    html += '</div></section>';
   }
 
   document.getElementById('main-content').innerHTML = html || '<div class="empty-state">報告內容為空。</div>';
+  initMotion();
 }
 
 main();
