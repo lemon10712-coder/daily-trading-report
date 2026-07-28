@@ -1,6 +1,6 @@
 {
-  "updated_at": "2026/7/28 下午1:05:27",
-  "updated_at_iso": "2026-07-28T05:05:27.261Z",
+  "updated_at": "2026/7/28 下午1:10:29",
+  "updated_at_iso": "2026-07-28T05:10:29.827Z",
   "price_type": "intraday",
   "quote_status": {
     "expected": 3,
@@ -18,12 +18,12 @@
     "2408": {
       "price": 392.5,
       "change_pct": -9.98,
-      "source": "yahoo_finance_tw",
+      "source": "twse_mis",
       "stale": false
     },
     "6505": {
-      "price": 74.8,
-      "change_pct": -3.98,
+      "price": 74.9,
+      "change_pct": -3.85,
       "source": "yahoo_finance_tw",
       "stale": false
     }
