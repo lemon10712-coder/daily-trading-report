@@ -39,6 +39,31 @@
    done
    exit 1
    ```
+7. **只有在第 6 步真的產生新 commit（有東西可推）時**，才通知使用者因果分析已經好了。**重要：這個雲端 routine 跟 GitHub Actions 是不同的執行環境，拿不到 `LINE_CHANNEL_ACCESS_TOKEN`（那是存在 GitHub Actions secrets 裡的），而且這個 repo 是 public 的，絕對不能把任何 token 明碼寫進 commit 裡。正確做法是呼叫 GitHub API，觸發本來就有權限存取那組 secret 的 `notify-line-manual.yml` workflow**：
+   ```bash
+   node -e "
+   const fs = require('fs');
+   const d = JSON.parse(fs.readFileSync('data/backtest-latest.json','utf8'));
+   const lines = [];
+   for (const key of ['safe_pick','aggressive_pick']) {
+     const p = d.picks && d.picks[key];
+     const c = p && p.quality_review && p.quality_review.causal_analysis;
+     if (p && c) lines.push(p.name + '(' + p.symbol + ')：' + c.summary);
+   }
+   const msg = '🔍 今天的個股漲跌原因查好了：\n' + (lines.join('\n') || '（今天兩檔皆未觸發進場，無漲跌原因可查）');
+   fs.writeFileSync('/tmp/line-msg.txt', msg);
+   "
+   # SECURITY: never hardcode the token in this file (it's committed to a PUBLIC repo).
+   # Extract it at runtime from the git remote URL you already configured for step 6's push
+   # (the routine's own prompt message sets that remote with the token as the HTTPS password —
+   # it lives in the private routine config, never in a committed file).
+   TOKEN=$(git remote get-url origin | sed -E 's#https://[^:]+:([^@]+)@.*#\1#')
+   curl -X POST -H "Authorization: Bearer $TOKEN" \
+     -H "Accept: application/vnd.github+json" \
+     https://api.github.com/repos/lemon10712-coder/daily-trading-report/actions/workflows/notify-line-manual.yml/dispatches \
+     -d "$(node -e "console.log(JSON.stringify({ref:'main', inputs:{message: require('fs').readFileSync('/tmp/line-msg.txt','utf8')}}))")"
+   ```
+   If this API call fails (e.g. 403 because the token lacks Actions:write scope), just print the failure and move on — **do not let a failed notification block the task**. The causal analysis already being committed and pushed in step 6 is this routine's real output; the LINE ping is a nice-to-have on top.
 
 ## 品質要求（比照日報方法論）
 
