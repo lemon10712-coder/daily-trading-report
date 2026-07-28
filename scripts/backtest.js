@@ -120,7 +120,7 @@ function pct(from, to) {
   return Number.isFinite(from) && from !== 0 && Number.isFinite(to) ? ((to - from) / from) * 100 : null;
 }
 
-function analyzeRecommendation(pick, result, bars) {
+function analyzeRecommendation(pick, result, bars, soxContext) {
   if (!bars.length) return {
     score: null, verdict: '資料不足', selection: '無法評分', direction: '無法評分',
     entry: '無法評分', risk: '無法評分', reasons: ['缺少分鐘線，不能判斷推薦品質'],
@@ -182,11 +182,17 @@ function analyzeRecommendation(pick, result, bars) {
     reasons.push(`計畫風報比僅 ${round(plannedRR)}，低於 2`);
     improvements.push('調整進場、停損或第一停利，使計畫風報比至少 2');
   }
+  if (direction === '錯誤' && soxContext && Math.abs(soxContext.change_pct) >= 2) {
+    const move = soxContext.change_pct > 0 ? '上漲' : '下跌';
+    reasons.push(`參考：美股費城半導體指數(SOX)最近一個交易日(${soxContext.session_date})收盤${move} ${Math.abs(soxContext.change_pct)}%，方向誤判可能與類股系統性外溢有關，非純粹選股邏輯錯誤`);
+    improvements.push('候選股屬於半導體/AI供應鏈類股時，開盤前查一次美股SOX指數走勢，大跌/大漲時調降信心度或縮小部位');
+  }
   if (!improvements.length) improvements.push('保留規則，持續累積至少 20 個交易日樣本再調整參數');
   return {
     score, verdict, selection, direction, entry, risk,
     market: { open: round(open), high: round(high), low: round(low), close: round(close), close_pct: round(closePct), upside_pct: round(upsidePct), downside_pct: round(downsidePct), range_pct: round(rangePct) },
     planned_risk_reward: round(plannedRR), reasons, improvements,
+    sox_context: soxContext || null,
   };
 }
 
@@ -287,11 +293,41 @@ function buildNarrative(result) {
   return lines.join('\n');
 }
 
-async function evaluateNamedPick(pick, date) {
+async function fetchSoxContext(date) {
+  const url = 'https://query1.finance.yahoo.com/v8/finance/chart/%5ESOX?range=1mo&interval=1d';
+  try {
+    const response = await fetch(url, { headers: { 'User-Agent': 'Mozilla/5.0 CHARLES-AGENT/1.0' } });
+    if (!response.ok) return null;
+    const payload = await response.json();
+    const result = payload?.chart?.result?.[0];
+    const quote = result?.indicators?.quote?.[0];
+    if (!result || !quote) return null;
+    const bars = [];
+    for (let index = 0; index < (result.timestamp || []).length; index += 1) {
+      const timestamp = result.timestamp[index];
+      const close = quote.close?.[index];
+      if (!Number.isFinite(close)) continue;
+      const dateLabel = new Intl.DateTimeFormat('en-CA', {
+        timeZone: 'America/New_York', year: 'numeric', month: '2-digit', day: '2-digit',
+      }).format(new Date(timestamp * 1000));
+      bars.push({ date: dateLabel, close });
+    }
+    const priorBars = bars.filter((bar) => bar.date < date);
+    if (priorBars.length < 2) return null;
+    const last = priorBars[priorBars.length - 1];
+    const prev = priorBars[priorBars.length - 2];
+    return { session_date: last.date, change_pct: round(((last.close - prev.close) / prev.close) * 100) };
+  } catch (error) {
+    console.error(`SOX fetch failed: ${error.message}`);
+    return null;
+  }
+}
+
+async function evaluateNamedPick(pick, date, soxContext) {
   if (!pick?.symbol) return null;
   const { bars, source } = await fetchYahooBarsForSymbol(pick.symbol, date);
   const trade = evaluatePickIntraday(pick, bars, DEFAULT_COSTS, source);
-  return { symbol: pick.symbol, name: pick.name, ...trade, quality_review: analyzeRecommendation(pick, trade, bars) };
+  return { symbol: pick.symbol, name: pick.name, ...trade, quality_review: analyzeRecommendation(pick, trade, bars, soxContext) };
 }
 
 function buildStrategyReview(result) {
@@ -341,10 +377,12 @@ async function main() {
     cost_assumptions: DEFAULT_COSTS,
     picks: {}, candidates: [],
   };
+  const soxContext = await fetchSoxContext(report.date);
+  result.sox_context = soxContext;
   const summary = report.summary || {};
-  if (summary.safe_pick) result.picks.safe_pick = await evaluateNamedPick(summary.safe_pick, report.date);
-  if (summary.aggressive_pick) result.picks.aggressive_pick = await evaluateNamedPick(summary.aggressive_pick, report.date);
-  for (const candidate of report.candidates || []) result.candidates.push(await evaluateNamedPick(candidate, report.date));
+  if (summary.safe_pick) result.picks.safe_pick = await evaluateNamedPick(summary.safe_pick, report.date, soxContext);
+  if (summary.aggressive_pick) result.picks.aggressive_pick = await evaluateNamedPick(summary.aggressive_pick, report.date, soxContext);
+  for (const candidate of report.candidates || []) result.candidates.push(await evaluateNamedPick(candidate, report.date, soxContext));
   result.price_snapshot_at = result.picks.safe_pick?.intraday_source || result.picks.aggressive_pick?.intraday_source || null;
   result.strategy_review = buildStrategyReview(result);
   result.narrative = buildNarrative(result);
