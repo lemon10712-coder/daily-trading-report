@@ -23,6 +23,9 @@ if (hour >= 15 && report.market_open !== false) {
   if (backtest.date !== today || Number(backtest.schema_version) < 3 || !backtest.strategy_review) failures.push('schema v3 strategy-quality backtest is missing or stale');
   if (!(learning.daily_reviews || []).some((item) => item.date === today)) failures.push('strategy learning has not recorded today');
   if (pdf.date !== today || !pdf.final_pdf) failures.push('final PDF with backtest is missing or stale');
+  // 2026-07-28: causal-analysis cloud routine runs 15:30 Asia/Taipei, after backtest;
+  // this 16:00 check is the first health pass after it should have completed.
+  if (backtest.date === today && !backtest.causal_analysis_generated_at) failures.push('per-stock causal analysis has not run for today (causal-analysis routine may be stuck)');
 }
 
 if (failures.length) {
