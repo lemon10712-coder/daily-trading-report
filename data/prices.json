@@ -1,7 +1,7 @@
 {
-  "updated_at": "2026/8/3 下午1:30:54",
-  "updated_at_iso": "2026-08-03T05:30:54.412Z",
-  "price_type": "intraday",
+  "updated_at": "2026/8/3 下午1:35:33",
+  "updated_at_iso": "2026-08-03T05:35:33.641Z",
+  "price_type": "close",
   "quote_status": {
     "expected": 13,
     "fresh": 13,
@@ -18,13 +18,13 @@
     "2327": {
       "price": 552,
       "change_pct": 9.96,
-      "source": "yahoo_finance_tw",
+      "source": "twse_mis",
       "stale": false
     },
     "2330": {
-      "price": 2375,
-      "change_pct": -2.06,
-      "source": "yahoo_finance_tw",
+      "price": 2370,
+      "change_pct": -2.27,
+      "source": "twse_mis",
       "stale": false
     },
     "2337": {
@@ -42,13 +42,13 @@
     "2408": {
       "price": 396.5,
       "change_pct": 9.99,
-      "source": "yahoo_finance_tw",
+      "source": "twse_mis",
       "stale": false
     },
     "2454": {
       "price": 3910,
       "change_pct": 9.99,
-      "source": "yahoo_finance_tw",
+      "source": "twse_mis",
       "stale": false
     },
     "3231": {
@@ -58,8 +58,8 @@
       "stale": false
     },
     "3481": {
-      "price": 45.25,
-      "change_pct": -0.55,
+      "price": 45.8,
+      "change_pct": 0.66,
       "source": "twse_mis",
       "stale": false
     },
@@ -70,9 +70,9 @@
       "stale": false
     },
     "4967": {
-      "price": 237.5,
-      "change_pct": 1.71,
-      "source": "yahoo_finance_tw",
+      "price": 240,
+      "change_pct": 2.78,
+      "source": "twse_mis",
       "stale": false
     },
     "5289": {
