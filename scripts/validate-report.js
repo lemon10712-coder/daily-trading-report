@@ -14,7 +14,10 @@ const LIMIT_PCT = 0.10;
 const TOLERANCE_PCT = 0.01; // 抓到剛好卡在邊界、四捨五入造成的誤差，多留 1% 緩衝
 
 // 2026-07-16 新增：參考 CHARLES AGENT Firebase 那套系統踩過的坑補上的兩條防呆規則
-const CAPITAL_CAP = 600000; // 單張成本上限（進場價 × 1000），超過只警告不擋
+// 2026-08-03 改：門檻從通用估計值改成使用者真實本金（50萬），且從「軟性警告文字」
+// 改成機器算好、寫回 latest.json 的結構化欄位（affordable/lot_cost_ntd/capital_note），
+// 套用到全部條目（含 candidates），不再只管 safe_pick/aggressive_pick 兩檔主推薦。
+const CAPITAL_CAP = 500000; // 單張成本上限（進場價 × 1000），超過就標記 affordable:false
 const NEAR_LIMIT_PCT = 0.97; // 進場/停利/目標價落在漲停價 97% 以上，視為「貼近漲停」
 const MIN_NEWS_COUNT = 8;
 const MIN_NEWS_CATEGORIES = 5;
@@ -159,14 +162,19 @@ function checkPick(label, pick, limits, errors, warnings, requireFields, isMainP
     }
   }
 
-  // 以下兩條只對 safe_pick/aggressive_pick 這種正式主推薦做，candidates 排行僅供參考不用管
-  if (isMainPick && parsed.entry !== undefined) {
-    const perLotCost = parsed.entry * 1000;
-    if (perLotCost > CAPITAL_CAP) {
-      const hasNote = /資金|成本|門檻/.test(pick.risk_tag || '');
-      if (!hasNote) {
-        warnings.push(`${label}（${pick.symbol} ${pick.name || ''}）單張成本約 ${Math.round(perLotCost / 10000)} 萬，超過 ${CAPITAL_CAP / 10000} 萬門檻，risk_tag 沒有註明資金門檻`);
-      }
+  // 2026-08-03 改：資金防呆套用到所有條目（含 candidates），並把結果寫成結構化欄位
+  // 直接掛回 pick 物件上（picks 陣列裡存的是 report 內部物件的參照，這裡改了 main() 裡
+  // 最後寫回 latest.json 時就會一併存進去），前端可以直接依 affordable 欄位分區塊渲染，
+  // 不用再靠 LLM 有沒有記得在 risk_tag 文字裡提一句「成本較高」。
+  if (parsed.entry !== undefined) {
+    const perLotCost = Math.round(parsed.entry * 1000);
+    pick.lot_cost_ntd = perLotCost;
+    pick.affordable = perLotCost <= CAPITAL_CAP;
+    if (!pick.affordable) {
+      pick.capital_note = `單張成本約 ${Math.round(perLotCost / 10000)} 萬元，超過本金上限 ${CAPITAL_CAP / 10000} 萬元，僅供參考、非可操作建議`;
+      warnings.push(`${label}（${pick.symbol} ${pick.name || ''}）單張成本約 ${Math.round(perLotCost / 10000)} 萬，超過本金上限 ${CAPITAL_CAP / 10000} 萬，已標記 affordable:false`);
+    } else {
+      pick.capital_note = null;
     }
   }
 
@@ -262,6 +270,14 @@ async function main() {
   // 結構化結果另外寫一份檔案，給 GitHub Actions 那層「連得到網路的複核」讀取用，
   // 不用去 parse 印出來的文字（脆弱），2026-07-16 新增。
   fs.writeFileSync(RESULT_PATH, JSON.stringify({ errors, warnings }, null, 2));
+
+  // 2026-08-03 新增：把上面 checkPick() 掛在每個 pick 物件上的 affordable/lot_cost_ntd/
+  // capital_note 欄位寫回 latest.json。這段不需要網路（entry × 1000 是純數學），沙盒環境
+  // 產生報告當下就會跑到、GitHub Actions 那次複核也會再跑一次（數字應該一致，不會產生
+  // 多餘 commit，git diff 沒變化的話 workflow 的 commit 步驟會自己跳過）。
+  if (!report.data_quality) report.data_quality = {};
+  report.data_quality.capital_cap_ntd = CAPITAL_CAP;
+  fs.writeFileSync(LATEST_PATH, JSON.stringify(report, null, 2) + '\n');
 
   if (errors.length) process.exit(1);
 }

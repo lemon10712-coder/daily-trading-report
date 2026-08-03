@@ -174,6 +174,12 @@
   .pick-card .rr b { color: var(--text); }
   .risk-tag { display: flex; gap: 6px; align-items: flex-start; background: var(--warn-bg); border: 1px solid rgba(251,191,36,0.25); border-radius: 6px; padding: 7px 9px; font-size: 11.5px; color: #e2c477; line-height: 1.55; margin-top: 6px; }
   .risk-tag .ico { color: var(--warn); flex-shrink: 0; }
+  .budget-badge { display: inline-flex; align-items: center; gap: 4px; font-size: 10.5px; font-weight: 700; letter-spacing: 0.02em; padding: 3px 9px; border-radius: 20px; background: var(--crit-bg); color: var(--crit); border: 1px solid rgba(248,113,113,0.35); margin-top: 8px; }
+  .candidate.over-budget { opacity: 0.8; }
+  .ref-only-divider { display: flex; align-items: center; gap: 10px; margin: 18px 0 10px; font-size: 11px; font-weight: 700; color: var(--crit); }
+  .ref-only-divider::before, .ref-only-divider::after { content: ""; flex: 1; height: 1px; background: var(--border); }
+  .plan-note { font-size: 11.5px; color: var(--text-faint); line-height: 1.65; margin: 8px 0 14px; padding: 9px 11px; background: var(--surface-2); border-radius: 8px; }
+  .live-caption { font-size: 10px; color: var(--text-faint); font-weight: 500; margin-left: 6px; }
   .ab-plans { margin-top: 10px; padding-top: 10px; border-top: 1px dashed var(--border); }
   .ab-plans .plan-title { font-weight: 700; color: var(--accent); font-size: 11px; margin-top: 8px; }
   .ab-plans .plan-title:first-child { margin-top: 0; }
@@ -497,7 +503,10 @@ function confidenceBars(score) {
 function renderPickCard(pick, kind, prices, matchedCandidate) {
   if (!pick) return '';
   const live = prices && prices[pick.symbol];
-  const liveHtml = `<div class="live-price" data-symbol="${esc(pick.symbol)}" data-live-price${live ? '' : ' style="display:none"'}><span class="price-num">${live ? live.price : ''}</span><span class="pct ${live ? pctClass(live.change_pct) : ''}">${live ? fmtPct(live.change_pct) : ''}</span><span class="eyebrow stale-badge" style="margin-left:6px${live && live.stale ? '' : ';display:none'}">舊價/未確認</span></div>`;
+  const liveHtml = `<div class="live-price" data-symbol="${esc(pick.symbol)}" data-live-price${live ? '' : ' style="display:none"'}><span class="price-num">${live ? live.price : ''}</span><span class="pct ${live ? pctClass(live.change_pct) : ''}">${live ? fmtPct(live.change_pct) : ''}</span><span class="live-caption">即時價・每5-10分更新，僅供參考</span><span class="eyebrow stale-badge" style="margin-left:6px${live && live.stale ? '' : ';display:none'}">舊價/未確認</span></div>`;
+  const budgetHtml = pick.affordable === false
+    ? `<div class="budget-badge">⚠ 超出你的本金上限</div>${pick.capital_note ? `<div class="plan-note" style="margin-top:6px">${esc(pick.capital_note)}</div>` : ''}`
+    : '';
   const planA = matchedCandidate && matchedCandidate.plan_a;
   const planB = matchedCandidate && matchedCandidate.plan_b;
   const plansHtml = (planA || planB) ? `
@@ -522,6 +531,7 @@ function renderPickCard(pick, kind, prices, matchedCandidate) {
       </div>
       ${pick.risk_reward_ratio ? `<div class="rr">風報比 <b class="mono">${esc(pick.risk_reward_ratio)}</b></div>` : ''}
       ${pick.risk_tag ? `<div class="risk-tag"><span class="ico">▲</span><span>${esc(pick.risk_tag)}</span></div>` : ''}
+      ${budgetHtml}
       ${plansHtml}
     </div>`;
 }
@@ -549,14 +559,17 @@ function renderEventCalendar(report) {
 function renderCandidate(c, prices) {
   const live = prices && prices[c.symbol];
   const liveHtml = `<span class="live ${live ? pctClass(live.change_pct) : ''} mono" data-symbol="${esc(c.symbol)}" data-live-price${live ? '' : ' style="display:none"'}>${live ? live.price + ' ' + fmtPct(live.change_pct) + (live.stale ? '（舊價）' : '') : ''}</span>`;
+  const overBudget = c.affordable === false;
   return `
-    <div class="candidate">
+    <div class="candidate${overBudget ? ' over-budget' : ''}">
       <div class="name">${c.rank ? c.rank + '. ' : ''}${esc(c.name)}<span class="mono" style="color:var(--text-muted);font-weight:500;font-size:12px"> ${esc(c.symbol)}</span> ${liveHtml}</div>
       <div class="meta">${esc(c.category)}</div>
+      ${overBudget ? `<div class="budget-badge">⚠ 超出你的本金上限</div>` : ''}
       <div class="plan">${esc(c.summary)}</div>
       ${c.plan_a ? `<div class="plan-title">A 計畫</div><div class="plan">${esc(c.plan_a)}</div>` : ''}
       ${c.plan_b ? `<div class="plan-title">B 計畫</div><div class="plan">${esc(c.plan_b)}</div>` : ''}
       ${c.risk_tag ? `<div class="risk-tag"><span class="ico">▲</span><span>${esc(c.risk_tag)}</span></div>` : ''}
+      ${overBudget && c.capital_note ? `<div class="plan-note" style="margin-top:6px">${esc(c.capital_note)}</div>` : ''}
     </div>`;
 }
 
@@ -841,7 +854,9 @@ async function main() {
 
   const findCandidate = (pick) => pick && (report.candidates || []).find(c => c.symbol === pick.symbol);
   if (report.summary && (report.summary.safe_pick || report.summary.aggressive_pick)) {
-    html += `<section><div class="section-head"><div class="eyebrow">今日推薦</div></div><div class="picks">`;
+    html += `<section><div class="section-head"><div class="eyebrow">今日推薦</div></div>`;
+    html += `<div class="plan-note">📌 進場／停損／停利／目標是今天 08:30 產生的固定計畫，盤中不會再變動；卡片上跳動的「即時價」只是每 5-10 分鐘更新一次的參考現價，不是新的進出場建議。</div>`;
+    html += `<div class="picks">`;
     html += renderPickCard(report.summary.safe_pick, 'safe', prices, findCandidate(report.summary.safe_pick));
     html += renderPickCard(report.summary.aggressive_pick, 'aggressive', prices, findCandidate(report.summary.aggressive_pick));
     html += '</div></section>';
@@ -851,9 +866,17 @@ async function main() {
   html += renderStrategyLearning(learning);
 
   if (report.candidates && report.candidates.length) {
-    html += `<section><div class="section-head"><div class="eyebrow">完整排行</div></div>`;
-    html += report.candidates.map(c => renderCandidate(c, prices)).join('');
+    const capitalCap = report.data_quality && report.data_quality.capital_cap_ntd;
+    const affordableCands = report.candidates.filter(c => c.affordable !== false);
+    const overBudgetCands = report.candidates.filter(c => c.affordable === false);
+    html += `<section><div class="section-head"><div class="eyebrow">完整排行${capitalCap ? `（依 ${Math.round(capitalCap / 10000)} 萬本金篩選可操作標的）` : ''}</div></div>`;
+    html += affordableCands.map(c => renderCandidate(c, prices)).join('');
     html += '</section>';
+    if (overBudgetCands.length) {
+      html += `<section><div class="ref-only-divider">超出本金上限・僅供參考・非可操作建議</div>`;
+      html += overBudgetCands.map(c => renderCandidate(c, prices)).join('');
+      html += '</section>';
+    }
   }
 
   html += renderWarnCenter(report, priceData);
