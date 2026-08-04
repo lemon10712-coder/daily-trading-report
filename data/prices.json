@@ -1,6 +1,6 @@
 {
-  "updated_at": "2026/8/4 下午12:40:54",
-  "updated_at_iso": "2026-08-04T04:40:54.277Z",
+  "updated_at": "2026/8/4 下午12:45:52",
+  "updated_at_iso": "2026-08-04T04:45:52.987Z",
   "price_type": "intraday",
   "quote_status": {
     "expected": 12,
@@ -10,27 +10,27 @@
   },
   "prices": {
     "2327": {
-      "price": 561,
-      "change_pct": 1.63,
+      "price": 560,
+      "change_pct": 1.45,
       "source": "yahoo_finance_tw",
       "stale": false
     },
     "2337": {
-      "price": 118,
-      "change_pct": 6.79,
+      "price": 117.5,
+      "change_pct": 6.33,
       "source": "yahoo_finance_tw",
       "stale": false
     },
     "2344": {
       "price": 157,
       "change_pct": 9.79,
-      "source": "yahoo_finance_tw",
+      "source": "twse_mis",
       "stale": false
     },
     "2345": {
-      "price": 2300,
-      "change_pct": -1.5,
-      "source": "yahoo_finance_tw",
+      "price": 2305,
+      "change_pct": -1.28,
+      "source": "twse_mis",
       "stale": false
     },
     "2408": {
@@ -46,8 +46,8 @@
       "stale": false
     },
     "3017": {
-      "price": 2595,
-      "change_pct": 1.76,
+      "price": 2590,
+      "change_pct": 1.57,
       "source": "yahoo_finance_tw",
       "stale": false
     },
@@ -58,26 +58,26 @@
       "stale": false
     },
     "3711": {
-      "price": 576,
-      "change_pct": -5.57,
+      "price": 575,
+      "change_pct": -5.74,
       "source": "yahoo_finance_tw",
       "stale": false
     },
     "4967": {
-      "price": 258,
-      "change_pct": 7.5,
+      "price": 257,
+      "change_pct": 7.08,
       "source": "yahoo_finance_tw",
       "stale": false
     },
     "5289": {
-      "price": 1395,
-      "change_pct": 0.72,
-      "source": "twse_mis",
+      "price": 1390,
+      "change_pct": 0.36,
+      "source": "yahoo_finance_two",
       "stale": false
     },
     "8299": {
-      "price": 1805,
-      "change_pct": 2.56,
+      "price": 1800,
+      "change_pct": 2.27,
       "source": "yahoo_finance_two",
       "stale": false
     }
