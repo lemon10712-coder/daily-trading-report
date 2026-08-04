@@ -1,6 +1,6 @@
 {
-  "updated_at": "2026/8/4 下午1:20:48",
-  "updated_at_iso": "2026-08-04T05:20:48.546Z",
+  "updated_at": "2026/8/4 下午1:25:48",
+  "updated_at_iso": "2026-08-04T05:25:48.534Z",
   "price_type": "intraday",
   "quote_status": {
     "expected": 12,
@@ -10,9 +10,9 @@
   },
   "prices": {
     "2327": {
-      "price": 562,
-      "change_pct": 1.81,
-      "source": "twse_mis",
+      "price": 563,
+      "change_pct": 1.99,
+      "source": "yahoo_finance_tw",
       "stale": false
     },
     "2337": {
@@ -28,44 +28,44 @@
       "stale": false
     },
     "2345": {
-      "price": 2305,
-      "change_pct": -1.28,
+      "price": 2290,
+      "change_pct": -1.93,
       "source": "twse_mis",
       "stale": false
     },
     "2408": {
       "price": 436,
       "change_pct": 9.96,
-      "source": "twse_mis",
+      "source": "yahoo_finance_tw",
       "stale": false
     },
     "2454": {
-      "price": 3830,
-      "change_pct": -2.05,
+      "price": 3825,
+      "change_pct": -2.17,
       "source": "yahoo_finance_tw",
       "stale": false
     },
     "3017": {
-      "price": 2585,
-      "change_pct": 1.37,
+      "price": 2575,
+      "change_pct": 0.98,
       "source": "yahoo_finance_tw",
       "stale": false
     },
     "3231": {
       "price": 193.5,
       "change_pct": 4.03,
-      "source": "yahoo_finance_tw",
+      "source": "twse_mis",
       "stale": false
     },
     "3711": {
-      "price": 580,
-      "change_pct": -4.92,
-      "source": "yahoo_finance_tw",
+      "price": 583,
+      "change_pct": -4.43,
+      "source": "twse_mis",
       "stale": false
     },
     "4967": {
-      "price": 257.5,
-      "change_pct": 7.29,
+      "price": 258,
+      "change_pct": 7.5,
       "source": "yahoo_finance_tw",
       "stale": false
     },
@@ -76,8 +76,8 @@
       "stale": false
     },
     "8299": {
-      "price": 1810,
-      "change_pct": 2.84,
+      "price": 1805,
+      "change_pct": 2.56,
       "source": "yahoo_finance_two",
       "stale": false
     }
