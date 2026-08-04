@@ -19,6 +19,18 @@ const TOLERANCE_PCT = 0.01; // 抓到剛好卡在邊界、四捨五入造成的�
 // 套用到全部條目（含 candidates），不再只管 safe_pick/aggressive_pick 兩檔主推薦。
 const CAPITAL_CAP = 500000; // 單張成本上限（進場價 × 1000），超過就標記 affordable:false
 const NEAR_LIMIT_PCT = 0.97; // 進場/停利/目標價落在漲停價 97% 以上，視為「貼近漲停」
+
+// 2026-08-04 新增：股價區間分類，取代原本「安全牌+衝最快固定2檔」的結構。這是機器算的
+// （純看entry價），不依賴LLM生成時有沒有正確分類，確保就算生成端分類錯誤，post-process
+// 也能校正到一致的結果。500元以上這一區跟CAPITAL_CAP=500000是同一件事的兩種講法
+// （500元 × 1000股 = 50萬，剛好是本金上限），market_observation_only因此直接掛在這一區。
+function computePriceTier(entry) {
+  if (!Number.isFinite(entry)) return null;
+  if (entry < 100) return 'under100';
+  if (entry < 250) return '100to250';
+  if (entry < 500) return '250to500';
+  return '500plus';
+}
 const MIN_NEWS_COUNT = 8;
 const MIN_NEWS_CATEGORIES = 5;
 
@@ -176,6 +188,16 @@ function checkPick(label, pick, limits, errors, warnings, requireFields, isMainP
     } else {
       pick.capital_note = null;
     }
+
+    // 2026-08-04 新增：股價區間分類，覆蓋寫回，不管生成階段有沒有標對。
+    const tier = computePriceTier(parsed.entry);
+    pick.price_tier = tier;
+    pick.market_observation_only = tier === '500plus';
+    if (pick.market_observation_only && pick.affordable !== false) {
+      // 理論上不該發生（500元entry×1000一定超過50萬CAPITAL_CAP），發生了代表兩條規則的
+      // 門檻被改到不一致，寧可吵出來也不要讓500plus區塊悄悄混進「可操作」清單。
+      warnings.push(`${label}（${pick.symbol} ${pick.name || ''}）price_tier=500plus 但 affordable 沒有同步標成 false，CAPITAL_CAP 門檻可能跟 500 元分界不一致，人工確認一下`);
+    }
   }
 
   if (isMainPick && limits) {
@@ -210,8 +232,13 @@ async function main() {
   // 結構檢查
   if (!report.date || report.date === '尚未產生') errors.push('date 欄位是預設值，報告還沒真的產生過');
   if (!report.generated_at) warnings.push('generated_at 是空的');
-  if (!report.summary || !report.summary.safe_pick) errors.push('summary.safe_pick 是空的');
-  if (!report.summary || !report.summary.aggressive_pick) errors.push('summary.aggressive_pick 是空的');
+  // 2026-08-04 改：summary.safe_pick/aggressive_pick 固定2檔的舊結構，改成
+  // summary.recommendations 變動長度陣列（依股價區間，夠格幾檔列幾檔，可以是0檔）。
+  if (!report.summary || !Array.isArray(report.summary.recommendations)) {
+    errors.push('summary.recommendations 不是陣列，報告結構跟新版schema不符');
+  } else if (report.summary.recommendations.length === 0) {
+    warnings.push('summary.recommendations 是空陣列，今天完全沒有任何區間有夠格的推薦，確認是不是真的市況太差、不是漏寫');
+  }
   if (!Array.isArray(report.candidates) || report.candidates.length === 0) errors.push('candidates 是空陣列');
 
   // 日期新鮮度檢查（用台北時區判斷是不是今天，只警告不擋，因為可能是收假日補發的舊報告）
@@ -233,10 +260,12 @@ async function main() {
   }
 
   const picks = [];
-  if (report.summary) {
+  if (report.summary && Array.isArray(report.summary.recommendations)) {
     // [label, pick, requireFields, isMainPick]
-    if (report.summary.safe_pick) picks.push(['安全牌', report.summary.safe_pick, true, true]);
-    if (report.summary.aggressive_pick) picks.push(['衝最快', report.summary.aggressive_pick, true, true]);
+    report.summary.recommendations.forEach((p, i) => {
+      const typeLabel = p.type === 'aggressive' ? '衝最快' : p.type === 'safe' ? '安全牌' : '推薦';
+      picks.push([`${typeLabel}#${i + 1}`, p, true, true]);
+    });
   }
   // 2026-07-16 起 candidates 也要求有結構化的 entry/take_profit/target/stop_loss 欄位
   // （requireFields=true），但不是正式主推薦所以資金級距/貼近漲停降級不適用（isMainPick=false）

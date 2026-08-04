@@ -179,6 +179,12 @@
   .ref-only-divider { display: flex; align-items: center; gap: 10px; margin: 18px 0 10px; font-size: 11px; font-weight: 700; color: var(--crit); }
   .ref-only-divider::before, .ref-only-divider::after { content: ""; flex: 1; height: 1px; background: var(--border); }
   .plan-note { font-size: 11.5px; color: var(--text-faint); line-height: 1.65; margin: 8px 0 14px; padding: 9px 11px; background: var(--surface-2); border-radius: 8px; }
+  .tier-block { margin-top: 20px; }
+  .tier-block:first-of-type { margin-top: 0; }
+  .tier-head { font-size: 12px; font-weight: 700; color: var(--accent); letter-spacing: 0.02em; margin-bottom: 8px; padding-bottom: 6px; border-bottom: 1px solid var(--border); }
+  .tier-block.observational .tier-head { color: var(--text-faint); }
+  .tier-block.observational .plan-note { border: 1px solid rgba(248,113,113,0.25); }
+  .tier-empty-note { font-size: 12px; color: var(--text-faint); padding: 10px 2px; }
   .live-caption { font-size: 10px; color: var(--text-faint); font-weight: 500; margin-left: 6px; }
   .ab-plans { margin-top: 10px; padding-top: 10px; border-top: 1px dashed var(--border); }
   .ab-plans .plan-title { font-weight: 700; color: var(--accent); font-size: 11px; margin-top: 8px; }
@@ -359,8 +365,7 @@ function renderTicker(report, prices) {
     seen.add(pick.symbol);
     items.push({ name: pick.name + ' ' + pick.symbol, price: live.price, chg: fmtPct(live.change_pct), dir: pctClass(live.change_pct) });
   };
-  pushPick(report.summary && report.summary.safe_pick);
-  pushPick(report.summary && report.summary.aggressive_pick);
+  ((report.summary && report.summary.recommendations) || []).forEach(pushPick);
   (report.candidates || []).forEach(c => pushPick(c));
   if (!items.length) { wrap.style.display = 'none'; return; }
   const renderOnce = () => items.map(t =>
@@ -378,13 +383,12 @@ function renderHero(report) {
     const bullBear = report.sentiment.factors.find(f => f.type === 'bull') || report.sentiment.factors[0];
     return `<div class="hero reveal"><div class="eyebrow">今日一句話</div><div class="line">${esc(bullBear.text)}（今日多空：<b>${esc(report.sentiment.label)}</b>）</div></div>`;
   }
-  const safe = report.summary && report.summary.safe_pick;
-  const aggr = report.summary && report.summary.aggressive_pick;
-  if (!safe && !aggr) return '';
-  const parts = [];
-  if (safe) parts.push(`安全牌 <b>${esc(safe.name)}</b>`);
-  if (aggr) parts.push(`衝最快 <b>${esc(aggr.name)}</b>`);
-  return `<div class="hero reveal"><div class="eyebrow">今日一句話</div><div class="line">${parts.join('，')}，詳見下方進出場計畫。</div></div>`;
+  const recs = (report.summary && report.summary.recommendations) || [];
+  const actionable = recs.filter(r => !r.market_observation_only);
+  if (!actionable.length) return '';
+  const parts = actionable.slice(0, 3).map(r => `${r.type === 'aggressive' ? '衝最快' : '安全牌'} <b>${esc(r.name)}</b>`);
+  const moreCount = actionable.length - parts.length;
+  return `<div class="hero reveal"><div class="eyebrow">今日一句話</div><div class="line">${parts.join('，')}${moreCount > 0 ? `等共 ${actionable.length} 檔` : ''}，詳見下方進出場計畫。</div></div>`;
 }
 
 /* ---------- health strip ---------- */
@@ -458,10 +462,7 @@ function renderHeatmap(report, prices) {
     if (!live) return;
     rows.push({ sector: item.category || (isPick ? '主推薦' : '候選'), name: item.name, symbol: item.symbol, chg: live.change_pct });
   };
-  if (report.summary) {
-    pushRow(Object.assign({ category: '主推薦' }, report.summary.safe_pick || {}), true);
-    pushRow(Object.assign({ category: '主推薦' }, report.summary.aggressive_pick || {}), true);
-  }
+  ((report.summary && report.summary.recommendations) || []).forEach(p => pushRow(Object.assign({ category: '主推薦' }, p), true));
   (report.candidates || []).forEach(c => pushRow(c));
   if (!rows.length) return '';
   const cellHtml = rows.map(r => {
@@ -536,6 +537,49 @@ function renderPickCard(pick, kind, prices, matchedCandidate) {
     </div>`;
 }
 
+/* ---------- tiered recommendations (2026-08-04：取代固定的安全牌+衝最快兩張卡片) ---------- */
+const TIER_DEFS = [
+  { key: 'under100', label: '100 元以下', observational: false },
+  { key: '100to250', label: '100-250 元', observational: false },
+  { key: '250to500', label: '250-500 元', observational: false },
+  { key: '500plus', label: '500 元以上・市場觀察', observational: true },
+];
+function renderTierSection(tierDef, picks, prices, findCandidate) {
+  const cardsHtml = picks.length
+    ? `<div class="picks">${picks.map(p => renderPickCard(p, p.type === 'aggressive' ? 'aggressive' : 'safe', prices, findCandidate(p))).join('')}</div>`
+    : `<div class="tier-empty-note">今日這個價位區間沒有夠格的推薦。</div>`;
+  const obsNote = tierDef.observational
+    ? `<div class="plan-note">📌 這個區間是「市場觀察」：一張（1000股）進場成本一定超過你的 50 萬本金上限，不是可操作的進出場建議，純粹讓你了解大型股／高價股當天在做什麼。</div>`
+    : '';
+  return `<div class="tier-block${tierDef.observational ? ' observational' : ''}">
+    <div class="tier-head">${esc(tierDef.label)}${picks.length ? `（${picks.length} 檔）` : ''}</div>
+    ${obsNote}
+    ${cardsHtml}
+  </div>`;
+}
+function renderRecommendations(report, prices, findCandidate) {
+  const recs = (report.summary && report.summary.recommendations) || [];
+  if (!recs.length) return '';
+  const byTier = { under100: [], '100to250': [], '250to500': [], '500plus': [], other: [] };
+  recs.forEach(p => {
+    const key = byTier.hasOwnProperty(p.price_tier) ? p.price_tier : 'other';
+    byTier[key].push(p);
+  });
+  let html = `<section><div class="section-head"><div class="eyebrow">今日推薦</div></div>`;
+  html += `<div class="plan-note">📌 進場／停損／停利／目標是今天 08:30 產生的固定計畫，盤中不會再變動；卡片上跳動的「即時價」只是每 5-10 分鐘更新一次的參考現價，不是新的進出場建議。</div>`;
+  TIER_DEFS.forEach(def => {
+    // under100 是邊緣情況（比100-250更便宜），今天沒有就不佔版面；其他三區使用者明確要求
+    // 每天都要看到（0檔也要顯示「今日沒有夠格推薦」），不能因為空白就消失不見。
+    if (def.key === 'under100' && byTier.under100.length === 0) return;
+    html += renderTierSection(def, byTier[def.key], prices, findCandidate);
+  });
+  if (byTier.other.length) {
+    html += renderTierSection({ key: 'other', label: '其他（無法判斷股價區間）', observational: false }, byTier.other, prices, findCandidate);
+  }
+  html += '</section>';
+  return html;
+}
+
 /* ---------- event calendar (derived from real risk_tag text mentioning 法說會) ---------- */
 function extractEarningsEvent(name, riskTag) {
   if (!riskTag || riskTag.indexOf('法說會') === -1) return null;
@@ -544,9 +588,8 @@ function extractEarningsEvent(name, riskTag) {
 }
 function renderEventCalendar(report) {
   const events = [];
-  const safe = report.summary && report.summary.safe_pick;
-  const aggr = report.summary && report.summary.aggressive_pick;
-  [safe, aggr, ...(report.candidates || [])].forEach(p => {
+  const recs = (report.summary && report.summary.recommendations) || [];
+  [...recs, ...(report.candidates || [])].forEach(p => {
     if (!p) return;
     const ev = extractEarningsEvent(p.name, p.risk_tag);
     if (ev) events.push(ev);
@@ -853,14 +896,7 @@ async function main() {
   html += renderNarrativeTimeline(report);
 
   const findCandidate = (pick) => pick && (report.candidates || []).find(c => c.symbol === pick.symbol);
-  if (report.summary && (report.summary.safe_pick || report.summary.aggressive_pick)) {
-    html += `<section><div class="section-head"><div class="eyebrow">今日推薦</div></div>`;
-    html += `<div class="plan-note">📌 進場／停損／停利／目標是今天 08:30 產生的固定計畫，盤中不會再變動；卡片上跳動的「即時價」只是每 5-10 分鐘更新一次的參考現價，不是新的進出場建議。</div>`;
-    html += `<div class="picks">`;
-    html += renderPickCard(report.summary.safe_pick, 'safe', prices, findCandidate(report.summary.safe_pick));
-    html += renderPickCard(report.summary.aggressive_pick, 'aggressive', prices, findCandidate(report.summary.aggressive_pick));
-    html += '</div></section>';
-  }
+  html += renderRecommendations(report, prices, findCandidate);
   html += renderEventCalendar(report);
   html += renderBacktest(backtest, report.date);
   html += renderStrategyLearning(learning);
