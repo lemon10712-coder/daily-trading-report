@@ -1,0 +1,949 @@
+{
+  "schema_version": 3,
+  "methodology": "one-minute entry/exit sequence plus recommendation, selection, direction, entry and risk-quality review; same-bar ambiguity uses conservative stop",
+  "date": "2026-08-03",
+  "generated_at": "2026/8/3 下午2:20:34",
+  "price_snapshot_at": "Yahoo Finance 2317.TW 1m",
+  "cost_assumptions": {
+    "commissionRate": 0.001425,
+    "sellTaxRate": 0.0015,
+    "slippageRate": 0
+  },
+  "picks": {
+    "safe_pick": {
+      "symbol": "2317",
+      "name": "鴻海",
+      "status": "up_no_exit",
+      "label": "🟡 上漲但未達停利",
+      "entry_triggered": true,
+      "entry_time": "09:24",
+      "entry_price": 248,
+      "exit_time": "13:30",
+      "average_exit": 249.5,
+      "exits": [
+        {
+          "fraction": 0.5,
+          "price": 246,
+          "time": "09:40",
+          "reason": "early_stop"
+        },
+        {
+          "fraction": 0.5,
+          "price": 253,
+          "time": "13:30",
+          "reason": "close"
+        }
+      ],
+      "ambiguous": false,
+      "pct_vs_entry": 0.6,
+      "gross_pct": 0.6,
+      "net_pct": 0.17,
+      "transaction_cost_pct": 0.44,
+      "close": 253,
+      "entry_mid": 249.5,
+      "stop_loss": 244,
+      "early_stop": 246,
+      "take_profit": 260,
+      "target": 266,
+      "intraday_source": "Yahoo Finance 2317.TW 1m",
+      "quality_review": {
+        "score": 100,
+        "verdict": "正確",
+        "selection": "有效",
+        "direction": "正確",
+        "entry": "成功捕捉",
+        "risk": "風控有效",
+        "market": {
+          "open": 244.5,
+          "high": 254,
+          "low": 242.5,
+          "close": 253,
+          "close_pct": 3.48,
+          "upside_pct": 3.89,
+          "downside_pct": -0.82,
+          "range_pct": 4.74
+        },
+        "planned_risk_reward": 1.91,
+        "reasons": [
+          "做多方向成立：最大上行 3.89%，收盤相對開盤 3.48%",
+          "計畫風報比僅 1.91，低於 2"
+        ],
+        "improvements": [
+          "調整進場、停損或第一停利，使計畫風報比至少 2"
+        ],
+        "sox_context": {
+          "session_date": "2026-07-31",
+          "change_pct": 0.07
+        },
+        "causal_analysis": {
+          "summary": "AI伺服器／機殼族群出現補漲行情，鴻海領漲整個族群（外資同步加碼），加上公司7月營收年增、Q2財報EPS創同期新高的基本面支撐；未查到當天單一個股突發公告。",
+          "category": "類股連動",
+          "sources_note": "財經媒體產業分析＋法說會/營收報導"
+        }
+      }
+    },
+    "aggressive_pick": {
+      "symbol": "3711",
+      "name": "日月光投控",
+      "status": "no_trade",
+      "label": "⚪ 未觸發進場",
+      "entry_triggered": false,
+      "no_trade_reason": "price_never_touched_entry",
+      "pct_vs_entry": null,
+      "gross_pct": 0,
+      "net_pct": 0,
+      "close": 610,
+      "entry_mid": 555,
+      "stop_loss": 540,
+      "take_profit": 578,
+      "target": 590,
+      "intraday_source": "Yahoo Finance 3711.TW 1m",
+      "quality_review": {
+        "score": 20,
+        "verdict": "需要改善",
+        "selection": "不佳",
+        "direction": "錯誤",
+        "entry": "未成交",
+        "risk": "未成交，不適用",
+        "market": {
+          "open": 610,
+          "high": 610,
+          "low": 592,
+          "close": 610,
+          "close_pct": 0,
+          "upside_pct": 0,
+          "downside_pct": -2.95,
+          "range_pct": 3.04
+        },
+        "planned_risk_reward": 1.53,
+        "reasons": [
+          "做多方向錯誤：收盤相對開盤 0%，最大下行 -2.95%",
+          "計畫風報比僅 1.53，低於 2"
+        ],
+        "improvements": [
+          "降低前一日大漲後的延續假設；開盤跌破 VWAP／首 15 分鐘低點時取消做多",
+          "調整進場、停損或第一停利，使計畫風報比至少 2"
+        ],
+        "sox_context": {
+          "session_date": "2026-07-31",
+          "change_pct": 0.07
+        },
+        "causal_analysis": {
+          "summary": "早盤一度重挫近3%但尾盤拉回平盤作收，查無當天專屬的利多或利空公告；雖然公司近期因先進封裝資本支出擴大至70億美元具備長線題材，但當天走勢較可能是大盤權值股籌碼調節所致。",
+          "category": "查無明確原因",
+          "sources_note": "股價數據＋一般法說會背景報導，無當日專屬消息"
+        }
+      }
+    }
+  },
+  "candidates": [
+    {
+      "symbol": "2330",
+      "name": "台積電",
+      "status": "no_trade",
+      "label": "⚪ 未觸發進場",
+      "entry_triggered": false,
+      "no_trade_reason": "price_never_touched_entry",
+      "pct_vs_entry": null,
+      "gross_pct": 0,
+      "net_pct": 0,
+      "close": 2370,
+      "entry_mid": 2430,
+      "stop_loss": 2370,
+      "take_profit": 2520,
+      "target": 2560,
+      "intraday_source": "Yahoo Finance 2330.TW 1m",
+      "quality_review": {
+        "score": 40,
+        "verdict": "需要改善",
+        "selection": "波動不足",
+        "direction": "混合",
+        "entry": "未成交，沒有明顯損失",
+        "risk": "未成交，不適用",
+        "market": {
+          "open": 2390,
+          "high": 2395,
+          "low": 2365,
+          "close": 2370,
+          "close_pct": -0.84,
+          "upside_pct": 0.21,
+          "downside_pct": -1.05,
+          "range_pct": 1.27
+        },
+        "planned_risk_reward": 1.5,
+        "reasons": [
+          "盤勢多空混合：最大上行 0.21%、最大下行 -1.05%",
+          "全日振幅僅 1.27%，不符合當沖效率",
+          "計畫風報比僅 1.5，低於 2"
+        ],
+        "improvements": [
+          "候選股加入預估振幅與早盤量能門檻，振幅不足時降級為觀察股",
+          "調整進場、停損或第一停利，使計畫風報比至少 2"
+        ],
+        "sox_context": {
+          "session_date": "2026-07-31",
+          "change_pct": 0.07
+        }
+      }
+    },
+    {
+      "symbol": "2454",
+      "name": "聯發科",
+      "status": "no_trade",
+      "label": "⚪ 未觸發進場",
+      "entry_triggered": false,
+      "no_trade_reason": "price_never_touched_entry",
+      "pct_vs_entry": null,
+      "gross_pct": 0,
+      "net_pct": 0,
+      "close": 3910,
+      "entry_mid": 3555,
+      "stop_loss": 3470,
+      "take_profit": 3690,
+      "target": 3750,
+      "intraday_source": "Yahoo Finance 2454.TW 1m",
+      "quality_review": {
+        "score": 20,
+        "verdict": "需要改善",
+        "selection": "不佳",
+        "direction": "錯誤",
+        "entry": "未成交",
+        "risk": "未成交，不適用",
+        "market": {
+          "open": 3910,
+          "high": 3910,
+          "low": 3780,
+          "close": 3910,
+          "close_pct": 0,
+          "upside_pct": 0,
+          "downside_pct": -3.32,
+          "range_pct": 3.44
+        },
+        "planned_risk_reward": 1.59,
+        "reasons": [
+          "做多方向錯誤：收盤相對開盤 0%，最大下行 -3.32%",
+          "計畫風報比僅 1.59，低於 2"
+        ],
+        "improvements": [
+          "降低前一日大漲後的延續假設；開盤跌破 VWAP／首 15 分鐘低點時取消做多",
+          "調整進場、停損或第一停利，使計畫風報比至少 2"
+        ],
+        "sox_context": {
+          "session_date": "2026-07-31",
+          "change_pct": 0.07
+        }
+      }
+    },
+    {
+      "symbol": "3711",
+      "name": "日月光投控",
+      "status": "no_trade",
+      "label": "⚪ 未觸發進場",
+      "entry_triggered": false,
+      "no_trade_reason": "price_never_touched_entry",
+      "pct_vs_entry": null,
+      "gross_pct": 0,
+      "net_pct": 0,
+      "close": 610,
+      "entry_mid": 555,
+      "stop_loss": 540,
+      "take_profit": 578,
+      "target": 590,
+      "intraday_source": "Yahoo Finance 3711.TW 1m",
+      "quality_review": {
+        "score": 20,
+        "verdict": "需要改善",
+        "selection": "不佳",
+        "direction": "錯誤",
+        "entry": "未成交",
+        "risk": "未成交，不適用",
+        "market": {
+          "open": 610,
+          "high": 610,
+          "low": 592,
+          "close": 610,
+          "close_pct": 0,
+          "upside_pct": 0,
+          "downside_pct": -2.95,
+          "range_pct": 3.04
+        },
+        "planned_risk_reward": 1.53,
+        "reasons": [
+          "做多方向錯誤：收盤相對開盤 0%，最大下行 -2.95%",
+          "計畫風報比僅 1.53，低於 2"
+        ],
+        "improvements": [
+          "降低前一日大漲後的延續假設；開盤跌破 VWAP／首 15 分鐘低點時取消做多",
+          "調整進場、停損或第一停利，使計畫風報比至少 2"
+        ],
+        "sox_context": {
+          "session_date": "2026-07-31",
+          "change_pct": 0.07
+        },
+        "causal_analysis": {
+          "summary": "早盤一度重挫近3%但尾盤拉回平盤作收，查無當天專屬的利多或利空公告；雖然公司近期因先進封裝資本支出擴大至70億美元具備長線題材，但當天走勢較可能是大盤權值股籌碼調節所致。",
+          "category": "查無明確原因",
+          "sources_note": "股價數據＋一般法說會背景報導，無當日專屬消息"
+        }
+      }
+    },
+    {
+      "symbol": "2317",
+      "name": "鴻海",
+      "status": "up_no_exit",
+      "label": "🟡 上漲但未達停利",
+      "entry_triggered": true,
+      "entry_time": "09:24",
+      "entry_price": 248,
+      "exit_time": "13:30",
+      "average_exit": 249.5,
+      "exits": [
+        {
+          "fraction": 0.5,
+          "price": 246,
+          "time": "09:40",
+          "reason": "early_stop"
+        },
+        {
+          "fraction": 0.5,
+          "price": 253,
+          "time": "13:30",
+          "reason": "close"
+        }
+      ],
+      "ambiguous": false,
+      "pct_vs_entry": 0.6,
+      "gross_pct": 0.6,
+      "net_pct": 0.17,
+      "transaction_cost_pct": 0.44,
+      "close": 253,
+      "entry_mid": 249.5,
+      "stop_loss": 244,
+      "early_stop": 246,
+      "take_profit": 260,
+      "target": 266,
+      "intraday_source": "Yahoo Finance 2317.TW 1m",
+      "quality_review": {
+        "score": 100,
+        "verdict": "正確",
+        "selection": "有效",
+        "direction": "正確",
+        "entry": "成功捕捉",
+        "risk": "風控有效",
+        "market": {
+          "open": 244.5,
+          "high": 254,
+          "low": 242.5,
+          "close": 253,
+          "close_pct": 3.48,
+          "upside_pct": 3.89,
+          "downside_pct": -0.82,
+          "range_pct": 4.74
+        },
+        "planned_risk_reward": 1.91,
+        "reasons": [
+          "做多方向成立：最大上行 3.89%，收盤相對開盤 3.48%",
+          "計畫風報比僅 1.91，低於 2"
+        ],
+        "improvements": [
+          "調整進場、停損或第一停利，使計畫風報比至少 2"
+        ],
+        "sox_context": {
+          "session_date": "2026-07-31",
+          "change_pct": 0.07
+        },
+        "causal_analysis": {
+          "summary": "AI伺服器／機殼族群出現補漲行情，鴻海領漲整個族群（外資同步加碼），加上公司7月營收年增、Q2財報EPS創同期新高的基本面支撐；未查到當天單一個股突發公告。",
+          "category": "類股連動",
+          "sources_note": "財經媒體產業分析＋法說會/營收報導"
+        }
+      }
+    },
+    {
+      "symbol": "2408",
+      "name": "南亞科",
+      "status": "no_trade",
+      "label": "⚪ 未觸發進場",
+      "entry_triggered": false,
+      "no_trade_reason": "price_never_touched_entry",
+      "pct_vs_entry": null,
+      "gross_pct": 0,
+      "net_pct": 0,
+      "close": 396.5,
+      "entry_mid": 359,
+      "stop_loss": 347,
+      "take_profit": 376,
+      "target": 384,
+      "intraday_source": "Yahoo Finance 2408.TW 1m",
+      "quality_review": {
+        "score": 70,
+        "verdict": "部分正確",
+        "selection": "有效",
+        "direction": "正確",
+        "entry": "太保守，錯過上漲",
+        "risk": "未成交，不適用",
+        "market": {
+          "open": 374.5,
+          "high": 396.5,
+          "low": 374.5,
+          "close": 396.5,
+          "close_pct": 5.87,
+          "upside_pct": 5.87,
+          "downside_pct": 0,
+          "range_pct": 5.87
+        },
+        "planned_risk_reward": 1.42,
+        "reasons": [
+          "做多方向成立：最大上行 5.87%，收盤相對開盤 5.87%",
+          "計畫風報比僅 1.42，低於 2"
+        ],
+        "improvements": [
+          "保留拉回價，但增加突破回測後的小部位 B 計畫，禁止直接追價",
+          "調整進場、停損或第一停利，使計畫風報比至少 2"
+        ],
+        "sox_context": {
+          "session_date": "2026-07-31",
+          "change_pct": 0.07
+        },
+        "causal_analysis": {
+          "summary": "三大原廠（美光、三星、SK海力士）逐步退出DDR4市場、產能轉往AI伺服器HBM與高階DDR5，南亞科作為純DRAM廠承接轉單、報價支撐，加上南韓記憶體同業股價齊揚的族群連動效應。",
+          "category": "類股連動",
+          "sources_note": "產業分析報告＋同業（SK海力士）股價連動報導"
+        }
+      }
+    },
+    {
+      "symbol": "2344",
+      "name": "華邦電",
+      "status": "no_trade",
+      "label": "⚪ 未觸發進場",
+      "entry_triggered": false,
+      "no_trade_reason": "price_never_touched_entry",
+      "pct_vs_entry": null,
+      "gross_pct": 0,
+      "net_pct": 0,
+      "close": 143,
+      "entry_mid": 129.75,
+      "stop_loss": 126,
+      "take_profit": 135,
+      "target": 138,
+      "intraday_source": "Yahoo Finance 2344.TW 1m",
+      "quality_review": {
+        "score": 70,
+        "verdict": "部分正確",
+        "selection": "有效",
+        "direction": "正確",
+        "entry": "太保守，錯過上漲",
+        "risk": "未成交，不適用",
+        "market": {
+          "open": 134,
+          "high": 143,
+          "low": 133.5,
+          "close": 143,
+          "close_pct": 6.72,
+          "upside_pct": 6.72,
+          "downside_pct": -0.37,
+          "range_pct": 7.12
+        },
+        "planned_risk_reward": 1.4,
+        "reasons": [
+          "做多方向成立：最大上行 6.72%，收盤相對開盤 6.72%",
+          "計畫風報比僅 1.4，低於 2"
+        ],
+        "improvements": [
+          "保留拉回價，但增加突破回測後的小部位 B 計畫，禁止直接追價",
+          "調整進場、停損或第一停利，使計畫風報比至少 2"
+        ],
+        "sox_context": {
+          "session_date": "2026-07-31",
+          "change_pct": 0.07
+        },
+        "causal_analysis": {
+          "summary": "大摩（Morgan Stanley）上調華邦電評等至優於大盤，目標價由100元大幅上調至222元，理由是預估2026下半年DDR4供給缺口擴大至19-20%（原估14%），帶動DDR4報價Q3季增可能達20%；同時美股科技股與台積電上週漲勢也帶動類股氣氛。",
+          "category": "個股消息",
+          "sources_note": "外資（大摩）調升評等與目標價報告"
+        }
+      }
+    },
+    {
+      "symbol": "8299",
+      "name": "群聯",
+      "status": "no_trade",
+      "label": "⚪ 未觸發進場",
+      "entry_triggered": false,
+      "no_trade_reason": "price_never_touched_entry",
+      "pct_vs_entry": null,
+      "gross_pct": 0,
+      "net_pct": 0,
+      "close": 1760,
+      "entry_mid": 1637.5,
+      "stop_loss": 1595,
+      "take_profit": 1710,
+      "target": 1740,
+      "intraday_source": "Yahoo Finance 8299.TWO 1m",
+      "quality_review": {
+        "score": 70,
+        "verdict": "部分正確",
+        "selection": "有效",
+        "direction": "正確",
+        "entry": "太保守，錯過上漲",
+        "risk": "未成交，不適用",
+        "market": {
+          "open": 1675,
+          "high": 1800,
+          "low": 1670,
+          "close": 1760,
+          "close_pct": 5.07,
+          "upside_pct": 7.46,
+          "downside_pct": -0.3,
+          "range_pct": 7.78
+        },
+        "planned_risk_reward": 1.71,
+        "reasons": [
+          "做多方向成立：最大上行 7.46%，收盤相對開盤 5.07%",
+          "計畫風報比僅 1.71，低於 2"
+        ],
+        "improvements": [
+          "保留拉回價，但增加突破回測後的小部位 B 計畫，禁止直接追價",
+          "調整進場、停損或第一停利，使計畫風報比至少 2"
+        ],
+        "sox_context": {
+          "session_date": "2026-07-31",
+          "change_pct": 0.07
+        },
+        "causal_analysis": {
+          "summary": "查無群聯當天專屬的利多公告，漲勢主要跟隨NAND/記憶體模組族群當天集體反彈（南亞科、華邦電、旺宏同步大漲），屬產業補漲行情的一部分。",
+          "category": "類股連動",
+          "sources_note": "記憶體族群同業股價連動，無個股專屬公告"
+        }
+      }
+    },
+    {
+      "symbol": "4967",
+      "name": "十銓",
+      "status": "up_no_exit",
+      "label": "🟡 上漲但未達停利",
+      "entry_triggered": true,
+      "entry_time": "09:00",
+      "entry_price": 233.5,
+      "exit_time": "13:30",
+      "average_exit": 240,
+      "exits": [
+        {
+          "fraction": 1,
+          "price": 240,
+          "time": "13:30",
+          "reason": "close"
+        }
+      ],
+      "ambiguous": false,
+      "pct_vs_entry": 2.78,
+      "gross_pct": 2.78,
+      "net_pct": 2.34,
+      "transaction_cost_pct": 0.44,
+      "close": 240,
+      "entry_mid": 233.5,
+      "stop_loss": 226,
+      "early_stop": 228,
+      "take_profit": 245,
+      "target": 249,
+      "intraday_source": "Yahoo Finance 4967.TW 1m",
+      "quality_review": {
+        "score": 100,
+        "verdict": "正確",
+        "selection": "有效",
+        "direction": "正確",
+        "entry": "成功捕捉",
+        "risk": "風控有效",
+        "market": {
+          "open": 232,
+          "high": 241.5,
+          "low": 230,
+          "close": 240,
+          "close_pct": 3.45,
+          "upside_pct": 4.09,
+          "downside_pct": -0.86,
+          "range_pct": 5
+        },
+        "planned_risk_reward": 1.53,
+        "reasons": [
+          "做多方向成立：最大上行 4.09%，收盤相對開盤 3.45%",
+          "計畫風報比僅 1.53，低於 2"
+        ],
+        "improvements": [
+          "調整進場、停損或第一停利，使計畫風報比至少 2"
+        ],
+        "sox_context": {
+          "session_date": "2026-07-31",
+          "change_pct": 0.07
+        },
+        "causal_analysis": {
+          "summary": "受惠DRAM／NAND Flash報價止跌回穩、6月營收回升，且市場預期公司將於8/3左右召開董事會公布財報，激勵股價提前反應；同時搭上當天整體記憶體族群的大漲行情。",
+          "category": "個股消息",
+          "sources_note": "營收公告＋財報公布時程預期＋族群連動"
+        }
+      }
+    },
+    {
+      "symbol": "2337",
+      "name": "旺宏",
+      "status": "take_profit",
+      "label": "✅ 達到停利點",
+      "entry_triggered": true,
+      "entry_time": "09:00",
+      "entry_price": 102,
+      "exit_time": "09:00",
+      "average_exit": 104.5,
+      "exits": [
+        {
+          "fraction": 1,
+          "price": 104.5,
+          "time": "09:00",
+          "reason": "take_profit"
+        }
+      ],
+      "ambiguous": false,
+      "pct_vs_entry": 2.45,
+      "gross_pct": 2.45,
+      "net_pct": 2.01,
+      "transaction_cost_pct": 0.44,
+      "close": 110.5,
+      "entry_mid": 101,
+      "stop_loss": 98.3,
+      "early_stop": 99.5,
+      "take_profit": 104.5,
+      "target": 107,
+      "intraday_source": "Yahoo Finance 2337.TW 1m",
+      "quality_review": {
+        "score": 100,
+        "verdict": "正確",
+        "selection": "有效",
+        "direction": "正確",
+        "entry": "成功捕捉",
+        "risk": "風控有效",
+        "market": {
+          "open": 102.5,
+          "high": 110.5,
+          "low": 102,
+          "close": 110.5,
+          "close_pct": 7.8,
+          "upside_pct": 7.8,
+          "downside_pct": -0.49,
+          "range_pct": 8.33
+        },
+        "planned_risk_reward": 1.3,
+        "reasons": [
+          "做多方向成立：最大上行 7.8%，收盤相對開盤 7.8%",
+          "計畫風報比僅 1.3，低於 2"
+        ],
+        "improvements": [
+          "調整進場、停損或第一停利，使計畫風報比至少 2"
+        ],
+        "sox_context": {
+          "session_date": "2026-07-31",
+          "change_pct": 0.07
+        },
+        "causal_analysis": {
+          "summary": "NAND Flash供給吃緊、旺宏3D NOR Flash擴產計畫（220億元投資）帶動長線成長預期，加上當天華邦電、南亞科等同業齊揚，記憶體族群集體大漲。",
+          "category": "類股連動",
+          "sources_note": "產業供需分析＋同業股價連動"
+        }
+      }
+    },
+    {
+      "symbol": "5289",
+      "name": "宜鼎",
+      "status": "take_profit",
+      "label": "✅ 達到停利點",
+      "entry_triggered": true,
+      "entry_time": "09:00",
+      "entry_price": 1295,
+      "exit_time": "09:02",
+      "average_exit": 1350,
+      "exits": [
+        {
+          "fraction": 1,
+          "price": 1350,
+          "time": "09:02",
+          "reason": "take_profit"
+        }
+      ],
+      "ambiguous": false,
+      "pct_vs_entry": 4.25,
+      "gross_pct": 4.25,
+      "net_pct": 3.8,
+      "transaction_cost_pct": 0.45,
+      "close": 1385,
+      "entry_mid": 1295,
+      "stop_loss": 1258,
+      "early_stop": 1272,
+      "take_profit": 1350,
+      "target": 1380,
+      "intraday_source": "Yahoo Finance 5289.TWO 1m",
+      "quality_review": {
+        "score": 100,
+        "verdict": "正確",
+        "selection": "有效",
+        "direction": "正確",
+        "entry": "成功捕捉",
+        "risk": "風控有效",
+        "market": {
+          "open": 1295,
+          "high": 1420,
+          "low": 1295,
+          "close": 1385,
+          "close_pct": 6.95,
+          "upside_pct": 9.65,
+          "downside_pct": 0,
+          "range_pct": 9.65
+        },
+        "planned_risk_reward": 1.49,
+        "reasons": [
+          "做多方向成立：最大上行 9.65%，收盤相對開盤 6.95%",
+          "計畫風報比僅 1.49，低於 2"
+        ],
+        "improvements": [
+          "調整進場、停損或第一停利，使計畫風報比至少 2"
+        ],
+        "sox_context": {
+          "session_date": "2026-07-31",
+          "change_pct": 0.07
+        },
+        "causal_analysis": {
+          "summary": "AI伺服器對高穩定度工業用記憶體需求急遽上升，宜鼎獨家取得南亞科、華邦電的DDR4料源優勢，加上營收年增率持續飆升（今年多月營收年增數倍），帶動股價強勢表現。",
+          "category": "個股消息",
+          "sources_note": "公司營收公告＋法人產業報告"
+        }
+      }
+    },
+    {
+      "symbol": "2327",
+      "name": "國巨",
+      "status": "no_trade",
+      "label": "⚪ 未觸發進場",
+      "entry_triggered": false,
+      "no_trade_reason": "price_never_touched_entry",
+      "pct_vs_entry": null,
+      "gross_pct": 0,
+      "net_pct": 0,
+      "close": 552,
+      "entry_mid": 501,
+      "stop_loss": 488,
+      "take_profit": 522,
+      "target": 533,
+      "intraday_source": "Yahoo Finance 2327.TW 1m",
+      "quality_review": {
+        "score": 70,
+        "verdict": "部分正確",
+        "selection": "有效",
+        "direction": "正確",
+        "entry": "太保守，錯過上漲",
+        "risk": "未成交，不適用",
+        "market": {
+          "open": 534,
+          "high": 552,
+          "low": 526,
+          "close": 552,
+          "close_pct": 3.37,
+          "upside_pct": 3.37,
+          "downside_pct": -1.5,
+          "range_pct": 4.94
+        },
+        "planned_risk_reward": 1.62,
+        "reasons": [
+          "做多方向成立：最大上行 3.37%，收盤相對開盤 3.37%",
+          "計畫風報比僅 1.62，低於 2"
+        ],
+        "improvements": [
+          "保留拉回價，但增加突破回測後的小部位 B 計畫，禁止直接追價",
+          "調整進場、停損或第一停利，使計畫風報比至少 2"
+        ],
+        "sox_context": {
+          "session_date": "2026-07-31",
+          "change_pct": 0.07
+        },
+        "causal_analysis": {
+          "summary": "銀價（被動元件關鍵原料之一）大幅飆漲加上AI伺服器需求持續強勁，帶動國巨等被動元件廠漲價題材發酵，法人看好其2026年獲利成長性。",
+          "category": "類股連動",
+          "sources_note": "原物料（銀價）走勢＋法人產業報告"
+        }
+      }
+    },
+    {
+      "symbol": "3481",
+      "name": "群創",
+      "status": "stop_loss",
+      "label": "❌ 觸及停損",
+      "entry_triggered": true,
+      "entry_time": "09:00",
+      "entry_price": 45,
+      "exit_time": "09:02",
+      "average_exit": 44.3,
+      "exits": [
+        {
+          "fraction": 0.5,
+          "price": 44.6,
+          "time": "09:00",
+          "reason": "early_stop"
+        },
+        {
+          "fraction": 0.5,
+          "price": 44,
+          "time": "09:02",
+          "reason": "stop_loss"
+        }
+      ],
+      "ambiguous": false,
+      "pct_vs_entry": -1.56,
+      "gross_pct": -1.56,
+      "net_pct": -1.99,
+      "transaction_cost_pct": 0.43,
+      "close": 45.8,
+      "entry_mid": 45.4,
+      "stop_loss": 44,
+      "early_stop": 44.6,
+      "take_profit": 47,
+      "target": 48.3,
+      "intraday_source": "Yahoo Finance 3481.TW 1m",
+      "quality_review": {
+        "score": 60,
+        "verdict": "部分正確",
+        "selection": "有效",
+        "direction": "正確",
+        "entry": "有成交但位置不佳",
+        "risk": "停損有執行，但策略失敗",
+        "market": {
+          "open": 45,
+          "high": 46.7,
+          "low": 43.8,
+          "close": 45.8,
+          "close_pct": 1.78,
+          "upside_pct": 3.78,
+          "downside_pct": -2.67,
+          "range_pct": 6.62
+        },
+        "planned_risk_reward": 1.14,
+        "reasons": [
+          "做多方向成立：最大上行 3.78%，收盤相對開盤 1.78%",
+          "計畫風報比僅 1.14，低於 2"
+        ],
+        "improvements": [
+          "進場需增加 VWAP、首 15 分鐘結構與量能確認，避免只因價格碰區間就進場",
+          "調整進場、停損或第一停利，使計畫風報比至少 2"
+        ],
+        "sox_context": {
+          "session_date": "2026-07-31",
+          "change_pct": 0.07
+        },
+        "causal_analysis": {
+          "summary": "查無群創當天專屬的利多或利空消息；公司近期雖有「面板轉半導體封裝／車用」的長線轉型題材與Q2獲利創單季新高的背景，但無法確認為8/3當天股價早盤重挫又拉回的具體驅動原因，較可能是大盤或面板族群籌碼面波動。",
+          "category": "查無明確原因",
+          "sources_note": "公司背景與財報報導，無當日專屬消息"
+        }
+      }
+    },
+    {
+      "symbol": "3231",
+      "name": "緯創",
+      "status": "stop_loss",
+      "label": "❌ 觸及停損",
+      "entry_triggered": true,
+      "entry_time": "09:07",
+      "entry_price": 174,
+      "exit_time": "09:07",
+      "average_exit": 171,
+      "exits": [
+        {
+          "fraction": 1,
+          "price": 171,
+          "time": "09:07",
+          "reason": "stop_loss"
+        }
+      ],
+      "ambiguous": false,
+      "pct_vs_entry": -1.72,
+      "gross_pct": -1.72,
+      "net_pct": -2.15,
+      "transaction_cost_pct": 0.43,
+      "close": 186,
+      "entry_mid": 176,
+      "stop_loss": 171,
+      "early_stop": 172.5,
+      "take_profit": 182.5,
+      "target": 187,
+      "intraday_source": "Yahoo Finance 3231.TW 1m",
+      "quality_review": {
+        "score": 60,
+        "verdict": "部分正確",
+        "selection": "有效",
+        "direction": "正確",
+        "entry": "有成交但位置不佳",
+        "risk": "停損有執行，但策略失敗",
+        "market": {
+          "open": 172.5,
+          "high": 188,
+          "low": 169.5,
+          "close": 186,
+          "close_pct": 7.83,
+          "upside_pct": 8.99,
+          "downside_pct": -1.74,
+          "range_pct": 10.91
+        },
+        "planned_risk_reward": 1.3,
+        "reasons": [
+          "做多方向成立：最大上行 8.99%，收盤相對開盤 7.83%",
+          "計畫風報比僅 1.3，低於 2"
+        ],
+        "improvements": [
+          "進場需增加 VWAP、首 15 分鐘結構與量能確認，避免只因價格碰區間就進場",
+          "調整進場、停損或第一停利，使計畫風報比至少 2"
+        ],
+        "sox_context": {
+          "session_date": "2026-07-31",
+          "change_pct": 0.07
+        },
+        "causal_analysis": {
+          "summary": "緯創美國德州智慧工廠D1正式啟用（董事長林憲銘與輝達執行長黃仁勳共同揭幕），已產出全美第一片採用輝達GB300平台的運算基板，外資同步上調下半年AI伺服器出貨與目標價；現金股利發放日又適逢8/3，題材與資金面同步發酵。",
+          "category": "個股消息",
+          "sources_note": "公司新廠啟用公告＋外資報告＋股利發放時程"
+        }
+      }
+    }
+  ],
+  "sox_context": {
+    "session_date": "2026-07-31",
+    "change_pct": 0.07
+  },
+  "strategy_review": {
+    "reviewed_symbols": 13,
+    "average_score": 67.7,
+    "verdict": "部分正確，需調整",
+    "correct_count": 4,
+    "needs_improvement_count": 3,
+    "priority_improvements": [
+      {
+        "rule": "調整進場、停損或第一停利，使計畫風報比至少 2",
+        "affected_count": 13
+      },
+      {
+        "rule": "保留拉回價，但增加突破回測後的小部位 B 計畫，禁止直接追價",
+        "affected_count": 4
+      },
+      {
+        "rule": "降低前一日大漲後的延續假設；開盤跌破 VWAP／首 15 分鐘低點時取消做多",
+        "affected_count": 2
+      },
+      {
+        "rule": "進場需增加 VWAP、首 15 分鐘結構與量能確認，避免只因價格碰區間就進場",
+        "affected_count": 2
+      },
+      {
+        "rule": "候選股加入預估振幅與早盤量能門檻，振幅不足時降級為觀察股",
+        "affected_count": 1
+      }
+    ],
+    "scoring_note": "0-100；綜合方向、當沖波動、進場捕捉與交易結果。未成交不直接算虧損。"
+  },
+  "narrative": "鴻海（2317）：🟡 上漲但未達停利，淨報酬 0.17%\n日月光投控（3711）：⚪ 未觸發進場\n總評：推薦 2 檔，實際觸發 1 檔，未進場 1 檔；獲利 1、虧損 0。\n策略品質：部分正確，需調整，平均 67.7 分。",
+  "causal_analysis_generated_at": "2026-08-03 15:40"
+}
