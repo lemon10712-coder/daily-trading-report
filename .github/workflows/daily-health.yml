@@ -17,6 +17,23 @@ jobs:
         id: check
         run: node scripts/check-automation-health.js
 
+      # 2026-08-05: the report was only ever published to the web page, so a
+      # late or missing report went unnoticed until the user opened the site —
+      # on 2026-08-05 that meant finding out after the market had already
+      # opened. Push the report itself down the same LINE channel the health
+      # alert already uses. Morning pass only; the 16:00 pass would be stale.
+      - name: Push morning report summary to LINE
+        if: success()
+        env:
+          LINE_CHANNEL_ACCESS_TOKEN: ${{ secrets.LINE_CHANNEL_ACCESS_TOKEN }}
+        run: |
+          HOUR=$(TZ=Asia/Taipei date +%-H)
+          if [ "$HOUR" -lt 12 ]; then
+            node scripts/notify-report-summary.js
+          else
+            echo "Afternoon health pass (${HOUR}:00 Asia/Taipei); skipping morning summary push."
+          fi
+
       - name: Notify LINE on failure
         if: failure()
         env:
