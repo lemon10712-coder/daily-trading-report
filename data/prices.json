@@ -1,6 +1,6 @@
 {
-  "updated_at": "2026/8/5 上午10:11:13",
-  "updated_at_iso": "2026-08-05T02:11:13.244Z",
+  "updated_at": "2026/8/5 上午10:15:51",
+  "updated_at_iso": "2026-08-05T02:15:51.270Z",
   "price_type": "intraday",
   "quote_status": {
     "expected": 12,
@@ -10,8 +10,8 @@
   },
   "prices": {
     "2327": {
-      "price": 584,
-      "change_pct": 3.18,
+      "price": 587,
+      "change_pct": 3.71,
       "source": "yahoo_finance_tw",
       "stale": false
     },
@@ -22,20 +22,20 @@
       "stale": false
     },
     "2344": {
-      "price": 170.5,
-      "change_pct": 8.6,
-      "source": "yahoo_finance_tw",
+      "price": 172.5,
+      "change_pct": 9.87,
+      "source": "twse_mis",
       "stale": false
     },
     "2345": {
-      "price": 2405,
-      "change_pct": 3.66,
+      "price": 2395,
+      "change_pct": 3.23,
       "source": "yahoo_finance_tw",
       "stale": false
     },
     "2408": {
-      "price": 465.5,
-      "change_pct": 6.77,
+      "price": 463.5,
+      "change_pct": 6.31,
       "source": "yahoo_finance_tw",
       "stale": false
     },
@@ -46,26 +46,26 @@
       "stale": false
     },
     "3017": {
-      "price": 2705,
-      "change_pct": 4.04,
+      "price": 2725,
+      "change_pct": 4.81,
       "source": "yahoo_finance_tw",
       "stale": false
     },
     "3231": {
-      "price": 196.5,
-      "change_pct": 0.77,
+      "price": 199,
+      "change_pct": 2.05,
       "source": "yahoo_finance_tw",
       "stale": false
     },
     "3711": {
-      "price": 610,
-      "change_pct": 4.27,
+      "price": 609,
+      "change_pct": 4.1,
       "source": "yahoo_finance_tw",
       "stale": false
     },
     "4967": {
-      "price": 268.5,
-      "change_pct": 4.68,
+      "price": 269.5,
+      "change_pct": 5.07,
       "source": "yahoo_finance_tw",
       "stale": false
     },
@@ -76,9 +76,9 @@
       "stale": false
     },
     "8299": {
-      "price": 1885,
-      "change_pct": 3.57,
-      "source": "yahoo_finance_two",
+      "price": 1890,
+      "change_pct": 3.85,
+      "source": "twse_mis",
       "stale": false
     }
   }
