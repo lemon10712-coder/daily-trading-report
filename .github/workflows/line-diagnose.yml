@@ -1,0 +1,33 @@
+name: LINE channel diagnose
+
+# Read-only diagnostic added 2026-08-05 after the 09:20 health check reported
+# "LINE notification sent." (HTTP 200) but no message reached the account owner.
+# broadcast returns 200 even when the Official Account has zero followers, so
+# this queries the channel's own state to tell those cases apart.
+
+on:
+  workflow_dispatch: {}
+
+jobs:
+  diagnose:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Query LINE channel state
+        env:
+          LINE_CHANNEL_ACCESS_TOKEN: ${{ secrets.LINE_CHANNEL_ACCESS_TOKEN }}
+        run: |
+          set +e
+          AUTH="Authorization: Bearer $LINE_CHANNEL_ACCESS_TOKEN"
+
+          echo "===== /v2/bot/info (chatMode is the key field) ====="
+          curl -s -w "\nHTTP %{http_code}\n" -H "$AUTH" https://api.line.me/v2/bot/info
+
+          echo "===== /v2/bot/message/quota ====="
+          curl -s -w "\nHTTP %{http_code}\n" -H "$AUTH" https://api.line.me/v2/bot/message/quota
+
+          echo "===== /v2/bot/message/quota/consumption ====="
+          curl -s -w "\nHTTP %{http_code}\n" -H "$AUTH" https://api.line.me/v2/bot/message/quota/consumption
+
+          YESTERDAY=$(TZ=Asia/Taipei date -d 'yesterday' +%Y%m%d)
+          echo "===== /v2/bot/insight/followers?date=$YESTERDAY (follower count) ====="
+          curl -s -w "\nHTTP %{http_code}\n" -H "$AUTH" "https://api.line.me/v2/bot/insight/followers?date=$YESTERDAY"
