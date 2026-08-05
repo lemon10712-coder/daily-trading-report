@@ -1,6 +1,6 @@
 {
-  "updated_at": "2026/8/5 上午10:45:52",
-  "updated_at_iso": "2026-08-05T02:45:52.979Z",
+  "updated_at": "2026/8/5 上午10:50:54",
+  "updated_at_iso": "2026-08-05T02:50:54.495Z",
   "price_type": "intraday",
   "quote_status": {
     "expected": 12,
@@ -10,14 +10,14 @@
   },
   "prices": {
     "2327": {
-      "price": 591,
-      "change_pct": 4.42,
-      "source": "twse_mis",
+      "price": 586,
+      "change_pct": 3.53,
+      "source": "yahoo_finance_tw",
       "stale": false
     },
     "2337": {
-      "price": 124.5,
-      "change_pct": 3.75,
+      "price": 125,
+      "change_pct": 4.17,
       "source": "yahoo_finance_tw",
       "stale": false
     },
@@ -34,8 +34,8 @@
       "stale": false
     },
     "2408": {
-      "price": 465,
-      "change_pct": 6.65,
+      "price": 463,
+      "change_pct": 6.19,
       "source": "yahoo_finance_tw",
       "stale": false
     },
@@ -46,38 +46,38 @@
       "stale": false
     },
     "3017": {
-      "price": 2735,
-      "change_pct": 5.19,
+      "price": 2730,
+      "change_pct": 5,
       "source": "yahoo_finance_tw",
       "stale": false
     },
     "3231": {
-      "price": 198.5,
-      "change_pct": 1.79,
+      "price": 199.5,
+      "change_pct": 2.31,
       "source": "yahoo_finance_tw",
       "stale": false
     },
     "3711": {
-      "price": 607,
-      "change_pct": 3.76,
+      "price": 604,
+      "change_pct": 3.25,
       "source": "yahoo_finance_tw",
       "stale": false
     },
     "4967": {
-      "price": 269.5,
-      "change_pct": 5.07,
+      "price": 268.5,
+      "change_pct": 4.68,
       "source": "yahoo_finance_tw",
       "stale": false
     },
     "5289": {
-      "price": 1485,
-      "change_pct": 4.95,
+      "price": 1480,
+      "change_pct": 4.59,
       "source": "yahoo_finance_two",
       "stale": false
     },
     "8299": {
-      "price": 1885,
-      "change_pct": 3.57,
+      "price": 1890,
+      "change_pct": 3.85,
       "source": "yahoo_finance_two",
       "stale": false
     }
