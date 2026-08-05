@@ -1,0 +1,40 @@
+name: Data source probe
+
+# Added 2026-08-05. The cloud report agent gets 403 from TWSE/TAIFEX and has to
+# reconstruct the candidate pool from ~80 WebSearch queries across three
+# sub-agents instead (see data/latest.json warnings for 2026-08-04). That
+# degraded path is what failed to produce a report at all on 2026-08-05.
+#
+# But refresh-prices.yml pulls TWSE MIS successfully from an Actions runner
+# every 5 minutes. If the runner can also reach TAIFEX, the volume ranking can
+# be fetched here and committed for the agent to read — no WebSearch guessing.
+# This probe measures exactly which hosts the runner can reach.
+
+on:
+  workflow_dispatch: {}
+
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Probe TWSE and TAIFEX endpoints
+        run: |
+          set +e
+          probe() {
+            printf '%-52s ' "$1"
+            code=$(curl -s -o /tmp/body -w '%{http_code}' -m 25 \
+              -H 'User-Agent: Mozilla/5.0' -H 'Referer: https://www.taifex.com.tw/' "$1")
+            printf 'HTTP %s  %s bytes\n' "$code" "$(wc -c < /tmp/body)"
+          }
+
+          echo "--- TWSE (known working: refresh-prices.yml uses this) ---"
+          probe "https://mis.twse.com.tw/stock/api/getStockInfo.jsp?ex_ch=tse_2330.tw&json=1&delay=0"
+          probe "https://openapi.twse.com.tw/v1/exchangeReport/STOCK_DAY_ALL"
+
+          echo "--- TAIFEX (the one that matters for the volume ranking) ---"
+          probe "https://www.taifex.com.tw/cht/3/stockDataDown"
+          probe "https://mis.taifex.com.tw/futures/api/getQuoteList"
+          probe "https://www.taifex.com.tw/cht/3/futDailyMarketReport"
+
+          echo "--- TWSE volume ranking fallback ---"
+          probe "https://openapi.twse.com.tw/v1/exchangeReport/MI_INDEX20"
