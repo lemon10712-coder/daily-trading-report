@@ -103,8 +103,16 @@ function checkPick(label, pick, limits, errors, warnings, requireFields, isMainP
     parsed[key] = val;
   }
 
-  // v2 把風控提升為機器可驗證欄位；v1 舊日報仍維持相容。
-  if (schemaVersion >= 2) {
+  // 2026-08-06 新增：500 元以上「市場觀察」區間定義上就是「買不起、僅供參考、不是可操作
+  // 建議」（見 daily-report-prompt.md 第 8 步），下面 v2 那組「報酬風險比≥2／必填風控欄位」
+  // 是為了真正會拿去下單的交易設計的可驗證門檻，硬套在「本來就說不是建議」的條目上是自相
+  // 矛盾的要求——懷疑這是 8/5 報告生成卡死的根因之一：AI 為了湊出通過驗證的數字，在無上限
+  // 的「改了重驗、還錯再改」迴圈裡一直卡住到沒時間 commit。這裡不對這個區間套用可交易性檢查，
+  // 但漲跌停區間、進場/停損/目標的基本邏輯順序（不管哪個區間都適用）還是照樣驗證。
+  const isMarketObservationOnly = Number.isFinite(parsed.entry) && computePriceTier(parsed.entry) === '500plus';
+
+  // v2 把風控提升為機器可驗證欄位；v1 舊日報仍維持相容。市場觀察區間不適用（見上）。
+  if (schemaVersion >= 2 && !isMarketObservationOnly) {
     for (const field of ['early_stop', 'risk_reward_ratio', 'invalidation_reason']) {
       if (!(field in pick) || pick[field] === '') {
         errors.push(`${label}（${pick.symbol || '無代號'}）缺少 v2 必填欄位 ${field}`);
