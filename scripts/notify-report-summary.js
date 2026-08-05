@@ -36,11 +36,6 @@ const lines = [`台股當沖早報 ${report.date}`, ''];
 if (report.provisional) lines.push('[暫定版] 部分資料尚未定案', '');
 if (report.market_open === false) lines.push('今日休市', '');
 
-const sentiment = report.sentiment || {};
-if (sentiment.score !== undefined) {
-  lines.push(`市場情緒 ${sentiment.score}／100　${String(sentiment.label || '').split('（')[0]}`, '');
-}
-
 // risk_tag runs to several hundred characters per pick — readable on the web
 // page, unreadable as a phone notification. Keep only the first clause so the
 // warning still registers, and point at the site for the full reasoning.
@@ -48,6 +43,30 @@ const firstClause = (text) => {
   const clause = String(text).split(/[；;]/)[0].trim();
   return clause.length > 38 ? `${clause.slice(0, 38)}…` : clause;
 };
+
+// Trim a longer causal statement (sentiment factor / narrative timeline text)
+// to a phone-readable length without cutting it as aggressively as risk_tag —
+// this is the actual content the user asked to receive, not just a flag.
+const trimLong = (text, max) => {
+  const s = String(text).trim();
+  return s.length > max ? `${s.slice(0, max)}…` : s;
+};
+
+const sentiment = report.sentiment || {};
+if (sentiment.score !== undefined) {
+  lines.push(`【今日多空】${sentiment.score}／100　${String(sentiment.label || '').split('（')[0]}`, '');
+  (sentiment.factors || []).forEach((factor) => {
+    const mark = factor.type === 'bull' ? '多' : factor.type === 'bear' ? '空' : '平';
+    lines.push(`[${mark}] ${trimLong(factor.text, 130)}`);
+  });
+  if ((sentiment.factors || []).length) lines.push('');
+}
+
+const narrative = (report.narrative_timeline || []).find((item) => item.current) || (report.narrative_timeline || []).slice(-1)[0];
+if (narrative) {
+  lines.push(`【產業敘事】${narrative.date}`);
+  lines.push(trimLong(narrative.text, 200), '');
+}
 
 const picks = (report.candidates || []).slice(0, 3);
 if (picks.length) {
