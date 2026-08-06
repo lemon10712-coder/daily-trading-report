@@ -37,6 +37,12 @@
 
 ## 第 1 步：抓成交量排行
 
+**優先讀取 GitHub Actions 已經幫你抓好的資料（2026-08-06 新增，先做這個）**：這次 git checkout 下來的 `data/volume-ranking/latest.json` 是 GitHub Actions 在報告生成前用 TWSE 開放資料 API（不受雲端 agent 的 IP 封鎖影響）抓的全市場量值/漲跌幅排行。**如果這個檔案存在、`date` 是今天或最近一個交易日、`candidates` 陣列有 15 檔以上**：直接拿它當候選池基礎，跳過下面第 1.1-1.4 步，改成用 WebSearch 對池子裡每一檔查「[股票代號] 期貨」確認有沒有對應個股期貨合約掛牌（同下面第 4 點的做法），沒有把握的中小型股可以排除，但排除完仍要顧到 8-12 檔的水準。這是 TWSE 現股排行不是 TAIFEX 期貨原始排行，範疇更廣但完全可信、不用像 WebSearch 那樣擔心漏抓或幻覺，`data_quality.warnings` 不需要特別註記使用了這個來源（這是正常路徑，不是降級）。
+
+**這個檔案不存在、過期、或筆數明顯不足**：才需要走下面原本的方法（先試 TAIFEX 直接抓，403 就用 WebSearch 降級），並在 `data_quality.warnings` 註明「volume-ranking/latest.json 未就緒，改用備援方法」。
+
+---
+
 前往 TAIFEX 行情網（mis.taifex.com.tw）「一般交易時段行情 → 股票類契約報價」，篩選到期月份為近月合約。
 
 **這個網站的已知陷阱**（本機用 Playwright 手動操作時踩過）：
