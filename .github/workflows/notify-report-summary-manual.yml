@@ -1,0 +1,22 @@
+name: Manual report summary notify
+
+# 2026-08-06 新增：daily-health.yml 只在台北時間中午前才會把報告內容推播到 LINE
+# （避免下午誤推播成過期報告當「今日早報」），但補發較晚才產生的報告（例如今天
+# CCR 卡死、改成手動在對話中生成）時需要不受時間限制手動觸發一次，所以獨立出來。
+on:
+  workflow_dispatch: {}
+
+jobs:
+  notify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Push report summary to LINE
+        env:
+          LINE_CHANNEL_ACCESS_TOKEN: ${{ secrets.LINE_CHANNEL_ACCESS_TOKEN }}
+        run: node scripts/notify-report-summary.js
