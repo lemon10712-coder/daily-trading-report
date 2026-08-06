@@ -1,6 +1,6 @@
 {
-  "updated_at": "2026/8/6 上午11:10:52",
-  "updated_at_iso": "2026-08-06T03:10:52.487Z",
+  "updated_at": "2026/8/6 上午11:15:50",
+  "updated_at_iso": "2026-08-06T03:15:50.348Z",
   "price_type": "intraday",
   "quote_status": {
     "expected": 12,
@@ -10,8 +10,8 @@
   },
   "prices": {
     "2327": {
-      "price": 570,
-      "change_pct": -1.38,
+      "price": 573,
+      "change_pct": -0.87,
       "source": "yahoo_finance_tw",
       "stale": false
     },
@@ -22,44 +22,44 @@
       "stale": false
     },
     "2344": {
-      "price": 168.5,
-      "change_pct": -0.3,
+      "price": 169.5,
+      "change_pct": 0.3,
       "source": "yahoo_finance_tw",
       "stale": false
     },
     "2345": {
-      "price": 2455,
-      "change_pct": 2.94,
+      "price": 2460,
+      "change_pct": 3.14,
       "source": "yahoo_finance_tw",
       "stale": false
     },
     "2408": {
-      "price": 456,
-      "change_pct": 2.47,
+      "price": 457,
+      "change_pct": 2.7,
       "source": "yahoo_finance_tw",
       "stale": false
     },
     "2454": {
-      "price": 3950,
-      "change_pct": -1.25,
+      "price": 3955,
+      "change_pct": -1.12,
       "source": "yahoo_finance_tw",
       "stale": false
     },
     "3017": {
-      "price": 2905,
-      "change_pct": 6.41,
+      "price": 2930,
+      "change_pct": 7.33,
       "source": "yahoo_finance_tw",
       "stale": false
     },
     "3231": {
-      "price": 191,
-      "change_pct": -1.04,
+      "price": 191.5,
+      "change_pct": -0.78,
       "source": "yahoo_finance_tw",
       "stale": false
     },
     "3711": {
-      "price": 594,
-      "change_pct": 0.17,
+      "price": 596,
+      "change_pct": 0.51,
       "source": "yahoo_finance_tw",
       "stale": false
     },
@@ -72,13 +72,13 @@
     "5289": {
       "price": 1610,
       "change_pct": 9.9,
-      "source": "yahoo_finance_two",
+      "source": "twse_mis",
       "stale": false
     },
     "8299": {
       "price": 2025,
       "change_pct": 9.76,
-      "source": "yahoo_finance_two",
+      "source": "twse_mis",
       "stale": false
     }
   }
