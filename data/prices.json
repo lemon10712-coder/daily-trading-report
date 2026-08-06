@@ -1,6 +1,6 @@
 {
-  "updated_at": "2026/8/6 上午11:40:54",
-  "updated_at_iso": "2026-08-06T03:40:54.808Z",
+  "updated_at": "2026/8/6 上午11:45:58",
+  "updated_at_iso": "2026-08-06T03:45:58.229Z",
   "price_type": "intraday",
   "quote_status": {
     "expected": 12,
@@ -10,44 +10,44 @@
   },
   "prices": {
     "2327": {
-      "price": 563,
-      "change_pct": -2.6,
+      "price": 565,
+      "change_pct": -2.25,
       "source": "yahoo_finance_tw",
       "stale": false
     },
     "2337": {
       "price": 129,
       "change_pct": 9.79,
-      "source": "yahoo_finance_tw",
+      "source": "twse_mis",
       "stale": false
     },
     "2344": {
-      "price": 168,
-      "change_pct": -0.59,
+      "price": 169.5,
+      "change_pct": 0.3,
       "source": "yahoo_finance_tw",
       "stale": false
     },
     "2345": {
-      "price": 2440,
-      "change_pct": 2.31,
+      "price": 2450,
+      "change_pct": 2.73,
       "source": "yahoo_finance_tw",
       "stale": false
     },
     "2408": {
-      "price": 454.5,
-      "change_pct": 2.13,
+      "price": 458,
+      "change_pct": 2.92,
       "source": "yahoo_finance_tw",
       "stale": false
     },
     "2454": {
-      "price": 3955,
-      "change_pct": -1.12,
+      "price": 3940,
+      "change_pct": -1.5,
       "source": "yahoo_finance_tw",
       "stale": false
     },
     "3017": {
-      "price": 2945,
-      "change_pct": 7.88,
+      "price": 2960,
+      "change_pct": 8.42,
       "source": "yahoo_finance_tw",
       "stale": false
     },
@@ -58,21 +58,21 @@
       "stale": false
     },
     "3711": {
-      "price": 592,
-      "change_pct": -0.17,
+      "price": 591,
+      "change_pct": -0.34,
       "source": "yahoo_finance_tw",
       "stale": false
     },
     "4967": {
-      "price": 279.5,
-      "change_pct": 5.27,
+      "price": 280.5,
+      "change_pct": 5.65,
       "source": "yahoo_finance_tw",
       "stale": false
     },
     "5289": {
       "price": 1610,
       "change_pct": 9.9,
-      "source": "yahoo_finance_two",
+      "source": "twse_mis",
       "stale": false
     },
     "8299": {
