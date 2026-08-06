@@ -1,0 +1,69 @@
+name: Generate base report (CCR fallback)
+
+# 2026-08-06 新增：CCR（Claude 雲端 AI routine）8/5、8/6 連續兩天完全卡死沒有產出，
+# 查證後發現 Anthropic 官方狀態頁只對 8/5 有正式事故公告，8/6 沒有——代表 CCR 之後
+# 還會不會穩，沒有人能保證。這個 workflow 是保底層：完全不用 AI、不用 WebSearch，
+# 純粹用 TWSE 官方即時 API 算出一份「數字正確但沒有深度分析」的基礎版報告，
+# 確保就算 CCR 或任何對話 session 都掛掉，使用者每天 08:45 前還是會收到 LINE 通知。
+#
+# 排在 CCR 排程（08:30 Taipei）後 15 分鐘，先檢查今天的 data/latest.json 是不是已經
+# 有更好的內容（CCR 或人工手動生成的），有的話這個 workflow 什麼都不做，不會覆蓋。
+
+on:
+  workflow_dispatch: {}
+
+concurrency:
+  group: generate-base-report
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+
+jobs:
+  generate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Generate base report if today's is missing
+        run: node scripts/generate-base-report.js
+
+      - name: Validate before publishing
+        run: node scripts/validate-report.js
+
+      - name: Commit and push if changed
+        id: commit
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add data/latest.json
+          if git diff --cached --quiet; then
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          echo "changed=true" >> "$GITHUB_OUTPUT"
+          git commit -m "Base report (CCR fallback) for $(TZ=Asia/Taipei date +%Y-%m-%d)"
+          for attempt in 1 2 3; do
+            if git pull --rebase; then
+              git push && exit 0
+            fi
+            if git status --short | grep -q '^UU'; then
+              git checkout --theirs data/latest.json
+              git add data/latest.json
+              git rebase --continue --no-edit || git rebase --abort
+            else
+              git rebase --abort 2>/dev/null || true
+            fi
+            sleep $((attempt * 10))
+          done
+          exit 1
+
+      - name: Push to LINE (only if this workflow actually generated a new base report)
+        if: steps.commit.outputs.changed == 'true'
+        env:
+          LINE_CHANNEL_ACCESS_TOKEN: ${{ secrets.LINE_CHANNEL_ACCESS_TOKEN }}
+        run: node scripts/notify-report-summary.js
