@@ -1,6 +1,6 @@
 {
-  "updated_at": "2026/8/6 上午11:55:49",
-  "updated_at_iso": "2026-08-06T03:55:49.251Z",
+  "updated_at": "2026/8/6 下午12:01:01",
+  "updated_at_iso": "2026-08-06T04:01:01.605Z",
   "price_type": "intraday",
   "quote_status": {
     "expected": 12,
@@ -10,15 +10,15 @@
   },
   "prices": {
     "2327": {
-      "price": 565,
-      "change_pct": -2.25,
+      "price": 568,
+      "change_pct": -1.73,
       "source": "yahoo_finance_tw",
       "stale": false
     },
     "2337": {
       "price": 129,
       "change_pct": 9.79,
-      "source": "twse_mis",
+      "source": "yahoo_finance_tw",
       "stale": false
     },
     "2344": {
@@ -28,51 +28,51 @@
       "stale": false
     },
     "2345": {
-      "price": 2435,
-      "change_pct": 2.1,
+      "price": 2430,
+      "change_pct": 1.89,
       "source": "yahoo_finance_tw",
       "stale": false
     },
     "2408": {
-      "price": 456.5,
-      "change_pct": 2.58,
+      "price": 457.5,
+      "change_pct": 2.81,
       "source": "yahoo_finance_tw",
       "stale": false
     },
     "2454": {
-      "price": 3935,
-      "change_pct": -1.62,
+      "price": 3945,
+      "change_pct": -1.37,
       "source": "yahoo_finance_tw",
       "stale": false
     },
     "3017": {
-      "price": 2935,
-      "change_pct": 7.51,
+      "price": 2940,
+      "change_pct": 7.69,
       "source": "yahoo_finance_tw",
       "stale": false
     },
     "3231": {
-      "price": 188.5,
-      "change_pct": -2.33,
+      "price": 188,
+      "change_pct": -2.59,
       "source": "yahoo_finance_tw",
       "stale": false
     },
     "3711": {
-      "price": 591,
-      "change_pct": -0.34,
+      "price": 593,
+      "change_pct": 0,
       "source": "yahoo_finance_tw",
       "stale": false
     },
     "4967": {
-      "price": 277,
-      "change_pct": 4.33,
-      "source": "twse_mis",
+      "price": 278.5,
+      "change_pct": 4.9,
+      "source": "yahoo_finance_tw",
       "stale": false
     },
     "5289": {
       "price": 1610,
       "change_pct": 9.9,
-      "source": "twse_mis",
+      "source": "yahoo_finance_two",
       "stale": false
     },
     "8299": {
