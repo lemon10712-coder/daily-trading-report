@@ -1,17 +1,23 @@
 {
-  "updated_at": "2026/8/6 下午12:20:48",
-  "updated_at_iso": "2026-08-06T04:20:48.843Z",
+  "updated_at": "2026/8/6 下午12:25:39",
+  "updated_at_iso": "2026-08-06T04:25:39.556Z",
   "price_type": "intraday",
   "quote_status": {
-    "expected": 12,
-    "fresh": 12,
+    "expected": 8,
+    "fresh": 8,
     "is_complete": true,
     "missing_symbols": []
   },
   "prices": {
-    "2327": {
-      "price": 568,
-      "change_pct": -1.73,
+    "2303": {
+      "price": 120.5,
+      "change_pct": -1.23,
+      "source": "yahoo_finance_tw",
+      "stale": false
+    },
+    "2330": {
+      "price": 2370,
+      "change_pct": -1.46,
       "source": "yahoo_finance_tw",
       "stale": false
     },
@@ -24,18 +30,12 @@
     "2344": {
       "price": 169,
       "change_pct": 0,
-      "source": "twse_mis",
-      "stale": false
-    },
-    "2345": {
-      "price": 2415,
-      "change_pct": 1.26,
       "source": "yahoo_finance_tw",
       "stale": false
     },
     "2408": {
-      "price": 454.5,
-      "change_pct": 2.13,
+      "price": 456,
+      "change_pct": 2.47,
       "source": "yahoo_finance_tw",
       "stale": false
     },
@@ -45,40 +45,16 @@
       "source": "yahoo_finance_tw",
       "stale": false
     },
-    "3017": {
-      "price": 2945,
-      "change_pct": 7.88,
+    "3008": {
+      "price": 4600,
+      "change_pct": 0.55,
       "source": "yahoo_finance_tw",
       "stale": false
     },
     "3231": {
       "price": 188,
       "change_pct": -2.59,
-      "source": "twse_mis",
-      "stale": false
-    },
-    "3711": {
-      "price": 592,
-      "change_pct": -0.17,
       "source": "yahoo_finance_tw",
-      "stale": false
-    },
-    "4967": {
-      "price": 277.5,
-      "change_pct": 4.52,
-      "source": "yahoo_finance_tw",
-      "stale": false
-    },
-    "5289": {
-      "price": 1610,
-      "change_pct": 9.9,
-      "source": "twse_mis",
-      "stale": false
-    },
-    "8299": {
-      "price": 2025,
-      "change_pct": 9.76,
-      "source": "twse_mis",
       "stale": false
     }
   }
