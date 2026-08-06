@@ -94,6 +94,16 @@
 - **B 計畫**：突破追價用「站穩前高不破一段時間才追價＋收緊停損」的邏輯，單一收緊停損，不疊加二段式。
 - 明確講清楚什麼情況下 A、B 計畫都不成立就直接放棄不做，寫進 `summary` 文字。
 
+## 第 5d 步：中繼檢查點——先 push 一版基本報告（2026-08-06 新增）
+
+**背景**：8/4 下午把報告結構從固定 2 檔改成多區間彈性數量後，8/5、8/6 兩次早上的執行都在中途卡死、完全沒有 commit 出任何東西，使用者兩天都拿不到報告。無法確認雲端執行環境有沒有時間或回合數上限，但既然抓不到確切原因，**用「分階段交付」直接讓這個失敗模式不可能再發生**：就算後面真的又卡住，至少已經有一版基本報告在使用者手上，不會像現在這樣完全空手。這也是唯一一種能讓「卡在哪一步」變成事後看得出來的做法（每個檢查點都是一次 commit，git log 的時間戳記就是進度記錄）。
+
+做完上面第 5 步（每一檔候選都有 entry/take_profit/target/stop_loss/plan_a/plan_b 這些基本欄位）之後：
+1. 先寫一版 `data/latest.json`，用第 9 步的完整 schema，但 `sentiment`、`narrative_timeline`、`confidence_score`／`confidence_factors`、`news`、`risk_tag` 這些還沒做的欄位可以先給合理預設值或留空（`sentiment.score` 給 50／`label` 給「中性（尚未完成深度分析）」；`news` 給空陣列；`confidence_score` 每檔先給 50）——**這些欄位第 6-9 步做完後會被覆蓋，這裡只是先求有，不用先求好**。
+2. `data_quality.warnings` 加一條「快速檢查點版本：風險體檢/法人動向/國際盤勢/新聞等深度分析尚未完成，稍後會更新完整版」，`provisional` 設 `true`。
+3. 跑一次 `node scripts/validate-report.js`（此時只會驗基本欄位跟漲跌停/邏輯順序，不會擋在深度分析上），沒有 `✗ 錯誤` 就直接 `git add`／`git commit -m "Checkpoint A (candidates ranked) for $(date +%Y-%m-%d)"`／`git push`。
+4. push 完這個檢查點才繼續往下做第 6 步。
+
 ## 第 6 步：三層風險體檢（缺一不可，這是本流程最容易出錯也最重要的一步）
 
 **a. 處置股／注意股體檢**
@@ -122,16 +132,14 @@
 - **每張成本上限＝使用者真實本金新台幣 50 萬**：算一下「進場價 × 1000 股」，如果超過 50 萬，這檔在第 8 步的股價區間分類裡自動落在「500 元以上・市場觀察」（因為 500 元進場價 × 1000 = 50 萬，剛好是門檻），**不算可操作推薦**，只是給使用者參考市場動態用。100-250 元／250-500 元這兩個可操作區間裡的股票，定義上單張成本一定在 50 萬以內，不需要另外做排除判斷。`candidates` 排行仍然可以放全部價位的股票（讓使用者看到市場熱點全貌），每一檔都要在 `risk_tag` 開頭明確標注「單張成本約 XX 萬，超過 50 萬本金上限」（適用時）——這不是可省略的軟性提醒，是必填。發布前 `scripts/validate-report.js` 會用 `進場價 × 1000 > 500000` 這個機器規則，自動幫每一檔（含 candidates 與第 8 步的區間推薦）標記 `affordable`/`lot_cost_ntd`/`capital_note`/`price_tier`/`market_observation_only` 結構化欄位，前端會依這些欄位分區塊渲染——生成階段的 `risk_tag` 標注只是第一道防線，真正生效的是這個機器驗證，兩邊口徑要一致，不要各說各話。
 - **貼近漲停自動降級**：如果某檔當天漲幅已經接近或達到當日合理漲停區間（例如漲幅 ≥ 9%、或已經鎖漲停），**不能把它當作「拉回進場」的 A 計畫主推薦**，因為隔日追高的風險極高、也最容易變成下一波被列注意股/處置股的對象。這種股票只能留在 B 計畫（突破追價、單一收緊停損）當備案，`risk_tag` 要明確寫「貼近漲停，追價風險極高」。如果篩選到最後，「安全牌」或「衝最快」剛好只剩貼近漲停的標的可選、沒有更適合的候補，**寧可把結論誠實降級為「保守觀望」，也不要硬塞一檔貼近漲停的股票進正式推薦**。
 
-## 第 5d 步：中繼檢查點——先 push 一版基本報告（2026-08-06 新增）
+## 第 6d 步：第二個檢查點——風險體檢做完後再 push 一次（2026-08-06 新增）
 
-**背景**：8/4 下午把報告結構從固定 2 檔改成多區間彈性數量後，8/5、8/6 兩次早上的執行都在中途卡死、完全沒有 commit 出任何東西，使用者兩天都拿不到報告。無法確認雲端執行環境有沒有時間或回合數上限，但既然抓不到確切原因，**用「分階段交付」直接讓這個失敗模式不可能再發生**：就算後面真的又卡住，至少已經有一版基本報告在使用者手上，不會像現在這樣完全空手。
+做完上面第 6 步的三層風險體檢（處置股/注意股、國際盤勢＋ADR＋SOX、資金防呆）之後，每一檔的 `risk_tag` 應該都已經補完整：
+1. 更新 `data/latest.json`（`news`／`sentiment`／`narrative_timeline`／`confidence_score` 還是可以維持第 5d 步的預設值，這步只更新 risk_tag 相關內容），`data_quality.warnings` 的說明改成「風險體檢已完成，法人動向/國際盤勢敘事/新聞仍在整理中」。
+2. 跑一次 `node scripts/validate-report.js`，沒有 `✗ 錯誤` 就 `git commit -m "Checkpoint B (risk-checked) for $(date +%Y-%m-%d)"`／`git push`。
+3. push 完才繼續做第 7-9 步（新聞、sentiment、narrative_timeline、confidence_score 這些最後的敘事類欄位），完成後照第 11 步再 commit＋push 一次覆蓋（`provisional` 設回 `false`，訊息維持 `"Daily report for $(date +%Y-%m-%d)"`）。
 
-做完上面第 5 步（每一檔候選都有 entry/take_profit/target/stop_loss/plan_a/plan_b 這些基本欄位）之後：
-1. 先寫一版 `data/latest.json`，用第 9 步的完整 schema，但 `sentiment`、`narrative_timeline`、`confidence_score`／`confidence_factors`、`news` 這些還沒做的欄位可以先給合理預設值（`sentiment.score` 給 50／`label` 給「中性（尚未完成深度分析）」；`news` 給空陣列；`confidence_score` 每檔先給 50）——**這些欄位第 6-9 步做完後會被覆蓋，這裡只是先求有，不用先求好**。
-2. `data_quality.warnings` 加一條「快速檢查點版本：法人動向/國際盤勢/處置股體檢/新聞等深度分析尚未完成，稍後會更新完整版」，`provisional` 設 `true`。
-3. 跑一次 `node scripts/validate-report.js`（此時只會驗基本欄位跟漲跌停/邏輯順序，不會擋在深度分析上），沒有 `✗ 錯誤` 就直接 `git add`／`git commit -m "Quick checkpoint for $(date +%Y-%m-%d)"`／`git push`。
-4. **push 完這個檢查點才繼續往下做第 6-9 步的完整版**，做完後照第 11 步再 commit＋push 一次覆蓋掉檢查點（`provisional` 設回 `false`，訊息維持 `"Daily report for $(date +%Y-%m-%d)"`）。
-5. **如果完整版做到一半明顯感覺時間或資源快耗盡**（例如已經對大半候選做完風險體檢，但新聞/sentiment 還沒做）：**把已經做完的部分寫進去，剩下的老實記進 `data_quality.warnings`，直接 commit push 現有進度**，不要因為想做到完美而完全不 commit——這正是造成 8/5、8/6 兩次空手的原因，不要重蹈覆轍。
+**任何一個檢查點之後、下一個檢查點之前，如果明顯感覺時間或資源快耗盡：把已經做完的部分寫進去，剩下的老實記進 `data_quality.warnings`，直接 commit push 現有進度，不要因為想做到完美而完全不 commit**——這正是造成 8/5、8/6 兩次空手的原因，不要重蹈覆轍。就算最後只走到 Checkpoint A 或 Checkpoint B 就被中斷，使用者手上也會有一份能用的報告，而且事後看 git log 的 commit 時間就知道是卡在候選排名之後、還是風險體檢之後、還是新聞/敘事這最後一段。
 
 ## 第 7 步：新聞：濃縮重點＋多面向延伸分析
 
