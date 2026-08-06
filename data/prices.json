@@ -1,6 +1,6 @@
 {
-  "updated_at": "2026/8/6 上午11:25:46",
-  "updated_at_iso": "2026-08-06T03:25:46.444Z",
+  "updated_at": "2026/8/6 上午11:31:02",
+  "updated_at_iso": "2026-08-06T03:31:02.142Z",
   "price_type": "intraday",
   "quote_status": {
     "expected": 12,
@@ -10,8 +10,8 @@
   },
   "prices": {
     "2327": {
-      "price": 569,
-      "change_pct": -1.56,
+      "price": 566,
+      "change_pct": -2.08,
       "source": "yahoo_finance_tw",
       "stale": false
     },
@@ -22,15 +22,15 @@
       "stale": false
     },
     "2344": {
-      "price": 169,
-      "change_pct": 0,
+      "price": 168.5,
+      "change_pct": -0.3,
       "source": "yahoo_finance_tw",
       "stale": false
     },
     "2345": {
-      "price": 2460,
-      "change_pct": 3.14,
-      "source": "yahoo_finance_tw",
+      "price": 2435,
+      "change_pct": 2.1,
+      "source": "twse_mis",
       "stale": false
     },
     "2408": {
@@ -40,39 +40,39 @@
       "stale": false
     },
     "2454": {
-      "price": 3960,
-      "change_pct": -1,
+      "price": 3950,
+      "change_pct": -1.25,
       "source": "yahoo_finance_tw",
       "stale": false
     },
     "3017": {
-      "price": 2940,
-      "change_pct": 7.69,
+      "price": 2935,
+      "change_pct": 7.51,
       "source": "yahoo_finance_tw",
       "stale": false
     },
     "3231": {
-      "price": 189.5,
-      "change_pct": -1.81,
+      "price": 189,
+      "change_pct": -2.07,
       "source": "yahoo_finance_tw",
       "stale": false
     },
     "3711": {
-      "price": 594,
-      "change_pct": 0.17,
+      "price": 592,
+      "change_pct": -0.17,
       "source": "yahoo_finance_tw",
       "stale": false
     },
     "4967": {
-      "price": 279,
-      "change_pct": 5.08,
+      "price": 278.5,
+      "change_pct": 4.9,
       "source": "yahoo_finance_tw",
       "stale": false
     },
     "5289": {
       "price": 1610,
       "change_pct": 9.9,
-      "source": "twse_mis",
+      "source": "yahoo_finance_two",
       "stale": false
     },
     "8299": {
