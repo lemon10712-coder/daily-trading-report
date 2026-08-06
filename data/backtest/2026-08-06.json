@@ -121,6 +121,11 @@
         "sox_context": {
           "session_date": "2026-08-05",
           "change_pct": -1.4
+        },
+        "causal_analysis": {
+          "summary": "8/3因AI ASIC法說會樂觀情緒與法人買超(單日流入約566億元)帶動連續強漲後，8/6出現獲利了結修正，查無當天具體個股利空公告，判斷為前波急漲後的正常籌碼調節。",
+          "category": "籌碼面",
+          "sources_note": "CMoney投資網誌市場評論＋一般財經新聞"
         }
       }
     },
@@ -182,6 +187,11 @@
         "sox_context": {
           "session_date": "2026-08-05",
           "change_pct": -1.4
+        },
+        "causal_analysis": {
+          "summary": "查無明確驅動消息，查證時查到的股價數字時間戳不明確、與已知收盤基準對不上，未採用不確定的數字。",
+          "category": "查無明確原因",
+          "sources_note": "搜尋結果資料時效性不足"
         }
       }
     },
@@ -244,6 +254,11 @@
         "sox_context": {
           "session_date": "2026-08-05",
           "change_pct": -1.4
+        },
+        "causal_analysis": {
+          "summary": "查無明確驅動消息，未查到與AI伺服器供應鏈相關的具體個股或類股新聞。",
+          "category": "查無明確原因",
+          "sources_note": "搜尋結果未涵蓋當日具體報導"
         }
       }
     },
@@ -313,6 +328,11 @@
         "sox_context": {
           "session_date": "2026-08-05",
           "change_pct": -1.4
+        },
+        "causal_analysis": {
+          "summary": "收盤持平，查無明確驅動消息，晶圓代工類股當天未見具體個股層級消息。",
+          "category": "查無明確原因",
+          "sources_note": "搜尋結果未涵蓋當日具體報導"
         }
       }
     },
@@ -374,6 +394,11 @@
         "sox_context": {
           "session_date": "2026-08-05",
           "change_pct": -1.4
+        },
+        "causal_analysis": {
+          "summary": "TrendForce報告指出2026年DRAM供需吃緊格局未緩解，加上公司7月營收438.68億元、月增49.27%、年增719.61%，連10個月創單月新高，外資近兩日買超約3.77萬張，帶動連3日漲停。",
+          "category": "個股消息",
+          "sources_note": "今週刊產業報導＋法人買賣超統計"
         }
       }
     },
@@ -441,6 +466,11 @@
         "sox_context": {
           "session_date": "2026-08-05",
           "change_pct": -1.4
+        },
+        "causal_analysis": {
+          "summary": "同屬記憶體超級週期族群動能，外資近兩日買超約3.06萬張，跟隨南亞科等同族群個股同步走強。",
+          "category": "類股連動",
+          "sources_note": "今週刊產業報導＋法人買賣超統計"
         }
       }
     },
@@ -502,6 +532,11 @@
         "sox_context": {
           "session_date": "2026-08-05",
           "change_pct": -1.4
+        },
+        "causal_analysis": {
+          "summary": "記憶體族群集體動能延續(南亞科、華邦電同日走強)，帶動旺宏同步大漲逼近漲停，查無旺宏個股專屬的當日利多公告，判斷為類股齊漲的連動效應。",
+          "category": "類股連動",
+          "sources_note": "今週刊產業報導（族群性）"
         }
       }
     }
@@ -536,5 +571,6 @@
     ],
     "scoring_note": "0-100；綜合方向、當沖波動、進場捕捉與交易結果。未成交不直接算虧損。"
   },
-  "narrative": "總評：推薦 0 檔，實際觸發 0 檔，未進場 0 檔；獲利 0、虧損 0。\n策略品質：部分正確，需調整，平均 58.8 分。"
+  "narrative": "總評：推薦 0 檔，實際觸發 0 檔，未進場 0 檔；獲利 0、虧損 0。\n策略品質：部分正確，需調整，平均 58.8 分。",
+  "causal_analysis_generated_at": "2026-08-06 23:22"
 }
