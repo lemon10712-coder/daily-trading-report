@@ -1,6 +1,6 @@
 {
-  "updated_at": "2026/8/10 上午10:40:47",
-  "updated_at_iso": "2026-08-10T02:40:47.095Z",
+  "updated_at": "2026/8/10 上午10:45:49",
+  "updated_at_iso": "2026-08-10T02:45:49.047Z",
   "price_type": "intraday",
   "quote_status": {
     "expected": 15,
@@ -10,21 +10,21 @@
   },
   "prices": {
     "1303": {
-      "price": 191.5,
-      "change_pct": 1.86,
-      "source": "twse_mis",
+      "price": 188.5,
+      "change_pct": 0.27,
+      "source": "yahoo_finance_tw",
       "stale": false
     },
     "2303": {
-      "price": 122,
-      "change_pct": 5.17,
-      "source": "twse_mis",
+      "price": 121.5,
+      "change_pct": 4.74,
+      "source": "yahoo_finance_tw",
       "stale": false
     },
     "2308": {
       "price": 1815,
       "change_pct": 10,
-      "source": "twse_mis",
+      "source": "yahoo_finance_tw",
       "stale": false
     },
     "2327": {
@@ -54,43 +54,43 @@
     "2408": {
       "price": 502,
       "change_pct": 9.85,
-      "source": "twse_mis",
+      "source": "yahoo_finance_tw",
       "stale": false
     },
     "2454": {
-      "price": 3975,
-      "change_pct": 1.92,
+      "price": 3985,
+      "change_pct": 2.18,
       "source": "yahoo_finance_tw",
       "stale": false
     },
     "3037": {
-      "price": 988,
-      "change_pct": 3.46,
+      "price": 986,
+      "change_pct": 3.25,
       "source": "twse_mis",
       "stale": false
     },
     "3189": {
-      "price": 830,
-      "change_pct": 0.85,
+      "price": 826,
+      "change_pct": 0.36,
       "source": "twse_mis",
       "stale": false
     },
     "3481": {
       "price": 52.3,
       "change_pct": 9.99,
-      "source": "yahoo_finance_tw",
+      "source": "twse_mis",
       "stale": false
     },
     "4958": {
-      "price": 485,
-      "change_pct": 2.54,
+      "price": 485.5,
+      "change_pct": 2.64,
       "source": "yahoo_finance_tw",
       "stale": false
     },
     "6213": {
       "price": 427.5,
       "change_pct": 9.9,
-      "source": "yahoo_finance_tw",
+      "source": "twse_mis",
       "stale": false
     },
     "6770": {
