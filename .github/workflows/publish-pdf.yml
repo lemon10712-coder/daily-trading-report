@@ -7,7 +7,13 @@ on:
       - 'data/backtest-latest.json'
       - 'scripts/generate-pdf.py'
   workflow_run:
-    workflows: ['Daily backtest']
+    # "Daily backtest" 見下方註解。"Generate base report (CCR fallback)" 2026-08-11
+    # 新增：這支腳本也用預設 GITHUB_TOKEN commit（同樣的反遞迴限制），且它現在是
+    # 每天 08:20 就跑的主力保底層——沒有這個 trigger，08:20 產生的基礎版報告會
+    # 完全沒有 PDF，一路空窗到下午 14:20 backtest 跑完才補上，這段期間
+    # daily-health.yml 的「morning PDF is missing」檢查會誤判成失敗（2026-08-10/11
+    # 的 gh run 紀錄證實了這個空窗確實發生過）。
+    workflows: ['Daily backtest', 'Generate base report (CCR fallback)']
     types: [completed]
   workflow_dispatch: {}
 

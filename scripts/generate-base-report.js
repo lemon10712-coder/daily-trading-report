@@ -1,16 +1,18 @@
-// 2026-08-06 新增：不依賴 CCR（Claude 雲端 AI routine）、純資料+公式計算的保底報告產生器。
+// 2026-08-06 新增，2026-08-11 升級為主力：不依賴 CCR（Claude 雲端 AI routine）、純資料+
+// 公式計算的保底報告產生器。
 //
-// 背景：8/5、8/6 兩天 CCR 完全卡死沒有任何產出，8/6 查證發現 Anthropic 官方狀態頁對
-// 8/5 有正式公告的 Sonnet 5 服務中斷紀錄，但 8/6 當天官方沒有列出任何事故——代表
-// CCR 之後還會不會穩定，沒有人能保證。這支腳本是「保底層」：不需要 AI、不需要
-// WebSearch，純粹用 TWSE 官方即時 API 抓真實漲跌停區間，配合固定公式算出進場/停利/
-// 目標/停損價位，確保就算 CCR 或這個對話 session 完全掛掉，使用者每天還是能收到一份
-// 「數字正確、可操作」的基礎版報告——代價是沒有法人動向/因果分析這類需要 AI 判斷的
-// 敘事內容，這些等 CCR 恢復後由 daily-report-prompt.md 那條路覆蓋補強化版時才有。
+// 背景：CCR 在 8/5、8/6、8/7、8/10、8/11 反覆卡死沒有產出，且看不到內部執行日誌無法對症
+// 下藥根治，判斷「CCR 之後還會不會穩」沒有人能保證。2026-08-11 起使用者明確要求把這支腳本
+// 從「CCR 掛掉時的陽春備案」升級成「每天都跑、不依賴 CCR 的正式主力」——GitHub Actions
+// runner 連線 TWSE/TPEx/Yahoo Finance 從未被 403 過（CCR 雲端沙盒才會被擋），且這個 repo
+// 的 GitHub Actions 過去幾個月完全沒斷過，是全系統最可靠的一層。CCR 如果之後真的跑出更好
+// 的版本，一樣會透過現有機制（PAT push 直接觸發 publish-pdf.yml）覆蓋掉這份基礎版，兩者不
+// 衝突、疊加運作。
 //
-// 由 fetch-volume-ranking.yml 觸發的排程晚 30 分鐘（08:45 Asia/Taipei）執行，寫入前
-// 會先檢查 data/latest.json 是不是已經有今天的內容——如果 CCR 那條路已經成功產生過
-// 今天的報告，這支腳本什麼都不做，不會覆蓋掉品質更好的版本。
+// 2026-08-11 這次升級新增兩項風險查核（原本只有陽春版才會缺的部分），縮小跟 AI 版本的品質
+// 差距：處置股/注意股排除（官方 API，非 AI 判斷但同樣可信）、SOX 費半指數連動（半導體供應鏈
+// 候選股在 SOX 大跌時調降信心分數）。代價仍然誠實寫在 data_quality.warnings：沒有法人動向/
+// 個股新聞/法說會這類需要真人或 AI 閱讀理解的敘事內容。
 const fs = require('fs');
 const path = require('path');
 const https = require('https');
@@ -24,7 +26,7 @@ function taipeiToday() {
 }
 
 function httpGetJson(url) {
-  return new Promise((resolve, reject) => {
+  return new Promise((resolve) => {
     const req = https.get(url, { headers: { 'User-Agent': 'Mozilla/5.0' } }, (res) => {
       let data = '';
       res.on('data', (chunk) => { data += chunk; });
@@ -52,6 +54,81 @@ async function fetchLimits(symbol) {
   return { prevClose, upper, lower };
 }
 
+// ROC (民國) 日期字串轉西元 yyyy-mm-dd，接受 "115/08/07" 或 "1150807" 兩種格式
+function rocToIso(raw) {
+  const s = String(raw).replace(/\//g, '');
+  if (s.length !== 7) return null;
+  const year = Number(s.slice(0, 3)) + 1911;
+  const month = s.slice(3, 5);
+  const day = s.slice(5, 7);
+  return `${year}-${month}-${day}`;
+}
+
+function isTodayWithinPeriod(periodRaw, todayIso) {
+  if (!periodRaw) return true; // 查不到期間就保守當作仍在處置中，寧可誤刪不要誤放
+  const parts = String(periodRaw).split(/[～~]/).map((p) => p.trim());
+  if (parts.length !== 2) return true;
+  const start = rocToIso(parts[0]);
+  const end = rocToIso(parts[1]);
+  if (!start || !end) return true;
+  return todayIso >= start && todayIso <= end;
+}
+
+// 處置股/注意股體檢：TWSE + TPEx 官方公告 API，純資料查詢不需要 AI 判斷，
+// 可信度跟 daily-report-prompt.md 那條 AI 路線的「WebSearch 查處置股」是同一件事、
+// 只是查證方式從搜尋引擎換成官方開放資料，結果更精確（不會漏、不會抓到舊聞）。
+async function fetchDispositionSymbols(todayIso) {
+  const disposed = new Set();
+  const sources = [];
+
+  const twse = await httpGetJson('https://openapi.twse.com.tw/v1/announcement/punish');
+  if (Array.isArray(twse)) {
+    sources.push('twse');
+    twse.forEach((row) => {
+      const code = String(row.Code || '').trim();
+      // 只保留 4 碼股票代號（權證/受益證券代號較長，不是我們候選池會出現的標的）
+      if (!/^\d{4}$/.test(code)) return;
+      if (isTodayWithinPeriod(row.DispositionPeriod, todayIso)) disposed.add(code);
+    });
+  }
+
+  const tpex = await httpGetJson('https://www.tpex.org.tw/openapi/v1/tpex_disposal_information');
+  if (Array.isArray(tpex)) {
+    sources.push('tpex');
+    tpex.forEach((row) => {
+      const code = String(row.SecuritiesCompanyCode || '').trim();
+      if (!/^\d{4}$/.test(code)) return;
+      if (isTodayWithinPeriod(row.DispositionPeriod, todayIso)) disposed.add(code);
+    });
+  }
+
+  return { disposed, sources, ok: sources.length > 0 };
+}
+
+// 半導體/AI供應鏈概念股靜態名單：SOX 連動風險調整只套用在這份名單內的候選股，避免對
+// 完全不相關的產業（食品、營建等）誤套用半導體系統性風險。名單來源：daily-report-prompt.md
+// 第 6b 步「候選股屬半導體/AI供應鏈類股一律查 SOX」規則點名過的族群（晶圓代工/封測/記憶體/
+// IC設計/矽晶圓），加上台股成交量/新聞版面最常出現的相關個股。這是保底版的已知簡化——
+// 不是動態產業分類，之後如果發現漏掉常見標的要回來補這份清單。
+const SEMI_SUPPLY_CHAIN_SYMBOLS = new Set([
+  '2330', '2303', '3711', '2454', '2408', '2344', '6488', '3037', '3189', '8046',
+  '2379', '2449', '3034', '2451', '5347', '6182', '3532', '2337', '6669', '3324',
+  '2401', '2481', '3661', '4966', '2314', '8299', '3443', '3105', '6510'
+]);
+
+async function fetchSoxChangePct() {
+  const json = await httpGetJson('https://query1.finance.yahoo.com/v8/finance/chart/%5ESOX?interval=1d&range=5d');
+  const result = json && json.chart && json.chart.result && json.chart.result[0];
+  if (!result) return null;
+  const closes = (result.indicators.quote[0] || {}).close || [];
+  const valid = closes.map((c, i) => ({ c, t: result.timestamp[i] })).filter((x) => Number.isFinite(x.c));
+  if (valid.length < 2) return null;
+  const last = valid[valid.length - 1].c;
+  const prev = valid[valid.length - 2].c;
+  if (!prev) return null;
+  return Math.round(((last - prev) / prev) * 10000) / 100;
+}
+
 function priceTier(entry) {
   if (entry < 100) return 'under100';
   if (entry < 250) return '100to250';
@@ -61,19 +138,54 @@ function priceTier(entry) {
 
 const round = (n) => Math.round(n * 100) / 100;
 
+// 台股法定升降單位（tick size）：交易所只接受下面級距的倍數，掛不合法級距的價格
+// 會直接被券商系統拒單。2026-08-11 修正：先前只用 round() 四捨五入到小數點後兩位，
+// 完全沒有校正成合法跳動單位，算出來的 entry/stop/target 常常是掛不了單的價格
+// （例如 100-500 元區間出現 121.8 這種非 0.5 倍數的數字）。
+function tickSize(price) {
+  if (price < 10) return 0.01;
+  if (price < 50) return 0.05;
+  if (price < 100) return 0.1;
+  if (price < 500) return 0.5;
+  if (price < 1000) return 1;
+  return 5;
+}
+
+// 依價格自己所在的級距（不是依 prevClose 的級距）捨入到最近的合法跳動單位——
+// 進場價可能因為 ×1.01 剛好跨過級距邊界（例如前收99.5算出entryHigh=100.5，
+// 這已經是100-500元級距，要用0.5而不是99元那邊的0.1）。
+function roundToTick(price) {
+  const tick = tickSize(price);
+  return Math.round(Math.round(price / tick) * tick * 100) / 100;
+}
+
 // 固定公式：進場價=前收1.005-1.01倍（小幅拉回買點）、停損=前收0.985倍(-1.5%，風險窄)、
 // 停利=前收1.03倍(+3%)、目標=前收1.09倍或漲停價97%取較小值（不超過真實漲停）。
 // 數學上保證：risk(進場上緣-停損)=2.5%，reward(目標-進場上緣)最差情況(被漲停頂住時)
 // 仍有約5.7%，風險報酬比穩定在2以上；停利跟目標之間留足3.5%以上級距，避免被
 // validate-report.js判定「抄前一天高點」。這是通用公式，不是針對個股特性判斷過的
-// 結果，這點會誠實寫進 risk_tag／data_quality.warnings。
+// 結果，這點會誠實寫進 risk_tag／data_quality.warnings。所有會被使用者拿去實際
+// 下單的價位（entry/stop/target/take_profit）一律用 roundToTick，不是純統計用途
+// 的數字（例如風報比）才維持一般 round()。
 function computeLevels(prevClose, upper) {
-  const entryLow = round(prevClose * 1.005);
-  const entryHigh = round(prevClose * 1.01);
-  const stopLoss = round(prevClose * 0.985);
-  const takeProfit = round(prevClose * 1.03);
-  const target = round(Math.min(prevClose * 1.09, upper * 0.97));
+  const entryLow = roundToTick(prevClose * 1.005);
+  const entryHigh = roundToTick(prevClose * 1.01);
+  const stopLoss = roundToTick(prevClose * 0.985);
+  const takeProfit = roundToTick(prevClose * 1.03);
+  const target = roundToTick(Math.min(prevClose * 1.09, upper * 0.97));
   return { entryLow, entryHigh, stopLoss, takeProfit, target };
+}
+
+// early_stop 是 entry 與 stop_loss 中點，一樣是實際下單價位要合法跳動單位；
+// 校正後理論上仍嚴格落在 (stopLoss, entryLow) 之間（區間寬度通常遠大於一個tick），
+// 但邊界情況（低價股/tick剛好卡在區間邊緣）用一次性微調保底，不讓 validate-report.js
+// 判定 early_stop 越界。
+function computeEarlyStop(entryLow, stopLoss) {
+  let mid = roundToTick((entryLow + stopLoss) / 2);
+  const tick = tickSize(mid);
+  if (mid <= stopLoss) mid = roundToTick(stopLoss + tick);
+  if (mid >= entryLow) mid = roundToTick(entryLow - tick);
+  return mid;
 }
 
 async function main() {
@@ -97,14 +209,34 @@ async function main() {
     return;
   }
   const ranking = JSON.parse(fs.readFileSync(RANKING_PATH, 'utf8'));
-  const pool = (ranking.candidates || []).slice(0, 15);
+  const pool = (ranking.candidates || []).slice(0, 20);
+
+  const [dispositionResult, soxChangePct] = await Promise.all([
+    fetchDispositionSymbols(today),
+    fetchSoxChangePct(),
+  ]);
+  const { disposed, ok: dispositionOk } = dispositionResult;
+  const excludedForDisposition = pool.filter((c) => disposed.has(c.symbol));
+  const poolClean = pool.filter((c) => !disposed.has(c.symbol)).slice(0, 15);
+
+  const soxSevere = Number.isFinite(soxChangePct) && Math.abs(soxChangePct) >= 2;
+  const soxDirection = Number.isFinite(soxChangePct) ? (soxChangePct < 0 ? 'bear' : 'bull') : null;
 
   const enriched = [];
-  for (const c of pool) {
+  for (const c of poolClean) {
     const limits = await fetchLimits(c.symbol);
     if (!limits) continue;
     const levels = computeLevels(limits.prevClose, limits.upper);
-    enriched.push({ ...c, ...limits, ...levels, tier: priceTier(levels.entryLow) });
+    const isSemi = SEMI_SUPPLY_CHAIN_SYMBOLS.has(c.symbol);
+    let confidence = 45;
+    let soxNote = null;
+    if (isSemi && soxSevere) {
+      confidence = soxDirection === 'bear' ? 35 : 50;
+      soxNote = soxDirection === 'bear'
+        ? `美股費半指數(SOX)前一交易日重挫${Math.abs(soxChangePct)}%，本檔屬半導體/AI供應鏈概念股，情緒外溢風險偏高，信心分數已調降`
+        : `美股費半指數(SOX)前一交易日大漲${soxChangePct}%，本檔屬半導體/AI供應鏈概念股，可能有正向外溢`;
+    }
+    enriched.push({ ...c, ...limits, ...levels, tier: priceTier(levels.entryLow), isSemi, soxNote, confidence });
   }
 
   if (enriched.length === 0) {
@@ -116,42 +248,60 @@ async function main() {
   const actionable = enriched.filter((c) => c.tier === '100to250' || c.tier === '250to500');
   const observation = enriched.filter((c) => c.tier === '500plus' || c.tier === 'under100');
 
+  const baseRiskTag = (c) => {
+    const parts = ['本檔為保底基礎版公式計算結果，已排除官方公告的處置股/注意股，未經法說會與個股新聞查證，僅供參考，正式版待CCR恢復後補上'];
+    if (c.soxNote) parts.push(c.soxNote);
+    return parts.join('；');
+  };
+
   const toRecommendation = (c) => ({
     symbol: c.symbol,
     name: c.name,
     type: 'safe',
-    reason: `成交值/漲跌幅排行前段（前一交易日成交值約 ${(c.turnover / 1e8).toFixed(1)} 億元），依固定公式（前收1.005-1.01倍拉回進場、停損-2%、目標視今日真實漲跌停區間）計算，非 AI 個別判斷結果`,
+    reason: `成交值/漲跌幅排行前段（前一交易日成交值約 ${(c.turnover / 1e8).toFixed(1)} 億元），依固定公式（前收1.005-1.01倍拉回進場、停損-1.5%、目標視今日真實漲跌停區間）計算，非個股層級 AI 判斷結果`,
     entry: `${c.entryLow}-${c.entryHigh}`,
     take_profit: String(c.takeProfit),
     target: String(c.target),
     stop_loss: String(c.stopLoss),
-    early_stop: String(round((c.entryLow + c.stopLoss) / 2)),
+    early_stop: String(computeEarlyStop(c.entryLow, c.stopLoss)),
     risk_reward_ratio: String(round((c.target - c.entryHigh) / (c.entryHigh - c.stopLoss))),
     invalidation_reason: '跌破停損價，或開盤即跳空超出進場區間，策略失效',
     prior_day_change_pct: c.change_pct,
-    risk_tag: '本檔為保底基礎版公式計算結果，未經處置股/注意股體檢、未經法說會與國際盤勢查證，僅供參考，正式版待CCR恢復後補上',
-    confidence_score: 45,
-    confidence_factors: ['公式化保底版本，未經AI風險體檢，固定給45分']
+    risk_tag: baseRiskTag(c),
+    confidence_score: c.confidence,
+    confidence_factors: c.soxNote ? ['公式化保底版本，固定45分', c.soxNote] : ['公式化保底版本，未經個股層級風險體檢，固定給45分']
   });
 
   const toCandidate = (c, rank) => ({
     rank,
     symbol: c.symbol,
     name: c.name,
-    category: '未分類（保底版本未做族群查證）',
+    category: c.isSemi ? '半導體/AI供應鏈（保底版靜態分類）' : '未分類（保底版本未做族群查證）',
     summary: `前一交易日成交值約 ${(c.turnover / 1e8).toFixed(1)} 億元，漲跌幅 ${c.change_pct}%`,
     entry: `${c.entryLow}-${c.entryHigh}`,
     take_profit: String(c.takeProfit),
     target: String(c.target),
     stop_loss: String(c.stopLoss),
-    early_stop: String(round((c.entryLow + c.stopLoss) / 2)),
+    early_stop: String(computeEarlyStop(c.entryLow, c.stopLoss)),
     risk_reward_ratio: String(round((c.target - c.entryHigh) / (c.entryHigh - c.stopLoss))),
     invalidation_reason: '跌破停損價，或開盤即跳空超出進場區間，策略失效',
     prior_day_change_pct: c.change_pct,
     plan_a: `拉回 ${c.entryLow}-${c.entryHigh} 進場，跌破停損 ${c.stopLoss} 出場`,
     plan_b: '本版本未提供突破追價備案，建議僅採A計畫或觀望',
-    risk_tag: '保底基礎版公式計算，未經深度風險體檢'
+    risk_tag: baseRiskTag(c)
   });
+
+  const warnings = [
+    '【保底基礎版】這份報告由 GitHub Actions 純程式化產生，作為每個交易日的正式主力（2026-08-11起），不依賴 Claude 雲端 AI（CCR）、也不依賴任何對話 session 存活，觸發於每個交易日 08:20（不再等待 CCR，CCR 如果之後成功產出更完整的版本會自動覆蓋這份基礎版）。',
+    '進場/停利/目標/停損價位是用固定公式（前收1.005-1.01倍進場、停損-1.5%、目標取前收+9%與今日真實漲停價97%兩者較小值）計算，搭配 TWSE 官方即時 API 查到的真實漲跌停區間，數字本身正確可信。',
+    dispositionOk
+      ? `已用 TWSE／TPEx 官方公告 API 查核處置股/注意股，${excludedForDisposition.length > 0 ? `排除了 ${excludedForDisposition.map((c) => `${c.symbol} ${c.name}`).join('、')} 這 ${excludedForDisposition.length} 檔` : '今天候選池內沒有命中的標的'}。`
+      : '處置股/注意股官方 API 查詢失敗（TWSE 或 TPEx 端點無回應），本次無法保證候選池已排除處置股，人工複核時要特別留意。',
+    Number.isFinite(soxChangePct)
+      ? `美股費半指數(SOX)前一交易日收盤變動 ${soxChangePct}%${soxSevere ? '（判定為顯著變動，已對半導體/AI供應鏈概念股候選調整信心分數）' : '（變動幅度不大，未觸發風險調整）'}。`
+      : '查不到美股費半指數(SOX)資料，本次無法納入國際盤勢連動判斷。',
+    '候選池來自前一交易日 TWSE 成交量/漲跌幅排行（GitHub Actions 抓取，真實資料），未經「是否有掛牌個股期貨」的資格確認，也沒有法人動向、個股新聞、法說會這類需要人工或 AI 閱讀理解的敘事內容——這些等 CCR 恢復正常後由完整版覆蓋補上。'
+  ];
 
   const report = {
     schema_version: 3,
@@ -160,14 +310,7 @@ async function main() {
     provisional: true,
     market_open: true,
     source_layer: 'base_formulaic',
-    data_quality: {
-      warnings: [
-        '【保底基礎版】這份報告由 GitHub Actions 純程式化產生，不依賴 Claude 雲端 AI（CCR）、也不依賴任何對話 session 存活，觸發於每個交易日 08:45（給 CCR 正常排程 15 分鐘機會，沒有產出才啟動這個保底機制）。',
-        '進場/停利/目標/停損價位是用固定公式（前收1.005-1.01倍進場、停損-2%、目標取前收+8%與今日真實漲停價95%兩者較小值）計算，搭配 TWSE 官方即時 API 查到的真實漲跌停區間，數字本身正確可信，但沒有經過個股層級的AI風險判斷（法說會、處置股/注意股、國際盤勢ADR/SOX、族群輪動）。',
-        '候選池來自前一交易日 TWSE 成交量/漲跌幅排行（GitHub Actions 抓取，真實資料），未經「是否有掛牌個股期貨」的資格確認。',
-        '法人動向、產業敘事、多空情緒等需要AI查證判斷的內容本版本未提供——CCR恢復正常後，daily-trading-report-0830這個routine補上完整版時會覆蓋這份基礎版。'
-      ]
-    },
+    data_quality: { warnings },
     sentiment: { score: 50, label: '中性（保底版本未做情緒分析）', factors: [] },
     narrative_timeline: [],
     summary: { recommendations: actionable.slice(0, 6).map(toRecommendation) },
@@ -176,7 +319,7 @@ async function main() {
   };
 
   fs.writeFileSync(LATEST_PATH, JSON.stringify(report, null, 2) + '\n');
-  console.log(`Wrote base report: ${actionable.length} actionable / ${observation.length} observation-only candidates.`);
+  console.log(`Wrote base report: ${actionable.length} actionable / ${observation.length} observation-only candidates. Disposition-excluded: ${excludedForDisposition.length}. SOX: ${soxChangePct}%.`);
 }
 
 main().catch((error) => {

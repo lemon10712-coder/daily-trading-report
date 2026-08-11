@@ -118,13 +118,18 @@ def styled_table(rows, widths, header=True):
     return table
 
 
+TYPE_LABELS = {"safe": "安全牌", "aggressive": "衝最快"}
+
+
 def pick_rows(report: dict):
+    # schema v3（2026-07-28 起，daily-report-prompt.md 與 generate-base-report.js 都用這個
+    # 結構）用 summary.recommendations 陣列，不是舊版固定的 safe_pick/aggressive_pick 兩個鍵。
+    # 2026-08-11 修正：這裡先前還在找已經不存在的舊鍵，導致「一、今日主策略」這個最重要的
+    # 區塊在 PDF 裡從 schema v3 上線後就一直是空的，沒有人發現。
     rows = [["類型", "股票", "進場", "停利", "目標", "停損", "風險"]]
     summary = report.get("summary") or {}
-    for label, key in [("安全牌", "safe_pick"), ("衝最快", "aggressive_pick")]:
-        item = summary.get(key)
-        if not item:
-            continue
+    for item in (summary.get("recommendations") or []):
+        label = TYPE_LABELS.get(item.get("type"), "推薦")
         rows.append([
             label,
             f"{item.get('name', '')} {item.get('symbol', '')}",
@@ -149,13 +154,12 @@ def build_story(report: dict, backtest: dict | None = None, learning: dict | Non
     summary = report.get("summary") or {}
     story.append(p("一、今日主策略", "H1CJ"))
     if summary:
-        for label, key in [("安全牌", "safe_pick"), ("衝最快", "aggressive_pick")]:
-            item = summary.get(key)
-            if item:
-                story.append(KeepTogether([
-                    p(f"{label}｜{item.get('name', '')}（{item.get('symbol', '')}）", "H2CJ"),
-                    p(item.get("reason", "")),
-                ]))
+        for item in (summary.get("recommendations") or []):
+            label = TYPE_LABELS.get(item.get("type"), "推薦")
+            story.append(KeepTogether([
+                p(f"{label}｜{item.get('name', '')}（{item.get('symbol', '')}）", "H2CJ"),
+                p(item.get("reason", "")),
+            ]))
         story.append(styled_table(pick_rows(report), [19*mm, 29*mm, 22*mm, 18*mm, 18*mm, 18*mm, 56*mm]))
     else:
         story.append(p("今天沒有通過風控的正式推薦；空手也是正式策略。", "GoodCJ"))
