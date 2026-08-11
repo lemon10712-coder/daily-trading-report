@@ -129,6 +129,27 @@ async function fetchSoxChangePct() {
   return Math.round(((last - prev) / prev) * 10000) / 100;
 }
 
+// 交易日曆檢查（2026-08-11 新增）：2026-07-10 曾發生颱風全日休市當天，AI 那條路線
+// 因為沒查交易日曆，照樣生出一份給不存在交易日用的進場建議。這支保底層原本完全沒有
+// 這層防呆——CCR 掛掉時剛好又遇到國定假日，一樣會重演同一種錯誤，而且保底層現在是
+// 每天 08:20 就跑的主力，暴露機會比以前更高。用 TWSE 官方年度休市日曆 API 查核。
+// 已知限制：這份年度日曆只涵蓋「事先排定的國定假日」（春節/國慶等），不包含颱風假這種
+// 臨時性、氣象決定的當日休市——TWSE 沒有提供「今天是否颱風假」的公開即時 API，這個
+// 保底層目前無法自動偵測颱風假，仍然是已知殘留風險（跟 CCR 那條路線一樣，颱風假要
+// 靠其他管道才查得到）。
+async function isKnownHoliday(todayIso) {
+  const json = await httpGetJson('https://openapi.twse.com.tw/v1/holidaySchedule/holidaySchedule');
+  if (!Array.isArray(json)) return { isHoliday: null, name: null }; // 查詢失敗，無法判斷
+  const hit = json.find((row) => rocToIso(row.Date) === todayIso);
+  if (!hit) return { isHoliday: false, name: null };
+  // 日曆裡也包含「開始交易日」這類描述當天正常交易的條目（不是休市），只有名稱/說明
+  // 明確講「放假」「休市」「無交易」才算真的休市，避免把「春節後開始交易日」誤判成休市。
+  const text = `${hit.Name}${hit.Description}`;
+  const isTrading = /開始交易|恢復交易/.test(hit.Name);
+  const isClosed = !isTrading && /放假|休市|無交易/.test(text);
+  return { isHoliday: isClosed, name: hit.Name };
+}
+
 function priceTier(entry) {
   if (entry < 100) return 'under100';
   if (entry < 250) return '100to250';
@@ -201,6 +222,31 @@ async function main() {
       console.log('Base report for today already generated — skipping duplicate run.');
       return;
     }
+  }
+
+  const holidayCheck = await isKnownHoliday(today);
+  if (holidayCheck.isHoliday) {
+    console.log(`今天（${today}）是台股休市日「${holidayCheck.name}」（TWSE官方年度日曆），寫入休市版報告，不產生進場建議。`);
+    const report = {
+      schema_version: 3,
+      date: today,
+      generated_at: new Date().toLocaleString('sv-SE', { timeZone: 'Asia/Taipei' }).slice(0, 16),
+      provisional: false,
+      market_open: false,
+      market_closed_reason: holidayCheck.name,
+      source_layer: 'base_formulaic',
+      data_quality: { warnings: [`今天是台股休市日（${holidayCheck.name}，TWSE官方年度日曆查得），不產生進場建議。`] },
+      sentiment: { score: 50, label: '休市', factors: [] },
+      narrative_timeline: [],
+      summary: { recommendations: [] },
+      candidates: [],
+      news: []
+    };
+    fs.writeFileSync(LATEST_PATH, JSON.stringify(report, null, 2) + '\n');
+    return;
+  }
+  if (holidayCheck.isHoliday === null) {
+    console.log('警告：TWSE官方休市日曆查詢失敗，無法確認今天是否為交易日，繼續照一般交易日流程產生報告（可能有誤判風險，人工複核時留意）。');
   }
 
   if (!fs.existsSync(RANKING_PATH)) {
