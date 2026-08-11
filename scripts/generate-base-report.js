@@ -10,7 +10,7 @@
 // 衝突、疊加運作。
 //
 // 2026-08-11 這次升級新增兩項風險查核（原本只有陽春版才會缺的部分），縮小跟 AI 版本的品質
-// 差距：處置股/注意股排除（官方 API，非 AI 判斷但同樣可信）、SOX 費半指數連動（半導體供應鏈
+// 差距：處置股排除（官方 API，非 AI 判斷但同樣可信；注意股目前未查核，見下方函式註解）、SOX 費半指數連動（半導體供應鏈
 // 候選股在 SOX 大跌時調降信心分數）。代價仍然誠實寫在 data_quality.warnings：沒有法人動向/
 // 個股新聞/法說會這類需要真人或 AI 閱讀理解的敘事內容。
 const fs = require('fs');
@@ -74,9 +74,17 @@ function isTodayWithinPeriod(periodRaw, todayIso) {
   return todayIso >= start && todayIso <= end;
 }
 
-// 處置股/注意股體檢：TWSE + TPEx 官方公告 API，純資料查詢不需要 AI 判斷，
+// 處置股體檢：TWSE + TPEx 官方公告 API，純資料查詢不需要 AI 判斷，
 // 可信度跟 daily-report-prompt.md 那條 AI 路線的「WebSearch 查處置股」是同一件事、
 // 只是查證方式從搜尋引擎換成官方開放資料，結果更精確（不會漏、不會抓到舊聞）。
+// 2026-08-11 round 3 自我審視發現：這裡只查了「處置」（announcement/punish、
+// tpex_disposal_information），沒有查「注意股」（處置的前一階段，daily-report-prompt.md
+// 定義風險偏高但還能交易）。TWSE 有 announcement/notice 這支 API 疑似對應注意股，
+// 但今天測試回傳的是一筆 Code 為空的預留格式列，無法判斷是「今天真的沒有注意股」還是
+// 「這支 API 本身沒查對」，沒有把握的資料來源不能拿來當「已排除」的依據去騙自己/騙
+// 使用者，所以刻意不接——寧可誠實承認「注意股本版本未查核」，也不要接一個沒驗證過在
+// 真正有資料的日子會不會正常運作的來源。之後如果要補這塊，要先在真的有注意股的交易日
+// 驗證這支 API（或找到 TPEx 對應端點）會不會正確回傳，再接進來。
 async function fetchDispositionSymbols(todayIso) {
   const disposed = new Set();
   const sources = [];
@@ -295,7 +303,7 @@ async function main() {
   const observation = enriched.filter((c) => c.tier === '500plus' || c.tier === 'under100');
 
   const baseRiskTag = (c) => {
-    const parts = ['本檔為保底基礎版公式計算結果，已排除官方公告的處置股/注意股，未經法說會與個股新聞查證，僅供參考，正式版待CCR恢復後補上'];
+    const parts = ['本檔為保底基礎版公式計算結果，已排除官方公告的處置股（注意股本版本未查核），未經法說會與個股新聞查證，僅供參考，正式版待CCR恢復後補上'];
     if (c.soxNote) parts.push(c.soxNote);
     return parts.join('；');
   };
@@ -341,8 +349,8 @@ async function main() {
     '【保底基礎版】這份報告由 GitHub Actions 純程式化產生，作為每個交易日的正式主力（2026-08-11起），不依賴 Claude 雲端 AI（CCR）、也不依賴任何對話 session 存活，觸發於每個交易日 08:20（不再等待 CCR，CCR 如果之後成功產出更完整的版本會自動覆蓋這份基礎版）。',
     '進場/停利/目標/停損價位是用固定公式（前收1.005-1.01倍進場、停損-1.5%、目標取前收+9%與今日真實漲停價97%兩者較小值）計算，搭配 TWSE 官方即時 API 查到的真實漲跌停區間，數字本身正確可信。',
     dispositionOk
-      ? `已用 TWSE／TPEx 官方公告 API 查核處置股/注意股，${excludedForDisposition.length > 0 ? `排除了 ${excludedForDisposition.map((c) => `${c.symbol} ${c.name}`).join('、')} 這 ${excludedForDisposition.length} 檔` : '今天候選池內沒有命中的標的'}。`
-      : '處置股/注意股官方 API 查詢失敗（TWSE 或 TPEx 端點無回應），本次無法保證候選池已排除處置股，人工複核時要特別留意。',
+      ? `已用 TWSE／TPEx 官方公告 API 查核處置股（不含注意股，這個保底版本目前未查核注意股，見程式碼註解），${excludedForDisposition.length > 0 ? `排除了 ${excludedForDisposition.map((c) => `${c.symbol} ${c.name}`).join('、')} 這 ${excludedForDisposition.length} 檔` : '今天候選池內沒有命中的標的'}。`
+      : '處置股官方 API 查詢失敗（TWSE 或 TPEx 端點無回應），本次無法保證候選池已排除處置股，人工複核時要特別留意。',
     Number.isFinite(soxChangePct)
       ? `美股費半指數(SOX)前一交易日收盤變動 ${soxChangePct}%${soxSevere ? '（判定為顯著變動，已對半導體/AI供應鏈概念股候選調整信心分數）' : '（變動幅度不大，未觸發風險調整）'}。`
       : '查不到美股費半指數(SOX)資料，本次無法納入國際盤勢連動判斷。',
