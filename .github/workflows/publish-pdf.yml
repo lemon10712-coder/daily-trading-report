@@ -90,8 +90,26 @@ jobs:
           git diff --cached --quiet && exit 0
           echo "changed=true" >> "$GITHUB_OUTPUT"
           git commit -m "Publish PDF for $(python -c "import json;print(json.load(open('data/pdf-latest.json'))['date'])")"
+          # 2026-08-11 修正：這支 workflow 現在有兩條 workflow_run 觸發來源（Daily backtest／
+          # Generate base report），加上還可能被 push 觸發同時撞上，兩個 run 幾乎同時想 commit
+          # 同一份 PDF 時，rebase 會撞到真的內容衝突（PDF 是二進位檔案，git 沒辦法自動合併），
+          # 不是單純 fast-forward 沒跟上。之前只在 refresh-prices.yml／generate-base-report.yml
+          # 修過這個坑，這支腳本一直沒補——PDF 內容是兩邊各自從同一份 data/latest.json
+          # 重新產生出來的，本來就應該等價，撞到衝突時直接放棄自己這次的 commit、採用對方已經
+          # push 上去的版本即可，不需要、也不應該去手動合併兩份 PDF 二進位內容。
           for attempt in 1 2 3; do
-            git pull --rebase && git push && exit 0
+            if git pull --rebase; then
+              git push && exit 0
+            fi
+            if git status --short | grep -qE '^(UU|AA)'; then
+              echo "Real conflict detected (not just fast-forward) — our PDF and the other run's PDF are both regenerated from the same data/latest.json, so discarding ours and keeping theirs is safe."
+              git rebase --abort
+              git fetch origin main
+              git reset --hard origin/main
+              echo "changed=false" >> "$GITHUB_OUTPUT"
+              exit 0
+            fi
+            git rebase --abort 2>/dev/null || true
             sleep $((attempt * 10))
           done
           exit 1
