@@ -1,6 +1,6 @@
 {
-  "updated_at": "2026/8/14 上午9:11:16",
-  "updated_at_iso": "2026-08-14T01:11:16.626Z",
+  "updated_at": "2026/8/14 上午9:16:00",
+  "updated_at_iso": "2026-08-14T01:16:00.740Z",
   "price_type": "intraday",
   "quote_status": {
     "expected": 15,
@@ -94,9 +94,9 @@
       "stale": false
     },
     "6770": {
-      "price": 74.9,
-      "change_pct": 1.63,
-      "source": "yahoo_finance_tw",
+      "price": 78,
+      "change_pct": 4.14,
+      "source": "twse_mis",
       "stale": false
     }
   }
