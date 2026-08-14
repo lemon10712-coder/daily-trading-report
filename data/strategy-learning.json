@@ -441,39 +441,70 @@
           "affected_symbols": 4
         }
       ]
+    },
+    {
+      "date": "2026-08-14",
+      "recorded_at": "2026-08-14T06:20:29.582Z",
+      "reviewed_symbols": 15,
+      "average_score": 37.3,
+      "verdict": "整體需要改善",
+      "direction_correct": 4,
+      "direction_wrong": 8,
+      "main_pick_count": 0,
+      "main_pick_triggered": 0,
+      "main_pick_wins": 0,
+      "main_pick_losses": 0,
+      "lessons": [
+        {
+          "rule": "調整進場、停損或第一停利，使計畫風報比至少 2",
+          "affected_symbols": 15
+        },
+        {
+          "rule": "降低前一日大漲後的延續假設；開盤跌破 VWAP／首 15 分鐘低點時取消做多",
+          "affected_symbols": 8
+        },
+        {
+          "rule": "進場需增加 VWAP、首 15 分鐘結構與量能確認，避免只因價格碰區間就進場",
+          "affected_symbols": 7
+        },
+        {
+          "rule": "保留拉回價，但增加突破回測後的小部位 B 計畫，禁止直接追價",
+          "affected_symbols": 2
+        }
+      ]
     }
   ],
   "recurring_lessons": [
     {
       "rule": "降低前一日大漲後的延續假設；開盤跌破 VWAP／首 15 分鐘低點時取消做多",
-      "occurrence_days": 14,
-      "affected_symbols_total": 66,
+      "occurrence_days": 15,
+      "affected_symbols_total": 74,
       "first_seen": "2026-07-22",
-      "last_seen": "2026-08-13",
+      "last_seen": "2026-08-14",
       "status": "candidate_rule"
     },
     {
       "rule": "進場需增加 VWAP、首 15 分鐘結構與量能確認，避免只因價格碰區間就進場",
-      "occurrence_days": 13,
-      "affected_symbols_total": 44,
+      "occurrence_days": 14,
+      "affected_symbols_total": 51,
       "first_seen": "2026-07-22",
-      "last_seen": "2026-08-13",
+      "last_seen": "2026-08-14",
       "status": "candidate_rule"
     },
     {
       "rule": "調整進場、停損或第一停利，使計畫風報比至少 2",
-      "occurrence_days": 11,
-      "affected_symbols_total": 116,
+      "occurrence_days": 12,
+      "affected_symbols_total": 131,
       "first_seen": "2026-07-22",
-      "last_seen": "2026-08-13",
+      "last_seen": "2026-08-14",
       "status": "candidate_rule"
     },
     {
       "rule": "保留拉回價，但增加突破回測後的小部位 B 計畫，禁止直接追價",
-      "occurrence_days": 7,
-      "affected_symbols_total": 24,
+      "occurrence_days": 8,
+      "affected_symbols_total": 26,
       "first_seen": "2026-07-22",
-      "last_seen": "2026-08-13",
+      "last_seen": "2026-08-14",
       "status": "candidate_rule"
     },
     {
@@ -502,15 +533,15 @@
     }
   ],
   "summary": {
-    "trading_days": 14,
-    "average_strategy_score": 42.6,
-    "total_reviewed_symbols": 138,
+    "trading_days": 15,
+    "average_strategy_score": 42.2,
+    "total_reviewed_symbols": 153,
     "main_pick_count": 16,
     "main_pick_triggered": 8,
     "main_pick_wins": 4,
     "main_pick_losses": 4,
-    "direction_correct": 56,
-    "direction_wrong": 66
+    "direction_correct": 60,
+    "direction_wrong": 74
   },
-  "updated_at": "2026-08-13T06:20:33.441Z"
+  "updated_at": "2026-08-14T06:20:29.583Z"
 }
