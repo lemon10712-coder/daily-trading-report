@@ -1,6 +1,6 @@
 {
-  "updated_at": "2026/8/17 下午1:01:06",
-  "updated_at_iso": "2026-08-17T05:01:06.114Z",
+  "updated_at": "2026/8/17 下午1:05:51",
+  "updated_at_iso": "2026-08-17T05:05:51.635Z",
   "price_type": "intraday",
   "quote_status": {
     "expected": 15,
@@ -16,56 +16,56 @@
       "stale": false
     },
     "2308": {
-      "price": 1915,
-      "change_pct": 1.59,
+      "price": 1920,
+      "change_pct": 1.86,
       "source": "yahoo_finance_tw",
       "stale": false
     },
     "2324": {
-      "price": 41.75,
-      "change_pct": -3.36,
-      "source": "yahoo_finance_tw",
+      "price": 41.55,
+      "change_pct": -3.82,
+      "source": "twse_mis",
       "stale": false
     },
     "2327": {
-      "price": 610,
-      "change_pct": -1.93,
-      "source": "twse_mis",
+      "price": 612,
+      "change_pct": -1.61,
+      "source": "yahoo_finance_tw",
       "stale": false
     },
     "2330": {
-      "price": 2410,
-      "change_pct": 0.63,
-      "source": "twse_mis",
+      "price": 2415,
+      "change_pct": 0.84,
+      "source": "yahoo_finance_tw",
       "stale": false
     },
     "2344": {
-      "price": 181.5,
-      "change_pct": -1.09,
-      "source": "twse_mis",
+      "price": 182,
+      "change_pct": -0.82,
+      "source": "yahoo_finance_tw",
       "stale": false
     },
     "2383": {
-      "price": 6395,
-      "change_pct": 3.73,
+      "price": 6390,
+      "change_pct": 3.65,
       "source": "yahoo_finance_tw",
       "stale": false
     },
     "2408": {
-      "price": 520,
-      "change_pct": 1.56,
+      "price": 521,
+      "change_pct": 1.76,
       "source": "yahoo_finance_tw",
       "stale": false
     },
     "2454": {
-      "price": 4065,
-      "change_pct": -3.44,
+      "price": 4060,
+      "change_pct": -3.56,
       "source": "yahoo_finance_tw",
       "stale": false
     },
     "2634": {
-      "price": 71.1,
-      "change_pct": 0.71,
+      "price": 70.9,
+      "change_pct": 0.42,
       "source": "yahoo_finance_tw",
       "stale": false
     },
@@ -88,14 +88,14 @@
       "stale": false
     },
     "6669": {
-      "price": 6655,
-      "change_pct": 3.42,
-      "source": "yahoo_finance_tw",
+      "price": 6605,
+      "change_pct": 2.64,
+      "source": "twse_mis",
       "stale": false
     },
     "6770": {
-      "price": 74.7,
-      "change_pct": -4.72,
+      "price": 74.6,
+      "change_pct": -4.85,
       "source": "yahoo_finance_tw",
       "stale": false
     }
