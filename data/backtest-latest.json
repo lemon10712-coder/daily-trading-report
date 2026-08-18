@@ -2,7 +2,7 @@
   "schema_version": 3,
   "methodology": "one-minute entry/exit sequence plus recommendation, selection, direction, entry and risk-quality review; same-bar ambiguity uses conservative stop",
   "date": "2026-08-17",
-  "generated_at": "2026/8/18 下午2:20:28",
+  "generated_at": "2026/8/18 下午2:40:29",
   "price_snapshot_at": null,
   "cost_assumptions": {
     "commissionRate": 0.001425,
@@ -543,18 +543,18 @@
         "entry": "有成交但位置不佳",
         "risk": "收盤出場仍虧損，停損／時效需調整",
         "market": {
-          "open": 1955,
+          "open": 1950,
           "high": 2005,
           "low": 1885,
           "close": 1890,
-          "close_pct": -3.32,
-          "upside_pct": 2.56,
-          "downside_pct": -3.58,
+          "close_pct": -3.08,
+          "upside_pct": 2.82,
+          "downside_pct": -3.33,
           "range_pct": 6.37
         },
         "planned_risk_reward": 0.89,
         "reasons": [
-          "做多方向錯誤：收盤相對開盤 -3.32%，最大下行 -3.58%",
+          "做多方向錯誤：收盤相對開盤 -3.08%，最大下行 -3.33%",
           "計畫風報比僅 0.89，低於 2"
         ],
         "improvements": [
