@@ -2,7 +2,7 @@
   "schema_version": 3,
   "methodology": "one-minute entry/exit sequence plus recommendation, selection, direction, entry and risk-quality review; same-bar ambiguity uses conservative stop",
   "date": "2026-08-19",
-  "generated_at": "2026/8/19 下午2:20:28",
+  "generated_at": "2026/8/19 下午2:40:27",
   "price_snapshot_at": null,
   "cost_assumptions": {
     "commissionRate": 0.001425,
@@ -736,28 +736,29 @@
       "target": 74.3,
       "intraday_source": "Yahoo Finance 6770.TW 1m",
       "quality_review": {
-        "score": 80,
-        "verdict": "正確",
-        "selection": "有效",
-        "direction": "正確",
-        "entry": "未成交",
+        "score": 30,
+        "verdict": "需要改善",
+        "selection": "不佳",
+        "direction": "錯誤",
+        "entry": "成功避開下跌",
         "risk": "未成交，不適用",
         "market": {
-          "open": 67.2,
+          "open": 67.3,
           "high": 69.6,
           "low": 66.5,
           "close": 66.6,
-          "close_pct": -0.89,
-          "upside_pct": 3.57,
-          "downside_pct": -1.04,
+          "close_pct": -1.04,
+          "upside_pct": 3.42,
+          "downside_pct": -1.19,
           "range_pct": 4.66
         },
         "planned_risk_reward": 1.07,
         "reasons": [
-          "做多方向成立：最大上行 3.57%，收盤相對開盤 -0.89%",
+          "做多方向錯誤：收盤相對開盤 -1.04%，最大下行 -1.19%",
           "計畫風報比僅 1.07，低於 2"
         ],
         "improvements": [
+          "降低前一日大漲後的延續假設；開盤跌破 VWAP／首 15 分鐘低點時取消做多",
           "調整進場、停損或第一停利，使計畫風報比至少 2"
         ],
         "sox_context": {
@@ -888,10 +889,10 @@
   },
   "strategy_review": {
     "reviewed_symbols": 15,
-    "average_score": 68,
+    "average_score": 64.7,
     "verdict": "部分正確，需調整",
-    "correct_count": 6,
-    "needs_improvement_count": 3,
+    "correct_count": 5,
+    "needs_improvement_count": 4,
     "priority_improvements": [
       {
         "rule": "調整進場、停損或第一停利，使計畫風報比至少 2",
@@ -902,15 +903,15 @@
         "affected_count": 6
       },
       {
-        "rule": "候選股加入預估振幅與早盤量能門檻，振幅不足時降級為觀察股",
-        "affected_count": 1
+        "rule": "降低前一日大漲後的延續假設；開盤跌破 VWAP／首 15 分鐘低點時取消做多",
+        "affected_count": 2
       },
       {
-        "rule": "降低前一日大漲後的延續假設；開盤跌破 VWAP／首 15 分鐘低點時取消做多",
+        "rule": "候選股加入預估振幅與早盤量能門檻，振幅不足時降級為觀察股",
         "affected_count": 1
       }
     ],
     "scoring_note": "0-100；綜合方向、當沖波動、進場捕捉與交易結果。未成交不直接算虧損。"
   },
-  "narrative": "總評：推薦 0 檔，實際觸發 0 檔，未進場 0 檔；獲利 0、虧損 0。\n策略品質：部分正確，需調整，平均 68 分。"
+  "narrative": "總評：推薦 0 檔，實際觸發 0 檔，未進場 0 檔；獲利 0、虧損 0。\n策略品質：部分正確，需調整，平均 64.7 分。"
 }
