@@ -1,6 +1,6 @@
 {
-  "updated_at": "2026/8/20 上午10:51:04",
-  "updated_at_iso": "2026-08-20T02:51:04.944Z",
+  "updated_at": "2026/8/20 上午10:55:51",
+  "updated_at_iso": "2026-08-20T02:55:51.469Z",
   "price_type": "intraday",
   "quote_status": {
     "expected": 15,
@@ -10,8 +10,8 @@
   },
   "prices": {
     "1303": {
-      "price": 189,
-      "change_pct": 0.8,
+      "price": 189.5,
+      "change_pct": 1.07,
       "source": "yahoo_finance_tw",
       "stale": false
     },
@@ -22,9 +22,9 @@
       "stale": false
     },
     "2327": {
-      "price": 553,
-      "change_pct": -3.99,
-      "source": "twse_mis",
+      "price": 559,
+      "change_pct": -2.95,
+      "source": "yahoo_finance_tw",
       "stale": false
     },
     "2330": {
@@ -34,68 +34,68 @@
       "stale": false
     },
     "2344": {
-      "price": 175.5,
-      "change_pct": 4.46,
+      "price": 176,
+      "change_pct": 4.76,
       "source": "yahoo_finance_tw",
       "stale": false
     },
     "2383": {
-      "price": 5895,
-      "change_pct": 0.26,
+      "price": 5900,
+      "change_pct": 0.34,
       "source": "yahoo_finance_tw",
       "stale": false
     },
     "2408": {
-      "price": 512,
-      "change_pct": 6.44,
+      "price": 517,
+      "change_pct": 7.48,
       "source": "yahoo_finance_tw",
       "stale": false
     },
     "2454": {
-      "price": 3735,
-      "change_pct": -2.86,
+      "price": 3750,
+      "change_pct": -2.47,
       "source": "yahoo_finance_tw",
       "stale": false
     },
     "2492": {
-      "price": 275,
-      "change_pct": -7.72,
+      "price": 274.5,
+      "change_pct": -7.89,
       "source": "yahoo_finance_tw",
       "stale": false
     },
     "3008": {
-      "price": 5615,
-      "change_pct": 1.17,
+      "price": 5670,
+      "change_pct": 2.16,
       "source": "yahoo_finance_tw",
       "stale": false
     },
     "3037": {
-      "price": 1125,
-      "change_pct": -0.44,
+      "price": 1135,
+      "change_pct": 0.44,
       "source": "yahoo_finance_tw",
       "stale": false
     },
     "3189": {
-      "price": 832,
-      "change_pct": -2,
+      "price": 831,
+      "change_pct": -2.12,
       "source": "yahoo_finance_tw",
       "stale": false
     },
     "3653": {
-      "price": 5520,
-      "change_pct": 1.1,
+      "price": 5490,
+      "change_pct": 0.55,
       "source": "yahoo_finance_tw",
       "stale": false
     },
     "4958": {
-      "price": 452.5,
-      "change_pct": -0.98,
+      "price": 453,
+      "change_pct": -0.88,
       "source": "yahoo_finance_tw",
       "stale": false
     },
     "8046": {
-      "price": 1175,
-      "change_pct": -0.42,
+      "price": 1180,
+      "change_pct": 0,
       "source": "yahoo_finance_tw",
       "stale": false
     }
