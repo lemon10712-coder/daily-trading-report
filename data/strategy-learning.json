@@ -573,31 +573,62 @@
           "affected_symbols": 2
         }
       ]
+    },
+    {
+      "date": "2026-08-24",
+      "recorded_at": "2026-08-24T06:20:33.595Z",
+      "reviewed_symbols": 15,
+      "average_score": 19.3,
+      "verdict": "整體需要改善",
+      "direction_correct": 0,
+      "direction_wrong": 14,
+      "main_pick_count": 0,
+      "main_pick_triggered": 0,
+      "main_pick_wins": 0,
+      "main_pick_losses": 0,
+      "lessons": [
+        {
+          "rule": "調整進場、停損或第一停利，使計畫風報比至少 2",
+          "affected_symbols": 15
+        },
+        {
+          "rule": "降低前一日大漲後的延續假設；開盤跌破 VWAP／首 15 分鐘低點時取消做多",
+          "affected_symbols": 14
+        },
+        {
+          "rule": "進場需增加 VWAP、首 15 分鐘結構與量能確認，避免只因價格碰區間就進場",
+          "affected_symbols": 8
+        },
+        {
+          "rule": "候選股加入預估振幅與早盤量能門檻，振幅不足時降級為觀察股",
+          "affected_symbols": 1
+        }
+      ]
     }
   ],
   "recurring_lessons": [
     {
       "rule": "降低前一日大漲後的延續假設；開盤跌破 VWAP／首 15 分鐘低點時取消做多",
-      "occurrence_days": 18,
-      "affected_symbols_total": 97,
+      "occurrence_days": 19,
+      "affected_symbols_total": 111,
       "first_seen": "2026-07-22",
-      "last_seen": "2026-08-20",
+      "last_seen": "2026-08-24",
       "status": "candidate_rule"
     },
     {
       "rule": "進場需增加 VWAP、首 15 分鐘結構與量能確認，避免只因價格碰區間就進場",
-      "occurrence_days": 17,
-      "affected_symbols_total": 75,
+      "occurrence_days": 18,
+      "affected_symbols_total": 83,
       "first_seen": "2026-07-22",
-      "last_seen": "2026-08-20",
+      "last_seen": "2026-08-24",
       "status": "candidate_rule"
     },
     {
       "rule": "調整進場、停損或第一停利，使計畫風報比至少 2",
-      "occurrence_days": 15,
-      "affected_symbols_total": 176,
+      "occurrence_days": 16,
+      "affected_symbols_total": 191,
       "first_seen": "2026-07-22",
-      "last_seen": "2026-08-20",
+      "last_seen": "2026-08-24",
       "status": "candidate_rule"
     },
     {
@@ -610,10 +641,10 @@
     },
     {
       "rule": "候選股加入預估振幅與早盤量能門檻，振幅不足時降級為觀察股",
-      "occurrence_days": 8,
-      "affected_symbols_total": 13,
+      "occurrence_days": 9,
+      "affected_symbols_total": 14,
       "first_seen": "2026-07-31",
-      "last_seen": "2026-08-19",
+      "last_seen": "2026-08-24",
       "status": "candidate_rule"
     },
     {
@@ -634,15 +665,15 @@
     }
   ],
   "summary": {
-    "trading_days": 18,
-    "average_strategy_score": 41.7,
-    "total_reviewed_symbols": 198,
+    "trading_days": 19,
+    "average_strategy_score": 40.6,
+    "total_reviewed_symbols": 213,
     "main_pick_count": 16,
     "main_pick_triggered": 8,
     "main_pick_wins": 4,
     "main_pick_losses": 4,
     "direction_correct": 77,
-    "direction_wrong": 97
+    "direction_wrong": 111
   },
-  "updated_at": "2026-08-20T06:20:31.057Z"
+  "updated_at": "2026-08-24T06:20:33.596Z"
 }
