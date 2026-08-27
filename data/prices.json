@@ -1,6 +1,6 @@
 {
-  "updated_at": "2026/8/27 上午11:15:54",
-  "updated_at_iso": "2026-08-27T03:15:54.198Z",
+  "updated_at": "2026/8/27 上午11:20:53",
+  "updated_at_iso": "2026-08-27T03:20:53.806Z",
   "price_type": "intraday",
   "quote_status": {
     "expected": 15,
@@ -22,21 +22,21 @@
       "stale": false
     },
     "2308": {
-      "price": 1800,
-      "change_pct": 2.86,
+      "price": 1795,
+      "change_pct": 2.57,
       "source": "yahoo_finance_tw",
       "stale": false
     },
     "2327": {
-      "price": 551,
-      "change_pct": 2.61,
-      "source": "yahoo_finance_tw",
+      "price": 554,
+      "change_pct": 3.17,
+      "source": "twse_mis",
       "stale": false
     },
     "2330": {
       "price": 2425,
       "change_pct": 0.41,
-      "source": "twse_mis",
+      "source": "yahoo_finance_tw",
       "stale": false
     },
     "2344": {
@@ -46,21 +46,21 @@
       "stale": false
     },
     "2408": {
-      "price": 543,
-      "change_pct": 5.03,
-      "source": "yahoo_finance_tw",
+      "price": 548,
+      "change_pct": 6,
+      "source": "twse_mis",
       "stale": false
     },
     "2454": {
-      "price": 3945,
-      "change_pct": 0,
+      "price": 3935,
+      "change_pct": -0.25,
       "source": "yahoo_finance_tw",
       "stale": false
     },
     "3017": {
-      "price": 3400,
-      "change_pct": 7.77,
-      "source": "yahoo_finance_tw",
+      "price": 3385,
+      "change_pct": 7.29,
+      "source": "twse_mis",
       "stale": false
     },
     "3037": {
@@ -70,20 +70,20 @@
       "stale": false
     },
     "3189": {
-      "price": 937,
-      "change_pct": 6.36,
-      "source": "yahoo_finance_tw",
+      "price": 933,
+      "change_pct": 5.9,
+      "source": "twse_mis",
       "stale": false
     },
     "3443": {
-      "price": 6055,
-      "change_pct": -1.14,
+      "price": 6025,
+      "change_pct": -1.63,
       "source": "yahoo_finance_tw",
       "stale": false
     },
     "6213": {
-      "price": 584,
-      "change_pct": 0.17,
+      "price": 580,
+      "change_pct": -0.51,
       "source": "yahoo_finance_tw",
       "stale": false
     },
