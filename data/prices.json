@@ -1,6 +1,6 @@
 {
-  "updated_at": "2026/8/27 上午10:40:57",
-  "updated_at_iso": "2026-08-27T02:40:57.040Z",
+  "updated_at": "2026/8/27 上午10:45:55",
+  "updated_at_iso": "2026-08-27T02:45:55.647Z",
   "price_type": "intraday",
   "quote_status": {
     "expected": 15,
@@ -12,12 +12,12 @@
     "1303": {
       "price": 227.5,
       "change_pct": 9.9,
-      "source": "yahoo_finance_tw",
+      "source": "twse_mis",
       "stale": false
     },
     "2301": {
-      "price": 306.5,
-      "change_pct": -0.16,
+      "price": 306,
+      "change_pct": -0.33,
       "source": "yahoo_finance_tw",
       "stale": false
     },
@@ -40,9 +40,9 @@
       "stale": false
     },
     "2344": {
-      "price": 188,
-      "change_pct": 3.58,
-      "source": "yahoo_finance_tw",
+      "price": 186.5,
+      "change_pct": 2.75,
+      "source": "twse_mis",
       "stale": false
     },
     "2408": {
@@ -52,38 +52,38 @@
       "stale": false
     },
     "2454": {
-      "price": 3955,
-      "change_pct": 0.25,
+      "price": 3950,
+      "change_pct": 0.13,
       "source": "yahoo_finance_tw",
       "stale": false
     },
     "3017": {
-      "price": 3370,
-      "change_pct": 6.81,
+      "price": 3400,
+      "change_pct": 7.77,
       "source": "yahoo_finance_tw",
       "stale": false
     },
     "3037": {
-      "price": 1190,
-      "change_pct": 2.59,
-      "source": "twse_mis",
+      "price": 1185,
+      "change_pct": 2.16,
+      "source": "yahoo_finance_tw",
       "stale": false
     },
     "3189": {
-      "price": 937,
-      "change_pct": 6.36,
+      "price": 941,
+      "change_pct": 6.81,
       "source": "yahoo_finance_tw",
       "stale": false
     },
     "3443": {
-      "price": 6160,
-      "change_pct": 0.57,
+      "price": 6130,
+      "change_pct": 0.08,
       "source": "yahoo_finance_tw",
       "stale": false
     },
     "6213": {
-      "price": 565,
-      "change_pct": -3.09,
+      "price": 564,
+      "change_pct": -3.26,
       "source": "yahoo_finance_tw",
       "stale": false
     },
