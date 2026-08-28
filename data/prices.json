@@ -1,6 +1,6 @@
 {
-  "updated_at": "2026/8/28 下午1:15:46",
-  "updated_at_iso": "2026-08-28T05:15:46.391Z",
+  "updated_at": "2026/8/28 下午1:20:53",
+  "updated_at_iso": "2026-08-28T05:20:53.952Z",
   "price_type": "intraday",
   "quote_status": {
     "expected": 15,
@@ -18,7 +18,7 @@
     "2303": {
       "price": 130,
       "change_pct": 9.7,
-      "source": "twse_mis",
+      "source": "yahoo_finance_tw",
       "stale": false
     },
     "2308": {
@@ -28,15 +28,15 @@
       "stale": false
     },
     "2327": {
-      "price": 598,
-      "change_pct": 7.75,
+      "price": 596,
+      "change_pct": 7.39,
       "source": "twse_mis",
       "stale": false
     },
     "2330": {
-      "price": 2420,
-      "change_pct": 0.41,
-      "source": "twse_mis",
+      "price": 2415,
+      "change_pct": 0.21,
+      "source": "yahoo_finance_tw",
       "stale": false
     },
     "2344": {
@@ -64,38 +64,38 @@
       "stale": false
     },
     "3008": {
-      "price": 7100,
-      "change_pct": 2.68,
+      "price": 7060,
+      "change_pct": 2.1,
       "source": "yahoo_finance_tw",
       "stale": false
     },
     "3017": {
-      "price": 3370,
-      "change_pct": 0.9,
+      "price": 3365,
+      "change_pct": 0.75,
       "source": "yahoo_finance_tw",
       "stale": false
     },
     "3037": {
-      "price": 1110,
-      "change_pct": -5.93,
-      "source": "twse_mis",
+      "price": 1135,
+      "change_pct": -3.81,
+      "source": "yahoo_finance_tw",
       "stale": false
     },
     "3189": {
-      "price": 883,
-      "change_pct": -3.39,
-      "source": "twse_mis",
+      "price": 882,
+      "change_pct": -3.5,
+      "source": "yahoo_finance_tw",
       "stale": false
     },
     "3443": {
-      "price": 6080,
-      "change_pct": 2.7,
+      "price": 6060,
+      "change_pct": 2.36,
       "source": "yahoo_finance_tw",
       "stale": false
     },
     "6213": {
-      "price": 580,
-      "change_pct": 3.02,
+      "price": 578,
+      "change_pct": 2.66,
       "source": "yahoo_finance_tw",
       "stale": false
     }
