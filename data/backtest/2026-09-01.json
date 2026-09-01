@@ -2,7 +2,7 @@
   "schema_version": 3,
   "methodology": "one-minute entry/exit sequence plus recommendation, selection, direction, entry and risk-quality review; same-bar ambiguity uses conservative stop",
   "date": "2026-09-01",
-  "generated_at": "2026/9/1 下午2:40:30",
+  "generated_at": "2026/9/1 下午3:00:46",
   "price_snapshot_at": null,
   "cost_assumptions": {
     "commissionRate": 0.001425,
@@ -67,16 +67,18 @@
         "planned_risk_reward": 1,
         "reasons": [
           "做多方向錯誤：收盤相對開盤 -5.99%，最大下行 -6.35%",
-          "計畫風報比僅 1，低於 2"
+          "計畫風報比僅 1，低於 2",
+          "參考：美股費城半導體指數(SOX)最近一個交易日(2026-08-31)收盤下跌 2.92%，方向誤判可能與類股系統性外溢有關，非純粹選股邏輯錯誤"
         ],
         "improvements": [
           "降低前一日大漲後的延續假設；開盤跌破 VWAP／首 15 分鐘低點時取消做多",
           "進場需增加 VWAP、首 15 分鐘結構與量能確認，避免只因價格碰區間就進場",
-          "調整進場、停損或第一停利，使計畫風報比至少 2"
+          "調整進場、停損或第一停利，使計畫風報比至少 2",
+          "候選股屬於半導體/AI供應鏈類股時，開盤前查一次美股SOX指數走勢，大跌/大漲時調降信心度或縮小部位"
         ],
         "sox_context": {
           "session_date": "2026-08-31",
-          "change_pct": 0.57
+          "change_pct": -2.92
         }
       }
     },
@@ -137,7 +139,7 @@
         ],
         "sox_context": {
           "session_date": "2026-08-31",
-          "change_pct": 0.57
+          "change_pct": -2.92
         }
       }
     },
@@ -197,16 +199,18 @@
         "planned_risk_reward": 1,
         "reasons": [
           "做多方向錯誤：收盤相對開盤 -4.09%，最大下行 -4.36%",
-          "計畫風報比僅 1，低於 2"
+          "計畫風報比僅 1，低於 2",
+          "參考：美股費城半導體指數(SOX)最近一個交易日(2026-08-31)收盤下跌 2.92%，方向誤判可能與類股系統性外溢有關，非純粹選股邏輯錯誤"
         ],
         "improvements": [
           "降低前一日大漲後的延續假設；開盤跌破 VWAP／首 15 分鐘低點時取消做多",
           "進場需增加 VWAP、首 15 分鐘結構與量能確認，避免只因價格碰區間就進場",
-          "調整進場、停損或第一停利，使計畫風報比至少 2"
+          "調整進場、停損或第一停利，使計畫風報比至少 2",
+          "候選股屬於半導體/AI供應鏈類股時，開盤前查一次美股SOX指數走勢，大跌/大漲時調降信心度或縮小部位"
         ],
         "sox_context": {
           "session_date": "2026-08-31",
-          "change_pct": 0.57
+          "change_pct": -2.92
         }
       }
     },
@@ -260,15 +264,17 @@
         "planned_risk_reward": 1.1,
         "reasons": [
           "做多方向錯誤：收盤相對開盤 -6.2%，最大下行 -7.4%",
-          "計畫風報比僅 1.1，低於 2"
+          "計畫風報比僅 1.1，低於 2",
+          "參考：美股費城半導體指數(SOX)最近一個交易日(2026-08-31)收盤下跌 2.92%，方向誤判可能與類股系統性外溢有關，非純粹選股邏輯錯誤"
         ],
         "improvements": [
           "降低前一日大漲後的延續假設；開盤跌破 VWAP／首 15 分鐘低點時取消做多",
-          "調整進場、停損或第一停利，使計畫風報比至少 2"
+          "調整進場、停損或第一停利，使計畫風報比至少 2",
+          "候選股屬於半導體/AI供應鏈類股時，開盤前查一次美股SOX指數走勢，大跌/大漲時調降信心度或縮小部位"
         ],
         "sox_context": {
           "session_date": "2026-08-31",
-          "change_pct": 0.57
+          "change_pct": -2.92
         }
       }
     },
@@ -329,7 +335,7 @@
         ],
         "sox_context": {
           "session_date": "2026-08-31",
-          "change_pct": 0.57
+          "change_pct": -2.92
         }
       }
     },
@@ -378,7 +384,7 @@
         ],
         "sox_context": {
           "session_date": "2026-08-31",
-          "change_pct": 0.57
+          "change_pct": -2.92
         }
       }
     },
@@ -439,7 +445,7 @@
         ],
         "sox_context": {
           "session_date": "2026-08-31",
-          "change_pct": 0.57
+          "change_pct": -2.92
         }
       }
     },
@@ -506,7 +512,7 @@
         ],
         "sox_context": {
           "session_date": "2026-08-31",
-          "change_pct": 0.57
+          "change_pct": -2.92
         }
       }
     },
@@ -554,7 +560,7 @@
         ],
         "sox_context": {
           "session_date": "2026-08-31",
-          "change_pct": 0.57
+          "change_pct": -2.92
         }
       }
     },
@@ -608,15 +614,17 @@
         "planned_risk_reward": 1,
         "reasons": [
           "做多方向錯誤：收盤相對開盤 -2.78%，最大下行 -3.17%",
-          "計畫風報比僅 1，低於 2"
+          "計畫風報比僅 1，低於 2",
+          "參考：美股費城半導體指數(SOX)最近一個交易日(2026-08-31)收盤下跌 2.92%，方向誤判可能與類股系統性外溢有關，非純粹選股邏輯錯誤"
         ],
         "improvements": [
           "降低前一日大漲後的延續假設；開盤跌破 VWAP／首 15 分鐘低點時取消做多",
-          "調整進場、停損或第一停利，使計畫風報比至少 2"
+          "調整進場、停損或第一停利，使計畫風報比至少 2",
+          "候選股屬於半導體/AI供應鏈類股時，開盤前查一次美股SOX指數走勢，大跌/大漲時調降信心度或縮小部位"
         ],
         "sox_context": {
           "session_date": "2026-08-31",
-          "change_pct": 0.57
+          "change_pct": -2.92
         }
       }
     },
@@ -683,7 +691,7 @@
         ],
         "sox_context": {
           "session_date": "2026-08-31",
-          "change_pct": 0.57
+          "change_pct": -2.92
         }
       }
     },
@@ -731,7 +739,7 @@
         ],
         "sox_context": {
           "session_date": "2026-08-31",
-          "change_pct": 0.57
+          "change_pct": -2.92
         }
       }
     },
@@ -792,7 +800,7 @@
         ],
         "sox_context": {
           "session_date": "2026-08-31",
-          "change_pct": 0.57
+          "change_pct": -2.92
         }
       }
     },
@@ -853,7 +861,7 @@
         ],
         "sox_context": {
           "session_date": "2026-08-31",
-          "change_pct": 0.57
+          "change_pct": -2.92
         }
       }
     },
@@ -914,14 +922,14 @@
         ],
         "sox_context": {
           "session_date": "2026-08-31",
-          "change_pct": 0.57
+          "change_pct": -2.92
         }
       }
     }
   ],
   "sox_context": {
     "session_date": "2026-08-31",
-    "change_pct": 0.57
+    "change_pct": -2.92
   },
   "strategy_review": {
     "reviewed_symbols": 15,
@@ -939,16 +947,16 @@
         "affected_count": 4
       },
       {
+        "rule": "候選股屬於半導體/AI供應鏈類股時，開盤前查一次美股SOX指數走勢，大跌/大漲時調降信心度或縮小部位",
+        "affected_count": 4
+      },
+      {
         "rule": "進場需增加 VWAP、首 15 分鐘結構與量能確認，避免只因價格碰區間就進場",
         "affected_count": 2
       },
       {
         "rule": "保留拉回價，但增加突破回測後的小部位 B 計畫，禁止直接追價",
         "affected_count": 2
-      },
-      {
-        "rule": "候選股加入預估振幅與早盤量能門檻，振幅不足時降級為觀察股",
-        "affected_count": 1
       }
     ],
     "scoring_note": "0-100；綜合方向、當沖波動、進場捕捉與交易結果。未成交不直接算虧損。"
