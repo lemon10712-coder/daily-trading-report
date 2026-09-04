@@ -2,7 +2,7 @@
   "schema_version": 3,
   "methodology": "one-minute entry/exit sequence plus recommendation, selection, direction, entry and risk-quality review; same-bar ambiguity uses conservative stop",
   "date": "2026-09-03",
-  "generated_at": "2026/9/3 下午3:00:42",
+  "generated_at": "2026/9/4 下午2:20:30",
   "price_snapshot_at": null,
   "cost_assumptions": {
     "commissionRate": 0.001425,
@@ -81,13 +81,13 @@
       "entry_triggered": true,
       "entry_time": "11:02",
       "entry_price": 2395,
-      "exit_time": "13:30",
+      "exit_time": "13:24",
       "average_exit": 2390,
       "exits": [
         {
           "fraction": 1,
           "price": 2390,
-          "time": "13:30",
+          "time": "13:24",
           "reason": "close"
         }
       ],
@@ -228,7 +228,7 @@
       "gross_pct": -1.52,
       "net_pct": -1.95,
       "transaction_cost_pct": 0.43,
-      "close": 2475,
+      "close": 2480,
       "entry_mid": 2630,
       "stop_loss": 2570,
       "early_stop": 2600,
@@ -245,16 +245,16 @@
         "market": {
           "open": 2605,
           "high": 2630,
-          "low": 2475,
-          "close": 2475,
-          "close_pct": -4.99,
+          "low": 2480,
+          "close": 2480,
+          "close_pct": -4.8,
           "upside_pct": 0.96,
-          "downside_pct": -4.99,
-          "range_pct": 6.26
+          "downside_pct": -4.8,
+          "range_pct": 6.05
         },
         "planned_risk_reward": 1,
         "reasons": [
-          "做多方向錯誤：收盤相對開盤 -4.99%，最大下行 -4.99%",
+          "做多方向錯誤：收盤相對開盤 -4.8%，最大下行 -4.8%",
           "計畫風報比僅 1，低於 2"
         ],
         "improvements": [
@@ -297,7 +297,7 @@
       "gross_pct": 0.57,
       "net_pct": 0.14,
       "transaction_cost_pct": 0.44,
-      "close": 1760,
+      "close": 1765,
       "entry_mid": 1742.5,
       "stop_loss": 1705,
       "early_stop": 1725,
@@ -315,15 +315,15 @@
           "open": 1735,
           "high": 1810,
           "low": 1725,
-          "close": 1760,
-          "close_pct": 1.44,
+          "close": 1765,
+          "close_pct": 1.73,
           "upside_pct": 4.32,
           "downside_pct": -0.58,
           "range_pct": 4.93
         },
         "planned_risk_reward": 1,
         "reasons": [
-          "做多方向成立：最大上行 4.32%，收盤相對開盤 1.44%",
+          "做多方向成立：最大上行 4.32%，收盤相對開盤 1.73%",
           "計畫風報比僅 1，低於 2"
         ],
         "improvements": [
@@ -364,7 +364,7 @@
       "gross_pct": -1.91,
       "net_pct": -2.34,
       "transaction_cost_pct": 0.43,
-      "close": 477.5,
+      "close": 478,
       "entry_mid": 522,
       "stop_loss": 510,
       "early_stop": 516,
@@ -381,16 +381,16 @@
         "market": {
           "open": 533,
           "high": 539,
-          "low": 477.5,
-          "close": 477.5,
-          "close_pct": -10.41,
+          "low": 478,
+          "close": 478,
+          "close_pct": -10.32,
           "upside_pct": 1.13,
-          "downside_pct": -10.41,
-          "range_pct": 12.88
+          "downside_pct": -10.32,
+          "range_pct": 12.76
         },
         "planned_risk_reward": 1,
         "reasons": [
-          "做多方向錯誤：收盤相對開盤 -10.41%，最大下行 -10.41%",
+          "做多方向錯誤：收盤相對開盤 -10.32%，最大下行 -10.32%",
           "計畫風報比僅 1，低於 2"
         ],
         "improvements": [
@@ -433,7 +433,7 @@
       "gross_pct": -1.78,
       "net_pct": -2.21,
       "transaction_cost_pct": 0.43,
-      "close": 923,
+      "close": 924,
       "entry_mid": 980.5,
       "stop_loss": 958,
       "early_stop": 968,
@@ -451,15 +451,15 @@
           "open": 997,
           "high": 1005,
           "low": 923,
-          "close": 923,
-          "close_pct": -7.42,
+          "close": 924,
+          "close_pct": -7.32,
           "upside_pct": 0.8,
           "downside_pct": -7.42,
           "range_pct": 8.88
         },
         "planned_risk_reward": 0.87,
         "reasons": [
-          "做多方向錯誤：收盤相對開盤 -7.42%，最大下行 -7.42%",
+          "做多方向錯誤：收盤相對開盤 -7.32%，最大下行 -7.42%",
           "計畫風報比僅 0.87，低於 2"
         ],
         "improvements": [
@@ -502,7 +502,7 @@
       "gross_pct": -1.65,
       "net_pct": -2.08,
       "transaction_cost_pct": 0.43,
-      "close": 511,
+      "close": 513,
       "entry_mid": 544,
       "stop_loss": 532,
       "early_stop": 538,
@@ -519,16 +519,16 @@
         "market": {
           "open": 545,
           "high": 545,
-          "low": 511,
-          "close": 511,
-          "close_pct": -6.24,
+          "low": 512,
+          "close": 513,
+          "close_pct": -5.87,
           "upside_pct": 0,
-          "downside_pct": -6.24,
-          "range_pct": 6.65
+          "downside_pct": -6.06,
+          "range_pct": 6.45
         },
         "planned_risk_reward": 1,
         "reasons": [
-          "做多方向錯誤：收盤相對開盤 -6.24%，最大下行 -6.24%",
+          "做多方向錯誤：收盤相對開盤 -5.87%，最大下行 -6.06%",
           "計畫風報比僅 1，低於 2"
         ],
         "improvements": [
@@ -571,7 +571,7 @@
       "gross_pct": -1.47,
       "net_pct": -1.9,
       "transaction_cost_pct": 0.43,
-      "close": 525,
+      "close": 520,
       "entry_mid": 546,
       "stop_loss": 534,
       "early_stop": 540,
@@ -589,15 +589,15 @@
           "open": 541,
           "high": 555,
           "low": 520,
-          "close": 525,
-          "close_pct": -2.96,
+          "close": 520,
+          "close_pct": -3.88,
           "upside_pct": 2.59,
           "downside_pct": -3.88,
           "range_pct": 6.73
         },
         "planned_risk_reward": 1,
         "reasons": [
-          "做多方向錯誤：收盤相對開盤 -2.96%，最大下行 -3.88%",
+          "做多方向錯誤：收盤相對開盤 -3.88%，最大下行 -3.88%",
           "計畫風報比僅 1，低於 2"
         ],
         "improvements": [
@@ -640,7 +640,7 @@
       "gross_pct": -1.77,
       "net_pct": -2.2,
       "transaction_cost_pct": 0.43,
-      "close": 125,
+      "close": 124.5,
       "entry_mid": 127,
       "stop_loss": 124,
       "early_stop": 125.5,
@@ -658,15 +658,15 @@
           "open": 127.5,
           "high": 129,
           "low": 123,
-          "close": 125,
-          "close_pct": -1.96,
+          "close": 124.5,
+          "close_pct": -2.35,
           "upside_pct": 1.18,
           "downside_pct": -3.53,
           "range_pct": 4.88
         },
         "planned_risk_reward": 1,
         "reasons": [
-          "做多方向錯誤：收盤相對開盤 -1.96%，最大下行 -3.53%",
+          "做多方向錯誤：收盤相對開盤 -2.35%，最大下行 -3.53%",
           "計畫風報比僅 1，低於 2"
         ],
         "improvements": [
@@ -833,7 +833,7 @@
       "gross_pct": 1.93,
       "net_pct": 1.49,
       "transaction_cost_pct": 0.44,
-      "close": 169,
+      "close": 168.5,
       "entry_mid": 180.5,
       "stop_loss": 176.5,
       "early_stop": 178.5,
@@ -851,15 +851,15 @@
           "open": 181.5,
           "high": 185.5,
           "low": 168,
-          "close": 169,
-          "close_pct": -6.89,
+          "close": 168.5,
+          "close_pct": -7.16,
           "upside_pct": 2.2,
           "downside_pct": -7.44,
           "range_pct": 10.42
         },
         "planned_risk_reward": 1,
         "reasons": [
-          "做多方向錯誤：收盤相對開盤 -6.89%，最大下行 -7.44%",
+          "做多方向錯誤：收盤相對開盤 -7.16%，最大下行 -7.44%",
           "計畫風報比僅 1，低於 2"
         ],
         "improvements": [
@@ -895,7 +895,7 @@
       "gross_pct": 2.29,
       "net_pct": 1.84,
       "transaction_cost_pct": 0.44,
-      "close": 299,
+      "close": 297.5,
       "entry_mid": 317.25,
       "stop_loss": 310.5,
       "early_stop": 313.5,
@@ -913,15 +913,15 @@
           "open": 321.5,
           "high": 325.5,
           "low": 296.5,
-          "close": 299,
-          "close_pct": -7,
+          "close": 297.5,
+          "close_pct": -7.47,
           "upside_pct": 1.24,
           "downside_pct": -7.78,
           "range_pct": 9.78
         },
         "planned_risk_reward": 1.07,
         "reasons": [
-          "做多方向錯誤：收盤相對開盤 -7%，最大下行 -7.78%",
+          "做多方向錯誤：收盤相對開盤 -7.47%，最大下行 -7.78%",
           "計畫風報比僅 1.07，低於 2"
         ],
         "improvements": [
@@ -957,7 +957,7 @@
       "gross_pct": 1.93,
       "net_pct": 1.49,
       "transaction_cost_pct": 0.44,
-      "close": 1770,
+      "close": 1775,
       "entry_mid": 1810,
       "stop_loss": 1770,
       "early_stop": 1790,
@@ -975,15 +975,15 @@
           "open": 1840,
           "high": 1920,
           "low": 1770,
-          "close": 1770,
-          "close_pct": -3.8,
+          "close": 1775,
+          "close_pct": -3.53,
           "upside_pct": 4.35,
           "downside_pct": -3.8,
           "range_pct": 8.47
         },
         "planned_risk_reward": 1,
         "reasons": [
-          "做多方向錯誤：收盤相對開盤 -3.8%，最大下行 -3.8%",
+          "做多方向錯誤：收盤相對開盤 -3.53%，最大下行 -3.8%",
           "計畫風報比僅 1，低於 2"
         ],
         "improvements": [
