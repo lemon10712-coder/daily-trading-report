@@ -1,6 +1,6 @@
 {
-  "updated_at": "2026/9/17 下午12:41:04",
-  "updated_at_iso": "2026-09-17T04:41:04.597Z",
+  "updated_at": "2026/9/17 下午12:45:55",
+  "updated_at_iso": "2026-09-17T04:45:55.161Z",
   "price_type": "intraday",
   "quote_status": {
     "expected": 15,
@@ -22,14 +22,14 @@
       "stale": false
     },
     "2308": {
-      "price": 1715,
-      "change_pct": 0.29,
+      "price": 1710,
+      "change_pct": 0,
       "source": "yahoo_finance_tw",
       "stale": false
     },
     "2327": {
-      "price": 537,
-      "change_pct": 0.19,
+      "price": 536,
+      "change_pct": 0,
       "source": "yahoo_finance_tw",
       "stale": false
     },
@@ -42,7 +42,7 @@
     "2344": {
       "price": 173,
       "change_pct": 2.37,
-      "source": "twse_mis",
+      "source": "yahoo_finance_tw",
       "stale": false
     },
     "2408": {
@@ -52,14 +52,14 @@
       "stale": false
     },
     "2454": {
-      "price": 4580,
-      "change_pct": 1.1,
+      "price": 4570,
+      "change_pct": 0.88,
       "source": "yahoo_finance_tw",
       "stale": false
     },
     "2455": {
-      "price": 523,
-      "change_pct": 1.55,
+      "price": 522,
+      "change_pct": 1.36,
       "source": "yahoo_finance_tw",
       "stale": false
     },
@@ -70,27 +70,27 @@
       "stale": false
     },
     "3008": {
-      "price": 6130,
-      "change_pct": -1.53,
+      "price": 6120,
+      "change_pct": -1.69,
       "source": "yahoo_finance_tw",
       "stale": false
     },
     "3037": {
-      "price": 951,
-      "change_pct": -1.04,
-      "source": "twse_mis",
+      "price": 949,
+      "change_pct": -1.25,
+      "source": "yahoo_finance_tw",
       "stale": false
     },
     "4958": {
-      "price": 479,
-      "change_pct": -2.94,
+      "price": 479.5,
+      "change_pct": -2.84,
       "source": "yahoo_finance_tw",
       "stale": false
     },
     "6213": {
       "price": 495,
       "change_pct": -10,
-      "source": "yahoo_finance_tw",
+      "source": "twse_mis",
       "stale": false
     },
     "6669": {
