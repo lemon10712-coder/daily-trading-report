@@ -1149,10 +1149,10 @@
       "date": "2026-09-17",
       "recorded_at": "2026-09-17T06:20:33.217Z",
       "reviewed_symbols": 15,
-      "average_score": 30,
+      "average_score": 34,
       "verdict": "整體需要改善",
-      "direction_correct": 3,
-      "direction_wrong": 11,
+      "direction_correct": 4,
+      "direction_wrong": 10,
       "main_pick_count": 0,
       "main_pick_triggered": 0,
       "main_pick_wins": 0,
@@ -1164,7 +1164,7 @@
         },
         {
           "rule": "降低前一日大漲後的延續假設；開盤跌破 VWAP／首 15 分鐘低點時取消做多",
-          "affected_symbols": 11
+          "affected_symbols": 10
         },
         {
           "rule": "進場需增加 VWAP、首 15 分鐘結構與量能確認，避免只因價格碰區間就進場",
@@ -1181,7 +1181,7 @@
     {
       "rule": "降低前一日大漲後的延續假設；開盤跌破 VWAP／首 15 分鐘低點時取消做多",
       "occurrence_days": 36,
-      "affected_symbols_total": 222,
+      "affected_symbols_total": 221,
       "first_seen": "2026-07-22",
       "last_seen": "2026-09-17",
       "status": "eligible_for_review"
@@ -1237,14 +1237,14 @@
   ],
   "summary": {
     "trading_days": 36,
-    "average_strategy_score": 44.1,
+    "average_strategy_score": 44.2,
     "total_reviewed_symbols": 468,
     "main_pick_count": 16,
     "main_pick_triggered": 8,
     "main_pick_wins": 4,
     "main_pick_losses": 4,
-    "direction_correct": 192,
-    "direction_wrong": 222
+    "direction_correct": 193,
+    "direction_wrong": 221
   },
-  "updated_at": "2026-09-17T06:20:33.218Z"
+  "updated_at": "2026-09-18T06:20:32.860Z"
 }
