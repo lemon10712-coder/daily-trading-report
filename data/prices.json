@@ -1,103 +1,12 @@
 {
-  "updated_at": "2026/9/24 下午1:55:29",
-  "updated_at_iso": "2026-09-24T05:55:29.945Z",
-  "price_type": "close",
+  "updated_at": "2026/9/25 上午9:00:37",
+  "updated_at_iso": "2026-09-25T01:00:37.568Z",
+  "price_type": "intraday",
   "quote_status": {
-    "expected": 15,
-    "fresh": 15,
+    "expected": 0,
+    "fresh": 0,
     "is_complete": true,
     "missing_symbols": []
   },
-  "prices": {
-    "1303": {
-      "price": 238,
-      "change_pct": 4.62,
-      "source": "twse_mis",
-      "stale": false
-    },
-    "2303": {
-      "price": 154,
-      "change_pct": -3.75,
-      "source": "twse_mis",
-      "stale": false
-    },
-    "2308": {
-      "price": 1910,
-      "change_pct": 0.53,
-      "source": "twse_mis",
-      "stale": false
-    },
-    "2327": {
-      "price": 580,
-      "change_pct": 1.22,
-      "source": "twse_mis",
-      "stale": false
-    },
-    "2330": {
-      "price": 2475,
-      "change_pct": -1,
-      "source": "twse_mis",
-      "stale": false
-    },
-    "2368": {
-      "price": 1105,
-      "change_pct": -3.07,
-      "source": "twse_mis",
-      "stale": false
-    },
-    "2408": {
-      "price": 503,
-      "change_pct": -2.33,
-      "source": "twse_mis",
-      "stale": false
-    },
-    "2409": {
-      "price": 34.2,
-      "change_pct": -1.44,
-      "source": "twse_mis",
-      "stale": false
-    },
-    "2454": {
-      "price": 5285,
-      "change_pct": 1.93,
-      "source": "twse_mis",
-      "stale": false
-    },
-    "3037": {
-      "price": 1185,
-      "change_pct": 2.16,
-      "source": "twse_mis",
-      "stale": false
-    },
-    "3189": {
-      "price": 962,
-      "change_pct": 6.18,
-      "source": "twse_mis",
-      "stale": false
-    },
-    "3443": {
-      "price": 8525,
-      "change_pct": 1.67,
-      "source": "twse_mis",
-      "stale": false
-    },
-    "4958": {
-      "price": 475.5,
-      "change_pct": 0.53,
-      "source": "twse_mis",
-      "stale": false
-    },
-    "8046": {
-      "price": 1240,
-      "change_pct": 2.48,
-      "source": "twse_mis",
-      "stale": false
-    },
-    "8150": {
-      "price": 112,
-      "change_pct": 4.67,
-      "source": "twse_mis",
-      "stale": false
-    }
-  }
+  "prices": {}
 }
