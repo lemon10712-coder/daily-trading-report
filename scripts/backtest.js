@@ -330,6 +330,21 @@ async function evaluateNamedPick(pick, date, soxContext) {
   return { symbol: pick.symbol, name: pick.name, ...trade, quality_review: analyzeRecommendation(pick, trade, bars, soxContext) };
 }
 
+async function evaluateReportPicks(report, soxContext, evaluate = evaluateNamedPick) {
+  const summary = report.summary || {};
+  const entries = Array.isArray(summary.recommendations)
+    ? summary.recommendations.map((pick, index) => [`recommendation_${index}`, pick])
+    : [['safe_pick', summary.safe_pick], ['aggressive_pick', summary.aggressive_pick]];
+  const picks = {};
+  const seen = new Set();
+  for (const [key, pick] of entries) {
+    if (!pick?.symbol || seen.has(String(pick.symbol))) continue;
+    seen.add(String(pick.symbol));
+    picks[key] = await evaluate(pick, report.date, soxContext);
+  }
+  return picks;
+}
+
 function buildStrategyReview(result) {
   const unique = new Map();
   for (const item of [...Object.values(result.picks || {}), ...(result.candidates || [])].filter(Boolean)) {
@@ -379,11 +394,9 @@ async function main() {
   };
   const soxContext = await fetchSoxContext(report.date);
   result.sox_context = soxContext;
-  const summary = report.summary || {};
-  if (summary.safe_pick) result.picks.safe_pick = await evaluateNamedPick(summary.safe_pick, report.date, soxContext);
-  if (summary.aggressive_pick) result.picks.aggressive_pick = await evaluateNamedPick(summary.aggressive_pick, report.date, soxContext);
+  result.picks = await evaluateReportPicks(report, soxContext);
   for (const candidate of report.candidates || []) result.candidates.push(await evaluateNamedPick(candidate, report.date, soxContext));
-  result.price_snapshot_at = result.picks.safe_pick?.intraday_source || result.picks.aggressive_pick?.intraday_source || null;
+  result.price_snapshot_at = Object.values(result.picks).find((item) => item?.intraday_source)?.intraday_source || null;
   result.strategy_review = buildStrategyReview(result);
   result.narrative = buildNarrative(result);
   if (!fs.existsSync(BACKTEST_DIR)) fs.mkdirSync(BACKTEST_DIR, { recursive: true });
@@ -397,4 +410,4 @@ async function main() {
 
 if (require.main === module) main().catch((error) => { console.error(error); process.exitCode = 1; });
 
-module.exports = { parseRange, parseEarlyStop, entryFillForBar, evaluatePickIntraday, tradeNetPnl, analyzeRecommendation, buildStrategyReview, buildNarrative };
+module.exports = { parseRange, parseEarlyStop, entryFillForBar, evaluatePickIntraday, tradeNetPnl, analyzeRecommendation, buildStrategyReview, buildNarrative, evaluateReportPicks };

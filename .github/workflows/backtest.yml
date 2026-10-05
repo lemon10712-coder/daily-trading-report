@@ -27,7 +27,7 @@ jobs:
           node-version: '20'
 
       - name: Run regression tests
-        run: node --test tests/backtest.test.js
+        run: node --test tests/backtest.test.js tests/recommendations.test.js tests/strategy-learning.test.js
 
       - name: Run backtest
         run: node scripts/backtest.js

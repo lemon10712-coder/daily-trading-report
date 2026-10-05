@@ -678,8 +678,9 @@ function renderPdfLinks(pdf, reportDate) {
 function renderBacktest(backtest, reportDate) {
   if (!backtest || backtest.date !== reportDate) return '';
   let html = '<section><div class="section-head"><div class="eyebrow">📊 今日回測（收盤後自動比對）</div></div><div class="bt-card">';
-  html += renderBacktestRow(backtest.picks && backtest.picks.safe_pick, 'safe');
-  html += renderBacktestRow(backtest.picks && backtest.picks.aggressive_pick, 'aggressive');
+  for (const [key, pick] of Object.entries(backtest.picks || {})) {
+    html += renderBacktestRow(pick, key);
+  }
   if (backtest.narrative) html += `<div class="backtest-narrative">${esc(backtest.narrative)}</div>`;
   const review = backtest.strategy_review;
   if (review) {

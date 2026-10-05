@@ -199,8 +199,8 @@ def build_story(report: dict, backtest: dict | None = None, learning: dict | Non
         story.extend([PageBreak(), p("五、收盤後精確回測", "H1CJ")])
         story.append(p(backtest.get("narrative", ""), "GoodCJ"))
         rows = [["類型", "股票", "結果", "進場", "平均出場", "毛報酬", "淨報酬"]]
-        for label, key in [("安全牌", "safe_pick"), ("衝最快", "aggressive_pick")]:
-            item = (backtest.get("picks") or {}).get(key)
+        for key, item in (backtest.get("picks") or {}).items():
+            label = {"safe_pick": "安全牌", "aggressive_pick": "衝最快"}.get(key, "主推薦")
             if not item:
                 continue
             rows.append([

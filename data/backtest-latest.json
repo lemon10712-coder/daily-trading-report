@@ -9,7 +9,198 @@
     "sellTaxRate": 0.0015,
     "slippageRate": 0
   },
-  "picks": {},
+  "picks": {
+    "recommendation_0": {
+      "symbol": "2303",
+      "name": "聯電",
+      "status": "down_no_stop",
+      "label": "🟠 下跌但未達停損",
+      "entry_triggered": true,
+      "entry_time": "12:06",
+      "entry_price": 162.5,
+      "exit_time": "13:30",
+      "average_exit": 161.25,
+      "exits": [
+        {
+          "fraction": 0.5,
+          "price": 161,
+          "time": "12:08",
+          "reason": "early_stop"
+        },
+        {
+          "fraction": 0.5,
+          "price": 161.5,
+          "time": "13:30",
+          "reason": "close"
+        }
+      ],
+      "ambiguous": false,
+      "pct_vs_entry": -0.77,
+      "gross_pct": -0.77,
+      "net_pct": -1.2,
+      "transaction_cost_pct": 0.43,
+      "close": 161.5,
+      "entry_mid": 162.75,
+      "stop_loss": 159,
+      "early_stop": 161,
+      "take_profit": 166.5,
+      "target": 172,
+      "intraday_source": "Yahoo Finance 2303.TW 1m",
+      "quality_review": {
+        "score": 60,
+        "verdict": "部分正確",
+        "selection": "有效",
+        "direction": "正確",
+        "entry": "有成交但位置不佳",
+        "risk": "收盤出場仍虧損，停損／時效需調整",
+        "market": {
+          "open": 159,
+          "high": 162.5,
+          "low": 157.5,
+          "close": 161.5,
+          "close_pct": 1.57,
+          "upside_pct": 2.2,
+          "downside_pct": -0.94,
+          "range_pct": 3.17
+        },
+        "planned_risk_reward": 1,
+        "reasons": [
+          "做多方向成立：最大上行 2.2%，收盤相對開盤 1.57%",
+          "計畫風報比僅 1，低於 2"
+        ],
+        "improvements": [
+          "進場需增加 VWAP、首 15 分鐘結構與量能確認，避免只因價格碰區間就進場",
+          "調整進場、停損或第一停利，使計畫風報比至少 2"
+        ],
+        "sox_context": {
+          "session_date": "2026-10-01",
+          "change_pct": 1.59
+        }
+      }
+    },
+    "recommendation_1": {
+      "symbol": "2492",
+      "name": "華新科",
+      "status": "take_profit",
+      "label": "✅ 達到停利點",
+      "entry_triggered": true,
+      "entry_time": "09:00",
+      "entry_price": 331.5,
+      "exit_time": "09:04",
+      "average_exit": 339,
+      "exits": [
+        {
+          "fraction": 1,
+          "price": 339,
+          "time": "09:04",
+          "reason": "take_profit"
+        }
+      ],
+      "ambiguous": false,
+      "pct_vs_entry": 2.26,
+      "gross_pct": 2.26,
+      "net_pct": 1.82,
+      "transaction_cost_pct": 0.44,
+      "close": 361.5,
+      "entry_mid": 331.5,
+      "stop_loss": 324,
+      "early_stop": 327.5,
+      "take_profit": 339,
+      "target": 350.5,
+      "intraday_source": "Yahoo Finance 2492.TW 1m",
+      "quality_review": {
+        "score": 100,
+        "verdict": "正確",
+        "selection": "有效",
+        "direction": "正確",
+        "entry": "成功捕捉",
+        "risk": "風控有效",
+        "market": {
+          "open": 335,
+          "high": 361.5,
+          "low": 329,
+          "close": 361.5,
+          "close_pct": 7.91,
+          "upside_pct": 7.91,
+          "downside_pct": -1.79,
+          "range_pct": 9.88
+        },
+        "planned_risk_reward": 1,
+        "reasons": [
+          "做多方向成立：最大上行 7.91%，收盤相對開盤 7.91%",
+          "計畫風報比僅 1，低於 2"
+        ],
+        "improvements": [
+          "調整進場、停損或第一停利，使計畫風報比至少 2"
+        ],
+        "sox_context": {
+          "session_date": "2026-10-01",
+          "change_pct": 1.59
+        }
+      }
+    },
+    "recommendation_2": {
+      "symbol": "1303",
+      "name": "南亞",
+      "status": "up_no_exit",
+      "label": "🟡 上漲但未達停利",
+      "entry_triggered": true,
+      "entry_time": "09:06",
+      "entry_price": 255.5,
+      "exit_time": "13:30",
+      "average_exit": 260,
+      "exits": [
+        {
+          "fraction": 1,
+          "price": 260,
+          "time": "13:30",
+          "reason": "close"
+        }
+      ],
+      "ambiguous": false,
+      "pct_vs_entry": 1.76,
+      "gross_pct": 1.76,
+      "net_pct": 1.32,
+      "transaction_cost_pct": 0.44,
+      "close": 260,
+      "entry_mid": 256,
+      "stop_loss": 250,
+      "early_stop": 253,
+      "take_profit": 261.5,
+      "target": 270.5,
+      "intraday_source": "Yahoo Finance 1303.TW 1m",
+      "quality_review": {
+        "score": 100,
+        "verdict": "正確",
+        "selection": "有效",
+        "direction": "正確",
+        "entry": "成功捕捉",
+        "risk": "風控有效",
+        "market": {
+          "open": 253,
+          "high": 261,
+          "low": 251.5,
+          "close": 260,
+          "close_pct": 2.77,
+          "upside_pct": 3.16,
+          "downside_pct": -0.59,
+          "range_pct": 3.78
+        },
+        "planned_risk_reward": 0.92,
+        "reasons": [
+          "做多方向成立：最大上行 3.16%，收盤相對開盤 2.77%",
+          "計畫風報比僅 0.92，低於 2"
+        ],
+        "improvements": [
+          "調整進場、停損或第一停利，使計畫風報比至少 2"
+        ],
+        "sox_context": {
+          "session_date": "2026-10-01",
+          "change_pct": 1.59
+        }
+      }
+    }
+  },
   "candidates": [
     {
       "symbol": "2330",
@@ -972,5 +1163,10 @@
     ],
     "scoring_note": "0-100；綜合方向、當沖波動、進場捕捉與交易結果。未成交不直接算虧損。"
   },
-  "narrative": "總評：推薦 0 檔，實際觸發 0 檔，未進場 0 檔；獲利 0、虧損 0。\n策略品質：部分正確，需調整，平均 74.7 分。"
+  "narrative": "聯電（2303）：🟠 下跌但未達停損，淨報酬 -1.2%\n華新科（2492）：✅ 達到停利點，淨報酬 1.82%\n南亞（1303）：🟡 上漲但未達停利，淨報酬 1.32%\n總評：推薦 3 檔，實際觸發 3 檔，未進場 0 檔；獲利 2、虧損 1。\n策略品質：部分正確，需調整，平均 74.7 分。",
+  "summary_repair": {
+    "repaired_at": "2026-10-05T00:42:10.782Z",
+    "report_commit": "ab34b1c48b0e50bd0c18c639416130367f4dbe2a",
+    "method": "Restore main picks from saved candidate results only after verifying identical original trading parameters; no prices or executions recomputed."
+  }
 }

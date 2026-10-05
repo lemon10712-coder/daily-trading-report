@@ -1425,10 +1425,10 @@
       "verdict": "部分正確，需調整",
       "direction_correct": 10,
       "direction_wrong": 2,
-      "main_pick_count": 0,
-      "main_pick_triggered": 0,
-      "main_pick_wins": 0,
-      "main_pick_losses": 0,
+      "main_pick_count": 3,
+      "main_pick_triggered": 3,
+      "main_pick_wins": 2,
+      "main_pick_losses": 1,
       "lessons": [
         {
           "rule": "調整進場、停損或第一停利，使計畫風報比至少 2",
@@ -1511,12 +1511,12 @@
     "trading_days": 44,
     "average_strategy_score": 44.8,
     "total_reviewed_symbols": 588,
-    "main_pick_count": 16,
-    "main_pick_triggered": 8,
-    "main_pick_wins": 4,
-    "main_pick_losses": 4,
+    "main_pick_count": 19,
+    "main_pick_triggered": 11,
+    "main_pick_wins": 6,
+    "main_pick_losses": 5,
     "direction_correct": 248,
     "direction_wrong": 270
   },
-  "updated_at": "2026-10-02T06:20:30.042Z"
+  "updated_at": "2026-10-05T00:42:10.821Z"
 }
