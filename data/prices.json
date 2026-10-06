@@ -1,6 +1,6 @@
 {
-  "updated_at": "2026/10/6 上午10:45:58",
-  "updated_at_iso": "2026-10-06T02:45:58.723Z",
+  "updated_at": "2026/10/6 上午10:50:58",
+  "updated_at_iso": "2026-10-06T02:50:58.287Z",
   "price_type": "intraday",
   "quote_status": {
     "expected": 15,
@@ -10,9 +10,9 @@
   },
   "prices": {
     "1303": {
-      "price": 280.5,
-      "change_pct": -1.92,
-      "source": "yahoo_finance_tw",
+      "price": 283,
+      "change_pct": -1.05,
+      "source": "twse_mis",
       "stale": false
     },
     "2303": {
@@ -22,8 +22,8 @@
       "stale": false
     },
     "2308": {
-      "price": 2035,
-      "change_pct": 1.5,
+      "price": 2015,
+      "change_pct": 0.5,
       "source": "yahoo_finance_tw",
       "stale": false
     },
@@ -46,32 +46,32 @@
       "stale": false
     },
     "2409": {
-      "price": 38.15,
-      "change_pct": -2.3,
+      "price": 37.7,
+      "change_pct": -3.46,
       "source": "yahoo_finance_tw",
       "stale": false
     },
     "2454": {
-      "price": 4940,
-      "change_pct": -4.36,
-      "source": "yahoo_finance_tw",
+      "price": 4920,
+      "change_pct": -4.74,
+      "source": "twse_mis",
       "stale": false
     },
     "2492": {
-      "price": 374.5,
-      "change_pct": 1.63,
+      "price": 373,
+      "change_pct": 1.22,
       "source": "yahoo_finance_tw",
       "stale": false
     },
     "3008": {
-      "price": 6760,
-      "change_pct": 0.45,
+      "price": 6755,
+      "change_pct": 0.37,
       "source": "yahoo_finance_tw",
       "stale": false
     },
     "3037": {
-      "price": 1310,
-      "change_pct": -1.13,
+      "price": 1305,
+      "change_pct": -1.51,
       "source": "yahoo_finance_tw",
       "stale": false
     },
@@ -82,20 +82,20 @@
       "stale": false
     },
     "3481": {
-      "price": 51.5,
-      "change_pct": -1.53,
+      "price": 51,
+      "change_pct": -2.49,
       "source": "yahoo_finance_tw",
       "stale": false
     },
     "4958": {
-      "price": 580,
-      "change_pct": 0.69,
+      "price": 577,
+      "change_pct": 0.17,
       "source": "yahoo_finance_tw",
       "stale": false
     },
     "8046": {
-      "price": 1510,
-      "change_pct": 1,
+      "price": 1500,
+      "change_pct": 0.33,
       "source": "yahoo_finance_tw",
       "stale": false
     }
