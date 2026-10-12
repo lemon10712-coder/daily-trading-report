@@ -1,6 +1,6 @@
 {
-  "updated_at": "2026/10/12 上午11:40:55",
-  "updated_at_iso": "2026-10-12T03:40:55.418Z",
+  "updated_at": "2026/10/12 上午11:45:56",
+  "updated_at_iso": "2026-10-12T03:45:56.225Z",
   "price_type": "intraday",
   "quote_status": {
     "expected": 15,
@@ -12,12 +12,12 @@
     "1301": {
       "price": 81.2,
       "change_pct": -0.12,
-      "source": "yahoo_finance_tw",
+      "source": "twse_mis",
       "stale": false
     },
     "1303": {
-      "price": 305.5,
-      "change_pct": -1.45,
+      "price": 306,
+      "change_pct": -1.29,
       "source": "yahoo_finance_tw",
       "stale": false
     },
@@ -28,21 +28,21 @@
       "stale": false
     },
     "2327": {
-      "price": 635,
-      "change_pct": 0,
+      "price": 636,
+      "change_pct": 0.16,
       "source": "yahoo_finance_tw",
       "stale": false
     },
     "2330": {
-      "price": 2535,
-      "change_pct": -0.59,
-      "source": "yahoo_finance_tw",
+      "price": 2540,
+      "change_pct": -0.39,
+      "source": "twse_mis",
       "stale": false
     },
     "2344": {
-      "price": 175,
-      "change_pct": -1.13,
-      "source": "twse_mis",
+      "price": 176,
+      "change_pct": -0.56,
+      "source": "yahoo_finance_tw",
       "stale": false
     },
     "2408": {
@@ -64,14 +64,14 @@
       "stale": false
     },
     "2492": {
-      "price": 414,
-      "change_pct": -1.43,
+      "price": 414.5,
+      "change_pct": -1.31,
       "source": "yahoo_finance_tw",
       "stale": false
     },
     "3008": {
-      "price": 7220,
-      "change_pct": 8.41,
+      "price": 7275,
+      "change_pct": 9.23,
       "source": "yahoo_finance_tw",
       "stale": false
     },
