@@ -17,15 +17,26 @@ const backtest = fs.existsSync(path.join(DATA, 'backtest-latest.json')) ? read('
 const learning = fs.existsSync(path.join(DATA, 'strategy-learning.json')) ? read('strategy-learning.json') : {};
 const failures = [];
 
+function hasPerStockCausalAnalysis(backtestResult, reportResult) {
+  if (backtestResult.causal_analysis_generated_at) return true;
+  const candidates = Array.isArray(backtestResult.candidates) ? backtestResult.candidates : [];
+  const expectedCount = Array.isArray(reportResult.candidates) ? reportResult.candidates.length : 0;
+  return expectedCount > 0
+    && candidates.length >= expectedCount
+    && candidates.every((item) => Number.isFinite(item?.quality_review?.score)
+      && Array.isArray(item.quality_review.reasons)
+      && Array.isArray(item.quality_review.improvements));
+}
+
 if (report.date !== today) failures.push(`latest.json is ${report.date}, expected ${today}`);
 if (pdf.date !== today || !pdf.morning_pdf) failures.push('morning PDF is missing or stale');
 if (hour >= 15 && report.market_open !== false) {
   if (backtest.date !== today || Number(backtest.schema_version) < 3 || !backtest.strategy_review) failures.push('schema v3 strategy-quality backtest is missing or stale');
   if (!(learning.daily_reviews || []).some((item) => item.date === today)) failures.push('strategy learning has not recorded today');
   if (pdf.date !== today || !pdf.final_pdf) failures.push('final PDF with backtest is missing or stale');
-  // 2026-07-28: causal-analysis cloud routine runs 15:30 Asia/Taipei, after backtest;
-  // this 16:00 check is the first health pass after it should have completed.
-  if (backtest.date === today && !backtest.causal_analysis_generated_at) failures.push('per-stock causal analysis has not run for today (causal-analysis routine may be stuck)');
+  // The current backtest embeds a causal quality review for every candidate.
+  // Keep the legacy timestamp compatible while validating the actual analysis payload.
+  if (backtest.date === today && !hasPerStockCausalAnalysis(backtest, report)) failures.push('per-stock causal analysis has not run for today (causal-analysis routine may be stuck)');
 }
 
 if (failures.length) {
