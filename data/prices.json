@@ -1,6 +1,6 @@
 {
-  "updated_at": "2026/10/22 下午12:01:09",
-  "updated_at_iso": "2026-10-22T04:01:09.329Z",
+  "updated_at": "2026/10/22 下午12:05:54",
+  "updated_at_iso": "2026-10-22T04:05:54.407Z",
   "price_type": "intraday",
   "quote_status": {
     "expected": 15,
@@ -10,8 +10,8 @@
   },
   "prices": {
     "1303": {
-      "price": 302.5,
-      "change_pct": -5.62,
+      "price": 302,
+      "change_pct": -5.77,
       "source": "yahoo_finance_tw",
       "stale": false
     },
@@ -46,8 +46,8 @@
       "stale": false
     },
     "2408": {
-      "price": 422,
-      "change_pct": -3.32,
+      "price": 422.5,
+      "change_pct": -3.21,
       "source": "yahoo_finance_tw",
       "stale": false
     },
@@ -58,45 +58,45 @@
       "stale": false
     },
     "2454": {
-      "price": 4085,
-      "change_pct": -1.33,
+      "price": 4095,
+      "change_pct": -1.09,
       "source": "yahoo_finance_tw",
       "stale": false
     },
     "2492": {
-      "price": 378,
-      "change_pct": -6.78,
+      "price": 377,
+      "change_pct": -7.03,
       "source": "yahoo_finance_tw",
       "stale": false
     },
     "3008": {
-      "price": 6175,
-      "change_pct": 0.08,
+      "price": 6190,
+      "change_pct": 0.32,
       "source": "yahoo_finance_tw",
       "stale": false
     },
     "3037": {
-      "price": 1100,
-      "change_pct": 0,
+      "price": 1095,
+      "change_pct": -0.45,
       "source": "yahoo_finance_tw",
       "stale": false
     },
     "3231": {
-      "price": 191,
-      "change_pct": -2.05,
+      "price": 191.5,
+      "change_pct": -1.79,
       "source": "yahoo_finance_tw",
       "stale": false
     },
     "4958": {
-      "price": 578,
-      "change_pct": 0,
+      "price": 581,
+      "change_pct": 0.52,
       "source": "yahoo_finance_tw",
       "stale": false
     },
     "8039": {
-      "price": 275.5,
-      "change_pct": -5.97,
-      "source": "twse_mis",
+      "price": 276,
+      "change_pct": -5.8,
+      "source": "yahoo_finance_tw",
       "stale": false
     }
   }
