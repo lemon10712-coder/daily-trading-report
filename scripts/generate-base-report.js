@@ -306,6 +306,16 @@ async function main() {
     return parts.join('；');
   };
 
+  // 前一日重挫的標的，不能只沿用一般「拉回即買」文字。這條限制同時寫入
+  // 主推薦與候選股，讓發布前健檢可驗證，也避免兩個輸出路徑的風控說法不一致。
+  const invalidationReason = (c) => Number(c.change_pct) <= -7
+    ? '前日重挫，09:15 前禁止做多；其後僅在價格回到進場區間並確認量能時評估，跌破停損價或開盤即跳空超出進場區間則策略失效'
+    : '跌破停損價，或開盤即跳空超出進場區間，策略失效';
+
+  const planA = (c) => Number(c.change_pct) <= -7
+    ? `09:15 前禁止做多；其後僅在拉回 ${c.entryLow}-${c.entryHigh} 且量能確認時進場，跌破停損 ${c.stopLoss} 出場`
+    : `拉回 ${c.entryLow}-${c.entryHigh} 進場，跌破停損 ${c.stopLoss} 出場`;
+
   const toRecommendation = (c) => ({
     symbol: c.symbol,
     name: c.name,
@@ -317,7 +327,7 @@ async function main() {
     stop_loss: String(c.stopLoss),
     early_stop: String(computeEarlyStop(c.entryLow, c.stopLoss)),
     risk_reward_ratio: String(round((c.target - c.entryHigh) / (c.entryHigh - c.stopLoss))),
-    invalidation_reason: '跌破停損價，或開盤即跳空超出進場區間，策略失效',
+    invalidation_reason: invalidationReason(c),
     prior_day_change_pct: c.change_pct,
     risk_tag: baseRiskTag(c),
     confidence_score: c.confidence,
@@ -336,9 +346,9 @@ async function main() {
     stop_loss: String(c.stopLoss),
     early_stop: String(computeEarlyStop(c.entryLow, c.stopLoss)),
     risk_reward_ratio: String(round((c.target - c.entryHigh) / (c.entryHigh - c.stopLoss))),
-    invalidation_reason: '跌破停損價，或開盤即跳空超出進場區間，策略失效',
+    invalidation_reason: invalidationReason(c),
     prior_day_change_pct: c.change_pct,
-    plan_a: `拉回 ${c.entryLow}-${c.entryHigh} 進場，跌破停損 ${c.stopLoss} 出場`,
+    plan_a: planA(c),
     plan_b: '本版本未提供突破追價備案，建議僅採A計畫或觀望',
     risk_tag: baseRiskTag(c)
   });
