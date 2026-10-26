@@ -1822,6 +1822,20 @@
           "affected_symbols": 13
         }
       ]
+    },
+    {
+      "date": "2026-10-26",
+      "recorded_at": "2026-10-26T06:20:35.772Z",
+      "reviewed_symbols": 0,
+      "average_score": null,
+      "verdict": "整體需要改善",
+      "direction_correct": 0,
+      "direction_wrong": 0,
+      "main_pick_count": 4,
+      "main_pick_triggered": 0,
+      "main_pick_wins": 0,
+      "main_pick_losses": 0,
+      "lessons": []
     }
   ],
   "recurring_lessons": [
@@ -1883,15 +1897,15 @@
     }
   ],
   "summary": {
-    "trading_days": 56,
+    "trading_days": 57,
     "average_strategy_score": 44.2,
     "total_reviewed_symbols": 753,
-    "main_pick_count": 70,
+    "main_pick_count": 74,
     "main_pick_triggered": 39,
     "main_pick_wins": 15,
     "main_pick_losses": 24,
     "direction_correct": 305,
     "direction_wrong": 354
   },
-  "updated_at": "2026-10-22T06:20:32.495Z"
+  "updated_at": "2026-10-26T06:20:35.773Z"
 }
