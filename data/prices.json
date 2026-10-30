@@ -1,6 +1,6 @@
 {
-  "updated_at": "2026/10/30 上午11:50:58",
-  "updated_at_iso": "2026-10-30T03:50:59.000Z",
+  "updated_at": "2026/10/30 上午11:55:47",
+  "updated_at_iso": "2026-10-30T03:55:47.476Z",
   "price_type": "intraday",
   "quote_status": {
     "expected": 15,
@@ -34,15 +34,15 @@
       "stale": false
     },
     "2330": {
-      "price": 2375,
-      "change_pct": -1.66,
+      "price": 2370,
+      "change_pct": -1.86,
       "source": "yahoo_finance_tw",
       "stale": false
     },
     "2344": {
-      "price": 164,
-      "change_pct": -3.81,
-      "source": "twse_mis",
+      "price": 163,
+      "change_pct": -4.4,
+      "source": "yahoo_finance_tw",
       "stale": false
     },
     "2383": {
@@ -52,8 +52,8 @@
       "stale": false
     },
     "2408": {
-      "price": 451.5,
-      "change_pct": -5.35,
+      "price": 452,
+      "change_pct": -5.24,
       "source": "yahoo_finance_tw",
       "stale": false
     },
@@ -64,39 +64,39 @@
       "stale": false
     },
     "2492": {
-      "price": 387,
-      "change_pct": -8.51,
+      "price": 386.5,
+      "change_pct": -8.63,
       "source": "yahoo_finance_tw",
       "stale": false
     },
     "3008": {
-      "price": 5515,
-      "change_pct": -5.16,
+      "price": 5505,
+      "change_pct": -5.33,
       "source": "yahoo_finance_tw",
       "stale": false
     },
     "3037": {
-      "price": 990,
-      "change_pct": -4.81,
-      "source": "yahoo_finance_tw",
+      "price": 991,
+      "change_pct": -4.71,
+      "source": "twse_mis",
       "stale": false
     },
     "3189": {
-      "price": 930,
-      "change_pct": -3.02,
+      "price": 932,
+      "change_pct": -2.82,
       "source": "yahoo_finance_tw",
       "stale": false
     },
     "3443": {
-      "price": 7785,
-      "change_pct": 1.9,
+      "price": 7770,
+      "change_pct": 1.7,
       "source": "yahoo_finance_tw",
       "stale": false
     },
     "6213": {
-      "price": 688,
-      "change_pct": -7.65,
-      "source": "yahoo_finance_tw",
+      "price": 689,
+      "change_pct": -7.52,
+      "source": "twse_mis",
       "stale": false
     }
   }
