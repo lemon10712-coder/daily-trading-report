@@ -113,8 +113,10 @@ jobs:
           done
           exit 1
 
-      - name: Notify LINE
-        if: steps.commit.outputs.changed == 'true'
+      # 2026-11-04: disabled at the user's request. PDF generation and website
+      # publishing continue, but this workflow no longer sends LINE messages.
+      - name: Notify LINE (disabled)
+        if: ${{ false }}
         env:
           LINE_CHANNEL_ACCESS_TOKEN: ${{ secrets.LINE_CHANNEL_ACCESS_TOKEN }}
         run: |
