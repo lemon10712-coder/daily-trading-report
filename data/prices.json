@@ -1,7 +1,7 @@
 {
-  "updated_at": "2026/11/4 下午1:30:55",
-  "updated_at_iso": "2026-11-04T05:30:55.355Z",
-  "price_type": "intraday",
+  "updated_at": "2026/11/4 下午1:35:32",
+  "updated_at_iso": "2026-11-04T05:35:32.657Z",
+  "price_type": "close",
   "quote_status": {
     "expected": 15,
     "fresh": 15,
@@ -10,9 +10,9 @@
   },
   "prices": {
     "1303": {
-      "price": 274.5,
-      "change_pct": 1.29,
-      "source": "yahoo_finance_tw",
+      "price": 276.5,
+      "change_pct": 2.03,
+      "source": "twse_mis",
       "stale": false
     },
     "1802": {
@@ -40,9 +40,9 @@
       "stale": false
     },
     "2330": {
-      "price": 2275,
-      "change_pct": -0.87,
-      "source": "yahoo_finance_tw",
+      "price": 2260,
+      "change_pct": -1.53,
+      "source": "twse_mis",
       "stale": false
     },
     "2383": {
@@ -52,9 +52,9 @@
       "stale": false
     },
     "2408": {
-      "price": 398.5,
-      "change_pct": -3.04,
-      "source": "yahoo_finance_tw",
+      "price": 399.5,
+      "change_pct": -2.8,
+      "source": "twse_mis",
       "stale": false
     },
     "2454": {
@@ -64,15 +64,15 @@
       "stale": false
     },
     "3037": {
-      "price": 890,
-      "change_pct": -1.33,
-      "source": "yahoo_finance_tw",
+      "price": 888,
+      "change_pct": -1.55,
+      "source": "twse_mis",
       "stale": false
     },
     "3443": {
-      "price": 7050,
-      "change_pct": 3.75,
-      "source": "yahoo_finance_tw",
+      "price": 7115,
+      "change_pct": 4.71,
+      "source": "twse_mis",
       "stale": false
     },
     "3711": {
@@ -82,15 +82,15 @@
       "stale": false
     },
     "4958": {
-      "price": 432,
-      "change_pct": -2.48,
+      "price": 433,
+      "change_pct": -2.26,
       "source": "twse_mis",
       "stale": false
     },
     "6213": {
-      "price": 613,
-      "change_pct": 2.17,
-      "source": "yahoo_finance_tw",
+      "price": 612,
+      "change_pct": 2,
+      "source": "twse_mis",
       "stale": false
     },
     "0050": {
