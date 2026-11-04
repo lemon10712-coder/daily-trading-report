@@ -34,8 +34,10 @@ jobs:
             echo "Afternoon health pass (${HOUR}:00 Asia/Taipei); skipping morning summary push."
           fi
 
-      - name: Notify LINE on failure
-        if: failure()
+      # 2026-11-04: disabled at the user's request. Health checks may still run,
+      # but failures must no longer send LINE messages.
+      - name: Notify LINE on failure (disabled)
+        if: ${{ false }}
         env:
           LINE_CHANNEL_ACCESS_TOKEN: ${{ secrets.LINE_CHANNEL_ACCESS_TOKEN }}
         run: |
