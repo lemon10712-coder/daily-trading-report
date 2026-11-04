@@ -1,3 +1,9 @@
+// LINE morning-report delivery is intentionally disabled.
+// 2026-11-04: disabled at the user's request. Report generation and website
+// publishing continue normally; only this report-summary push is skipped.
+console.log('Day-trading report LINE push is disabled; skipping.');
+process.exit(0);
+
 // Push a condensed version of today's morning report to LINE.
 //
 // Added 2026-08-05. Until now the report was only ever published to the web
