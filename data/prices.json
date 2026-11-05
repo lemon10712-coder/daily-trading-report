@@ -1,6 +1,6 @@
 {
-  "updated_at": "2026/11/5 下午1:21:03",
-  "updated_at_iso": "2026-11-05T05:21:03.408Z",
+  "updated_at": "2026/11/5 下午1:25:57",
+  "updated_at_iso": "2026-11-05T05:25:57.798Z",
   "price_type": "intraday",
   "quote_status": {
     "expected": 15,
@@ -10,15 +10,15 @@
   },
   "prices": {
     "1303": {
-      "price": 249.5,
-      "change_pct": -9.76,
+      "price": 251,
+      "change_pct": -9.22,
       "source": "yahoo_finance_tw",
       "stale": false
     },
     "1802": {
       "price": 60.1,
       "change_pct": -9.9,
-      "source": "twse_mis",
+      "source": "yahoo_finance_tw",
       "stale": false
     },
     "2308": {
@@ -28,21 +28,21 @@
       "stale": false
     },
     "2327": {
-      "price": 405,
-      "change_pct": -9.8,
+      "price": 406,
+      "change_pct": -9.58,
       "source": "yahoo_finance_tw",
       "stale": false
     },
     "2330": {
       "price": 2240,
       "change_pct": -0.88,
-      "source": "twse_mis",
+      "source": "yahoo_finance_tw",
       "stale": false
     },
     "2383": {
       "price": 4100,
       "change_pct": -9.99,
-      "source": "twse_mis",
+      "source": "yahoo_finance_tw",
       "stale": false
     },
     "2408": {
@@ -58,9 +58,9 @@
       "stale": false
     },
     "3037": {
-      "price": 802,
-      "change_pct": -9.68,
-      "source": "yahoo_finance_tw",
+      "price": 800,
+      "change_pct": -9.91,
+      "source": "twse_mis",
       "stale": false
     },
     "3189": {
@@ -82,20 +82,20 @@
       "stale": false
     },
     "3711": {
-      "price": 572,
-      "change_pct": -8.77,
+      "price": 574,
+      "change_pct": -8.45,
       "source": "yahoo_finance_tw",
       "stale": false
     },
     "6456": {
-      "price": 87.5,
-      "change_pct": -9.23,
+      "price": 88,
+      "change_pct": -8.71,
       "source": "yahoo_finance_tw",
       "stale": false
     },
     "0050": {
-      "price": 97.25,
-      "change_pct": -2.6,
+      "price": 97.3,
+      "change_pct": -2.55,
       "source": "yahoo_finance_tw",
       "stale": false
     }
