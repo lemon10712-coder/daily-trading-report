@@ -2119,6 +2119,29 @@
           "affected_symbols": 3
         }
       ]
+    },
+    {
+      "date": "2026-11-09",
+      "recorded_at": "2026-11-09T06:21:10.268Z",
+      "reviewed_symbols": 15,
+      "average_score": 80,
+      "verdict": "推薦與策略整體正確",
+      "direction_correct": 15,
+      "direction_wrong": 0,
+      "main_pick_count": 4,
+      "main_pick_triggered": 1,
+      "main_pick_wins": 1,
+      "main_pick_losses": 0,
+      "lessons": [
+        {
+          "rule": "調整進場、停損或第一停利，使計畫風報比至少 2",
+          "affected_symbols": 15
+        },
+        {
+          "rule": "保留拉回價，但增加突破回測後的小部位 B 計畫，禁止直接追價",
+          "affected_symbols": 10
+        }
+      ]
     }
   ],
   "recurring_lessons": [
@@ -2131,17 +2154,17 @@
       "status": "eligible_for_review"
     },
     {
-      "rule": "進場需增加 VWAP、首 15 分鐘結構與量能確認，避免只因價格碰區間就進場",
+      "rule": "調整進場、停損或第一停利，使計畫風報比至少 2",
       "occurrence_days": 62,
-      "affected_symbols_total": 341,
+      "affected_symbols_total": 881,
       "first_seen": "2026-07-22",
-      "last_seen": "2026-11-06",
+      "last_seen": "2026-11-09",
       "status": "eligible_for_review"
     },
     {
-      "rule": "調整進場、停損或第一停利，使計畫風報比至少 2",
-      "occurrence_days": 61,
-      "affected_symbols_total": 866,
+      "rule": "進場需增加 VWAP、首 15 分鐘結構與量能確認，避免只因價格碰區間就進場",
+      "occurrence_days": 62,
+      "affected_symbols_total": 341,
       "first_seen": "2026-07-22",
       "last_seen": "2026-11-06",
       "status": "eligible_for_review"
@@ -2155,19 +2178,19 @@
       "status": "eligible_for_review"
     },
     {
+      "rule": "保留拉回價，但增加突破回測後的小部位 B 計畫，禁止直接追價",
+      "occurrence_days": 29,
+      "affected_symbols_total": 90,
+      "first_seen": "2026-07-22",
+      "last_seen": "2026-11-09",
+      "status": "eligible_for_review"
+    },
+    {
       "rule": "候選股屬於半導體/AI供應鏈類股時，開盤前查一次美股SOX指數走勢，大跌/大漲時調降信心度或縮小部位",
       "occurrence_days": 28,
       "affected_symbols_total": 203,
       "first_seen": "2026-07-28",
       "last_seen": "2026-11-05",
-      "status": "eligible_for_review"
-    },
-    {
-      "rule": "保留拉回價，但增加突破回測後的小部位 B 計畫，禁止直接追價",
-      "occurrence_days": 28,
-      "affected_symbols_total": 80,
-      "first_seen": "2026-07-22",
-      "last_seen": "2026-10-28",
       "status": "eligible_for_review"
     },
     {
@@ -2180,15 +2203,15 @@
     }
   ],
   "summary": {
-    "trading_days": 66,
-    "average_strategy_score": 43.9,
-    "total_reviewed_symbols": 888,
-    "main_pick_count": 111,
-    "main_pick_triggered": 54,
-    "main_pick_wins": 19,
+    "trading_days": 67,
+    "average_strategy_score": 44.4,
+    "total_reviewed_symbols": 903,
+    "main_pick_count": 115,
+    "main_pick_triggered": 55,
+    "main_pick_wins": 20,
     "main_pick_losses": 35,
-    "direction_correct": 352,
+    "direction_correct": 367,
     "direction_wrong": 430
   },
-  "updated_at": "2026-11-06T06:20:36.839Z"
+  "updated_at": "2026-11-09T06:21:10.268Z"
 }
