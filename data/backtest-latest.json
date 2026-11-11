@@ -1,9 +1,9 @@
 {
   "schema_version": 3,
   "methodology": "one-minute entry/exit sequence plus recommendation, selection, direction, entry and risk-quality review; same-bar ambiguity uses conservative stop",
-  "date": "2026-11-10",
-  "generated_at": "2026/11/10 下午2:20:34",
-  "price_snapshot_at": "Yahoo Finance 2408.TW 1m",
+  "date": "2026-11-11",
+  "generated_at": "2026/11/11 下午2:20:32",
+  "price_snapshot_at": "Yahoo Finance 1303.TW 1m",
   "cost_assumptions": {
     "commissionRate": 0.001425,
     "sellTaxRate": 0.0015,
@@ -11,162 +11,330 @@
   },
   "picks": {
     "recommendation_0": {
-      "symbol": "2408",
-      "name": "南亞科",
+      "symbol": "1303",
+      "name": "南亞",
       "status": "take_profit",
       "label": "✅ 達到停利點",
       "entry_triggered": true,
-      "entry_time": "11:36",
-      "entry_price": 373.5,
-      "exit_time": "11:53",
-      "average_exit": 381,
+      "entry_time": "09:09",
+      "entry_price": 292,
+      "exit_time": "09:19",
+      "average_exit": 297.5,
       "exits": [
         {
           "fraction": 1,
-          "price": 381,
-          "time": "11:53",
+          "price": 297.5,
+          "time": "09:19",
           "reason": "take_profit"
         }
       ],
       "ambiguous": false,
-      "pct_vs_entry": 2.01,
-      "gross_pct": 2.01,
-      "net_pct": 1.57,
+      "pct_vs_entry": 1.88,
+      "gross_pct": 1.88,
+      "net_pct": 1.44,
       "transaction_cost_pct": 0.44,
-      "close": 383,
-      "entry_mid": 372.75,
-      "stop_loss": 364.5,
-      "early_stop": 368.5,
-      "take_profit": 381,
-      "target": 395,
-      "intraday_source": "Yahoo Finance 2408.TW 1m",
+      "close": 313,
+      "entry_mid": 291.25,
+      "stop_loss": 284.5,
+      "early_stop": 287.5,
+      "take_profit": 297.5,
+      "target": 308,
+      "intraday_source": "Yahoo Finance 1303.TW 1m",
       "quality_review": {
-        "score": 40,
-        "verdict": "需要改善",
-        "selection": "不佳",
-        "direction": "錯誤",
+        "score": 100,
+        "verdict": "正確",
+        "selection": "有效",
+        "direction": "正確",
         "entry": "成功捕捉",
         "risk": "風控有效",
         "market": {
-          "open": 391,
-          "high": 402,
-          "low": 370.5,
-          "close": 383,
-          "close_pct": -2.05,
-          "upside_pct": 2.81,
-          "downside_pct": -5.24,
-          "range_pct": 8.5
+          "open": 296,
+          "high": 314.5,
+          "low": 289.5,
+          "close": 313,
+          "close_pct": 5.74,
+          "upside_pct": 6.25,
+          "downside_pct": -2.2,
+          "range_pct": 8.64
         },
-        "planned_risk_reward": 1,
+        "planned_risk_reward": 0.93,
         "reasons": [
-          "做多方向錯誤：收盤相對開盤 -2.05%，最大下行 -5.24%",
-          "計畫風報比僅 1，低於 2",
-          "參考：美股費城半導體指數(SOX)最近一個交易日(2026-11-09)收盤上漲 6.85%，方向誤判可能與類股系統性外溢有關，非純粹選股邏輯錯誤"
+          "做多方向成立：最大上行 6.25%，收盤相對開盤 5.74%",
+          "計畫風報比僅 0.93，低於 2"
         ],
         "improvements": [
-          "降低前一日大漲後的延續假設；開盤跌破 VWAP／首 15 分鐘低點時取消做多",
-          "調整進場、停損或第一停利，使計畫風報比至少 2",
-          "候選股屬於半導體/AI供應鏈類股時，開盤前查一次美股SOX指數走勢，大跌/大漲時調降信心度或縮小部位"
+          "調整進場、停損或第一停利，使計畫風報比至少 2"
         ],
         "sox_context": {
-          "session_date": "2026-11-09",
-          "change_pct": 6.85
+          "session_date": "2026-11-10",
+          "change_pct": -0.35
         }
       }
     },
     "recommendation_1": {
-      "symbol": "1303",
-      "name": "南亞",
-      "status": "no_trade",
-      "label": "⚪ 未觸發進場",
-      "entry_triggered": false,
-      "no_trade_reason": "price_never_touched_entry",
-      "pct_vs_entry": null,
-      "gross_pct": 0,
-      "net_pct": 0,
-      "close": 289,
-      "entry_mid": 265,
-      "stop_loss": 259,
-      "take_profit": 271,
-      "target": 280.5,
-      "intraday_source": "Yahoo Finance 1303.TW 1m",
-      "quality_review": {
-        "score": 70,
-        "verdict": "部分正確",
-        "selection": "有效",
-        "direction": "正確",
-        "entry": "太保守，錯過上漲",
-        "risk": "未成交，不適用",
-        "market": {
-          "open": 278,
-          "high": 289,
-          "low": 275.5,
-          "close": 289,
-          "close_pct": 3.96,
-          "upside_pct": 3.96,
-          "downside_pct": -0.9,
-          "range_pct": 4.9
+      "symbol": "2327",
+      "name": "國巨*",
+      "status": "up_no_exit",
+      "label": "🟡 上漲但未達停利",
+      "entry_triggered": true,
+      "entry_time": "09:30",
+      "entry_price": 419.5,
+      "exit_time": "13:30",
+      "average_exit": 419.5,
+      "exits": [
+        {
+          "fraction": 0.5,
+          "price": 414.5,
+          "time": "09:56",
+          "reason": "early_stop"
         },
-        "planned_risk_reward": 1,
+        {
+          "fraction": 0.5,
+          "price": 424.5,
+          "time": "13:30",
+          "reason": "close"
+        }
+      ],
+      "ambiguous": false,
+      "pct_vs_entry": 0,
+      "gross_pct": 0,
+      "net_pct": -0.44,
+      "transaction_cost_pct": 0.44,
+      "close": 424.5,
+      "entry_mid": 419.5,
+      "stop_loss": 410.5,
+      "early_stop": 414.5,
+      "take_profit": 429,
+      "target": 444.5,
+      "intraday_source": "Yahoo Finance 2327.TW 1m",
+      "quality_review": {
+        "score": 0,
+        "verdict": "需要改善",
+        "selection": "不佳",
+        "direction": "錯誤",
+        "entry": "有成交但位置不佳",
+        "risk": "收盤出場仍虧損，停損／時效需調整",
+        "market": {
+          "open": 428,
+          "high": 435.5,
+          "low": 411.5,
+          "close": 424.5,
+          "close_pct": -0.82,
+          "upside_pct": 1.75,
+          "downside_pct": -3.86,
+          "range_pct": 5.83
+        },
+        "planned_risk_reward": 1.06,
         "reasons": [
-          "做多方向成立：最大上行 3.96%，收盤相對開盤 3.96%",
-          "計畫風報比僅 1，低於 2"
+          "做多方向錯誤：收盤相對開盤 -0.82%，最大下行 -3.86%",
+          "計畫風報比僅 1.06，低於 2"
         ],
         "improvements": [
-          "保留拉回價，但增加突破回測後的小部位 B 計畫，禁止直接追價",
+          "降低前一日大漲後的延續假設；開盤跌破 VWAP／首 15 分鐘低點時取消做多",
+          "進場需增加 VWAP、首 15 分鐘結構與量能確認，避免只因價格碰區間就進場",
           "調整進場、停損或第一停利，使計畫風報比至少 2"
         ],
         "sox_context": {
-          "session_date": "2026-11-09",
-          "change_pct": 6.85
+          "session_date": "2026-11-10",
+          "change_pct": -0.35
         }
       }
     },
     "recommendation_2": {
-      "symbol": "4958",
-      "name": "臻鼎-KY",
-      "status": "no_trade",
-      "label": "⚪ 未觸發進場",
-      "entry_triggered": false,
-      "no_trade_reason": "price_never_touched_entry",
-      "pct_vs_entry": null,
-      "gross_pct": 0,
-      "net_pct": 0,
-      "close": 430.5,
-      "entry_mid": 401,
-      "stop_loss": 392,
-      "take_profit": 410,
-      "target": 424.5,
-      "intraday_source": "Yahoo Finance 4958.TW 1m",
+      "symbol": "2408",
+      "name": "南亞科",
+      "status": "stop_loss",
+      "label": "❌ 觸及停損",
+      "entry_triggered": true,
+      "entry_time": "09:00",
+      "entry_price": 386,
+      "exit_time": "09:10",
+      "average_exit": 379.5,
+      "exits": [
+        {
+          "fraction": 0.5,
+          "price": 381.5,
+          "time": "09:09",
+          "reason": "early_stop"
+        },
+        {
+          "fraction": 0.5,
+          "price": 377.5,
+          "time": "09:10",
+          "reason": "stop_loss"
+        }
+      ],
+      "ambiguous": false,
+      "pct_vs_entry": -1.68,
+      "gross_pct": -1.68,
+      "net_pct": -2.11,
+      "transaction_cost_pct": 0.43,
+      "close": 394,
+      "entry_mid": 386,
+      "stop_loss": 377.5,
+      "early_stop": 381.5,
+      "take_profit": 394.5,
+      "target": 408.5,
+      "intraday_source": "Yahoo Finance 2408.TW 1m",
       "quality_review": {
-        "score": 70,
-        "verdict": "部分正確",
-        "selection": "有效",
-        "direction": "正確",
-        "entry": "太保守，錯過上漲",
-        "risk": "未成交，不適用",
+        "score": 0,
+        "verdict": "需要改善",
+        "selection": "不佳",
+        "direction": "錯誤",
+        "entry": "有成交但位置不佳",
+        "risk": "停損有執行，但策略失敗",
         "market": {
-          "open": 424.5,
-          "high": 437.5,
-          "low": 419,
-          "close": 430.5,
-          "close_pct": 1.41,
-          "upside_pct": 3.06,
-          "downside_pct": -1.3,
-          "range_pct": 4.42
+          "open": 392.5,
+          "high": 395,
+          "low": 373.5,
+          "close": 394,
+          "close_pct": 0.38,
+          "upside_pct": 0.64,
+          "downside_pct": -4.84,
+          "range_pct": 5.76
         },
         "planned_risk_reward": 1,
         "reasons": [
-          "做多方向成立：最大上行 3.06%，收盤相對開盤 1.41%",
+          "做多方向錯誤：收盤相對開盤 0.38%，最大下行 -4.84%",
           "計畫風報比僅 1，低於 2"
         ],
         "improvements": [
-          "保留拉回價，但增加突破回測後的小部位 B 計畫，禁止直接追價",
+          "降低前一日大漲後的延續假設；開盤跌破 VWAP／首 15 分鐘低點時取消做多",
+          "進場需增加 VWAP、首 15 分鐘結構與量能確認，避免只因價格碰區間就進場",
           "調整進場、停損或第一停利，使計畫風報比至少 2"
         ],
         "sox_context": {
-          "session_date": "2026-11-09",
-          "change_pct": 6.85
+          "session_date": "2026-11-10",
+          "change_pct": -0.35
+        }
+      }
+    },
+    "recommendation_3": {
+      "symbol": "0050",
+      "name": "元大台灣50",
+      "status": "take_profit",
+      "label": "✅ 達到停利點",
+      "entry_triggered": true,
+      "entry_time": "09:03",
+      "entry_price": 100.5,
+      "exit_time": "11:30",
+      "average_exit": 102.5,
+      "exits": [
+        {
+          "fraction": 1,
+          "price": 102.5,
+          "time": "11:30",
+          "reason": "take_profit"
+        }
+      ],
+      "ambiguous": false,
+      "pct_vs_entry": 1.99,
+      "gross_pct": 1.99,
+      "net_pct": 1.55,
+      "transaction_cost_pct": 0.44,
+      "close": 103.2,
+      "entry_mid": 100.25,
+      "stop_loss": 98.2,
+      "early_stop": 99.1,
+      "take_profit": 102.5,
+      "target": 106.5,
+      "intraday_source": "Yahoo Finance 0050.TW 1m",
+      "quality_review": {
+        "score": 100,
+        "verdict": "正確",
+        "selection": "有效",
+        "direction": "正確",
+        "entry": "成功捕捉",
+        "risk": "風控有效",
+        "market": {
+          "open": 101.15,
+          "high": 103.25,
+          "low": 99.8,
+          "close": 103.2,
+          "close_pct": 2.03,
+          "upside_pct": 2.08,
+          "downside_pct": -1.33,
+          "range_pct": 3.46
+        },
+        "planned_risk_reward": 1.1,
+        "reasons": [
+          "做多方向成立：最大上行 2.08%，收盤相對開盤 2.03%",
+          "計畫風報比僅 1.1，低於 2"
+        ],
+        "improvements": [
+          "調整進場、停損或第一停利，使計畫風報比至少 2"
+        ],
+        "sox_context": {
+          "session_date": "2026-11-10",
+          "change_pct": -0.35
+        }
+      }
+    },
+    "recommendation_4": {
+      "symbol": "2303",
+      "name": "聯電",
+      "status": "stop_loss",
+      "label": "❌ 觸及停損",
+      "entry_triggered": true,
+      "entry_time": "09:00",
+      "entry_price": 101.25,
+      "exit_time": "09:10",
+      "average_exit": 99.5,
+      "exits": [
+        {
+          "fraction": 0.5,
+          "price": 100,
+          "time": "09:00",
+          "reason": "early_stop"
+        },
+        {
+          "fraction": 0.5,
+          "price": 99,
+          "time": "09:10",
+          "reason": "stop_loss"
+        }
+      ],
+      "ambiguous": false,
+      "pct_vs_entry": -1.73,
+      "gross_pct": -1.73,
+      "net_pct": -2.16,
+      "transaction_cost_pct": 0.43,
+      "close": 104,
+      "entry_mid": 101.25,
+      "stop_loss": 99,
+      "early_stop": 100,
+      "take_profit": 103.5,
+      "target": 107,
+      "intraday_source": "Yahoo Finance 2303.TW 1m",
+      "quality_review": {
+        "score": 60,
+        "verdict": "部分正確",
+        "selection": "有效",
+        "direction": "正確",
+        "entry": "有成交但位置不佳",
+        "risk": "停損有執行，但策略失敗",
+        "market": {
+          "open": 101,
+          "high": 104,
+          "low": 98.6,
+          "close": 104,
+          "close_pct": 2.97,
+          "upside_pct": 2.97,
+          "downside_pct": -2.38,
+          "range_pct": 5.48
+        },
+        "planned_risk_reward": 1,
+        "reasons": [
+          "做多方向成立：最大上行 2.97%，收盤相對開盤 2.97%",
+          "計畫風報比僅 1，低於 2"
+        ],
+        "improvements": [
+          "進場需增加 VWAP、首 15 分鐘結構與量能確認，避免只因價格碰區間就進場",
+          "調整進場、停損或第一停利，使計畫風報比至少 2"
+        ],
+        "sox_context": {
+          "session_date": "2026-11-10",
+          "change_pct": -0.35
         }
       }
     }
@@ -175,61 +343,61 @@
     {
       "symbol": "2330",
       "name": "台積電",
-      "status": "up_no_exit",
-      "label": "🟡 上漲但未達停利",
+      "status": "take_profit",
+      "label": "✅ 達到停利點",
       "entry_triggered": true,
-      "entry_time": "09:15",
-      "entry_price": 2255,
-      "exit_time": "13:30",
-      "average_exit": 2285,
+      "entry_time": "09:04",
+      "entry_price": 2310,
+      "exit_time": "10:31",
+      "average_exit": 2355,
       "exits": [
         {
           "fraction": 1,
-          "price": 2285,
-          "time": "13:30",
-          "reason": "close"
+          "price": 2355,
+          "time": "10:31",
+          "reason": "take_profit"
         }
       ],
       "ambiguous": false,
-      "pct_vs_entry": 1.33,
-      "gross_pct": 1.33,
-      "net_pct": 0.89,
+      "pct_vs_entry": 1.95,
+      "gross_pct": 1.95,
+      "net_pct": 1.51,
       "transaction_cost_pct": 0.44,
-      "close": 2285,
-      "entry_mid": 2250,
-      "stop_loss": 2200,
-      "early_stop": 2225,
-      "take_profit": 2300,
-      "target": 2380,
+      "close": 2395,
+      "entry_mid": 2302.5,
+      "stop_loss": 2250,
+      "early_stop": 2275,
+      "take_profit": 2355,
+      "target": 2435,
       "intraday_source": "Yahoo Finance 2330.TW 1m",
       "quality_review": {
-        "score": 70,
-        "verdict": "部分正確",
-        "selection": "普通",
-        "direction": "混合",
+        "score": 100,
+        "verdict": "正確",
+        "selection": "有效",
+        "direction": "正確",
         "entry": "成功捕捉",
         "risk": "風控有效",
         "market": {
-          "open": 2265,
-          "high": 2285,
-          "low": 2230,
-          "close": 2285,
-          "close_pct": 0.88,
-          "upside_pct": 0.88,
-          "downside_pct": -1.55,
-          "range_pct": 2.47
+          "open": 2330,
+          "high": 2395,
+          "low": 2305,
+          "close": 2395,
+          "close_pct": 2.79,
+          "upside_pct": 2.79,
+          "downside_pct": -1.07,
+          "range_pct": 3.9
         },
         "planned_risk_reward": 1,
         "reasons": [
-          "盤勢多空混合：最大上行 0.88%、最大下行 -1.55%",
+          "做多方向成立：最大上行 2.79%，收盤相對開盤 2.79%",
           "計畫風報比僅 1，低於 2"
         ],
         "improvements": [
           "調整進場、停損或第一停利，使計畫風報比至少 2"
         ],
         "sox_context": {
-          "session_date": "2026-11-09",
-          "change_pct": 6.85
+          "session_date": "2026-11-10",
+          "change_pct": -0.35
         }
       }
     },
@@ -239,109 +407,125 @@
       "status": "take_profit",
       "label": "✅ 達到停利點",
       "entry_triggered": true,
-      "entry_time": "11:36",
-      "entry_price": 3760,
-      "exit_time": "12:26",
-      "average_exit": 3835,
+      "entry_time": "09:00",
+      "entry_price": 3860,
+      "exit_time": "11:31",
+      "average_exit": 3880,
       "exits": [
         {
-          "fraction": 1,
-          "price": 3835,
-          "time": "12:26",
+          "fraction": 0.5,
+          "price": 3815,
+          "time": "09:07",
+          "reason": "early_stop"
+        },
+        {
+          "fraction": 0.5,
+          "price": 3945,
+          "time": "11:31",
           "reason": "take_profit"
         }
       ],
       "ambiguous": false,
-      "pct_vs_entry": 1.99,
-      "gross_pct": 1.99,
-      "net_pct": 1.55,
+      "pct_vs_entry": 0.52,
+      "gross_pct": 0.52,
+      "net_pct": 0.08,
       "transaction_cost_pct": 0.44,
-      "close": 3830,
-      "entry_mid": 3752.5,
-      "stop_loss": 3670,
-      "early_stop": 3710,
-      "take_profit": 3835,
-      "target": 3970,
+      "close": 3990,
+      "entry_mid": 3860,
+      "stop_loss": 3775,
+      "early_stop": 3815,
+      "take_profit": 3945,
+      "target": 4085,
       "intraday_source": "Yahoo Finance 2454.TW 1m",
       "quality_review": {
-        "score": 40,
-        "verdict": "需要改善",
-        "selection": "不佳",
-        "direction": "錯誤",
+        "score": 100,
+        "verdict": "正確",
+        "selection": "有效",
+        "direction": "正確",
         "entry": "成功捕捉",
         "risk": "風控有效",
         "market": {
-          "open": 3940,
-          "high": 4065,
-          "low": 3745,
-          "close": 3830,
-          "close_pct": -2.79,
-          "upside_pct": 3.17,
-          "downside_pct": -4.95,
-          "range_pct": 8.54
+          "open": 3840,
+          "high": 3990,
+          "low": 3780,
+          "close": 3990,
+          "close_pct": 3.91,
+          "upside_pct": 3.91,
+          "downside_pct": -1.56,
+          "range_pct": 5.56
         },
         "planned_risk_reward": 1,
         "reasons": [
-          "做多方向錯誤：收盤相對開盤 -2.79%，最大下行 -4.95%",
-          "計畫風報比僅 1，低於 2",
-          "參考：美股費城半導體指數(SOX)最近一個交易日(2026-11-09)收盤上漲 6.85%，方向誤判可能與類股系統性外溢有關，非純粹選股邏輯錯誤"
+          "做多方向成立：最大上行 3.91%，收盤相對開盤 3.91%",
+          "計畫風報比僅 1，低於 2"
         ],
         "improvements": [
-          "降低前一日大漲後的延續假設；開盤跌破 VWAP／首 15 分鐘低點時取消做多",
-          "調整進場、停損或第一停利，使計畫風報比至少 2",
-          "候選股屬於半導體/AI供應鏈類股時，開盤前查一次美股SOX指數走勢，大跌/大漲時調降信心度或縮小部位"
+          "調整進場、停損或第一停利，使計畫風報比至少 2"
         ],
         "sox_context": {
-          "session_date": "2026-11-09",
-          "change_pct": 6.85
+          "session_date": "2026-11-10",
+          "change_pct": -0.35
         }
       }
     },
     {
-      "symbol": "3037",
-      "name": "欣興",
-      "status": "no_trade",
-      "label": "⚪ 未觸發進場",
-      "entry_triggered": false,
-      "no_trade_reason": "price_never_touched_entry",
-      "pct_vs_entry": null,
-      "gross_pct": 0,
-      "net_pct": 0,
-      "close": 828,
-      "entry_mid": 763,
-      "stop_loss": 746,
-      "take_profit": 780,
-      "target": 807,
-      "intraday_source": "Yahoo Finance 3037.TW 1m",
+      "symbol": "1303",
+      "name": "南亞",
+      "status": "take_profit",
+      "label": "✅ 達到停利點",
+      "entry_triggered": true,
+      "entry_time": "09:09",
+      "entry_price": 292,
+      "exit_time": "09:19",
+      "average_exit": 297.5,
+      "exits": [
+        {
+          "fraction": 1,
+          "price": 297.5,
+          "time": "09:19",
+          "reason": "take_profit"
+        }
+      ],
+      "ambiguous": false,
+      "pct_vs_entry": 1.88,
+      "gross_pct": 1.88,
+      "net_pct": 1.44,
+      "transaction_cost_pct": 0.44,
+      "close": 313,
+      "entry_mid": 291.25,
+      "stop_loss": 284.5,
+      "early_stop": 287.5,
+      "take_profit": 297.5,
+      "target": 308,
+      "intraday_source": "Yahoo Finance 1303.TW 1m",
       "quality_review": {
-        "score": 70,
-        "verdict": "部分正確",
+        "score": 100,
+        "verdict": "正確",
         "selection": "有效",
         "direction": "正確",
-        "entry": "太保守，錯過上漲",
-        "risk": "未成交，不適用",
+        "entry": "成功捕捉",
+        "risk": "風控有效",
         "market": {
-          "open": 802,
-          "high": 832,
-          "low": 797,
-          "close": 828,
-          "close_pct": 3.24,
-          "upside_pct": 3.74,
-          "downside_pct": -0.62,
-          "range_pct": 4.39
+          "open": 296,
+          "high": 314.5,
+          "low": 289.5,
+          "close": 313,
+          "close_pct": 5.74,
+          "upside_pct": 6.25,
+          "downside_pct": -2.2,
+          "range_pct": 8.64
         },
-        "planned_risk_reward": 1,
+        "planned_risk_reward": 0.93,
         "reasons": [
-          "做多方向成立：最大上行 3.74%，收盤相對開盤 3.24%",
-          "計畫風報比僅 1，低於 2"
+          "做多方向成立：最大上行 6.25%，收盤相對開盤 5.74%",
+          "計畫風報比僅 0.93，低於 2"
         ],
         "improvements": [
-          "保留拉回價，但增加突破回測後的小部位 B 計畫，禁止直接追價",
           "調整進場、停損或第一停利，使計畫風報比至少 2"
         ],
         "sox_context": {
-          "session_date": "2026-11-09",
-          "change_pct": 6.85
+          "session_date": "2026-11-10",
+          "change_pct": -0.35
         }
       }
     },
@@ -355,11 +539,11 @@
       "pct_vs_entry": null,
       "gross_pct": 0,
       "net_pct": 0,
-      "close": 7170,
-      "entry_mid": 6755,
-      "stop_loss": 6605,
-      "take_profit": 6905,
-      "target": 7155,
+      "close": 7885,
+      "entry_mid": 7222.5,
+      "stop_loss": 7060,
+      "take_profit": 7385,
+      "target": 7650,
       "intraday_source": "Yahoo Finance 3443.TW 1m",
       "quality_review": {
         "score": 70,
@@ -369,18 +553,18 @@
         "entry": "太保守，錯過上漲",
         "risk": "未成交，不適用",
         "market": {
-          "open": 7000,
-          "high": 7375,
-          "low": 6900,
-          "close": 7170,
-          "close_pct": 2.43,
-          "upside_pct": 5.36,
-          "downside_pct": -1.43,
-          "range_pct": 6.88
+          "open": 7265,
+          "high": 7885,
+          "low": 7260,
+          "close": 7885,
+          "close_pct": 8.53,
+          "upside_pct": 8.53,
+          "downside_pct": -0.07,
+          "range_pct": 8.61
         },
         "planned_risk_reward": 1,
         "reasons": [
-          "做多方向成立：最大上行 5.36%，收盤相對開盤 2.43%",
+          "做多方向成立：最大上行 8.53%，收盤相對開盤 8.53%",
           "計畫風報比僅 1，低於 2"
         ],
         "improvements": [
@@ -388,102 +572,239 @@
           "調整進場、停損或第一停利，使計畫風報比至少 2"
         ],
         "sox_context": {
-          "session_date": "2026-11-09",
-          "change_pct": 6.85
+          "session_date": "2026-11-10",
+          "change_pct": -0.35
         }
       }
     },
     {
-      "symbol": "0050",
-      "name": "元大台灣50",
-      "status": "up_no_exit",
-      "label": "🟡 上漲但未達停利",
+      "symbol": "2383",
+      "name": "台光電",
+      "status": "take_profit",
+      "label": "✅ 達到停利點",
       "entry_triggered": true,
-      "entry_time": "11:34",
-      "entry_price": 98.35,
-      "exit_time": "13:30",
-      "average_exit": 99.7,
+      "entry_time": "09:00",
+      "entry_price": 4410,
+      "exit_time": "09:01",
+      "average_exit": 4495,
       "exits": [
         {
           "fraction": 1,
-          "price": 99.7,
+          "price": 4495,
+          "time": "09:01",
+          "reason": "take_profit"
+        }
+      ],
+      "ambiguous": false,
+      "pct_vs_entry": 1.93,
+      "gross_pct": 1.93,
+      "net_pct": 1.49,
+      "transaction_cost_pct": 0.44,
+      "close": 4500,
+      "entry_mid": 4397.5,
+      "stop_loss": 4300,
+      "early_stop": 4345,
+      "take_profit": 4495,
+      "target": 4655,
+      "intraday_source": "Yahoo Finance 2383.TW 1m",
+      "quality_review": {
+        "score": 40,
+        "verdict": "需要改善",
+        "selection": "不佳",
+        "direction": "錯誤",
+        "entry": "成功捕捉",
+        "risk": "風控有效",
+        "market": {
+          "open": 4470,
+          "high": 4565,
+          "low": 4310,
+          "close": 4500,
+          "close_pct": 0.67,
+          "upside_pct": 2.13,
+          "downside_pct": -3.58,
+          "range_pct": 5.92
+        },
+        "planned_risk_reward": 1,
+        "reasons": [
+          "做多方向錯誤：收盤相對開盤 0.67%，最大下行 -3.58%",
+          "計畫風報比僅 1，低於 2"
+        ],
+        "improvements": [
+          "降低前一日大漲後的延續假設；開盤跌破 VWAP／首 15 分鐘低點時取消做多",
+          "調整進場、停損或第一停利，使計畫風報比至少 2"
+        ],
+        "sox_context": {
+          "session_date": "2026-11-10",
+          "change_pct": -0.35
+        }
+      }
+    },
+    {
+      "symbol": "2327",
+      "name": "國巨*",
+      "status": "up_no_exit",
+      "label": "🟡 上漲但未達停利",
+      "entry_triggered": true,
+      "entry_time": "09:30",
+      "entry_price": 419.5,
+      "exit_time": "13:30",
+      "average_exit": 419.5,
+      "exits": [
+        {
+          "fraction": 0.5,
+          "price": 414.5,
+          "time": "09:56",
+          "reason": "early_stop"
+        },
+        {
+          "fraction": 0.5,
+          "price": 424.5,
           "time": "13:30",
           "reason": "close"
         }
       ],
       "ambiguous": false,
-      "pct_vs_entry": 1.37,
-      "gross_pct": 1.37,
-      "net_pct": 0.93,
+      "pct_vs_entry": 0,
+      "gross_pct": 0,
+      "net_pct": -0.44,
       "transaction_cost_pct": 0.44,
-      "close": 99.7,
-      "entry_mid": 98.15,
-      "stop_loss": 96,
-      "early_stop": 97,
-      "take_profit": 100.5,
-      "target": 104,
-      "intraday_source": "Yahoo Finance 0050.TW 1m",
+      "close": 424.5,
+      "entry_mid": 419.5,
+      "stop_loss": 410.5,
+      "early_stop": 414.5,
+      "take_profit": 429,
+      "target": 444.5,
+      "intraday_source": "Yahoo Finance 2327.TW 1m",
       "quality_review": {
-        "score": 70,
-        "verdict": "部分正確",
-        "selection": "普通",
-        "direction": "混合",
+        "score": 0,
+        "verdict": "需要改善",
+        "selection": "不佳",
+        "direction": "錯誤",
+        "entry": "有成交但位置不佳",
+        "risk": "收盤出場仍虧損，停損／時效需調整",
+        "market": {
+          "open": 428,
+          "high": 435.5,
+          "low": 411.5,
+          "close": 424.5,
+          "close_pct": -0.82,
+          "upside_pct": 1.75,
+          "downside_pct": -3.86,
+          "range_pct": 5.83
+        },
+        "planned_risk_reward": 1.06,
+        "reasons": [
+          "做多方向錯誤：收盤相對開盤 -0.82%，最大下行 -3.86%",
+          "計畫風報比僅 1.06，低於 2"
+        ],
+        "improvements": [
+          "降低前一日大漲後的延續假設；開盤跌破 VWAP／首 15 分鐘低點時取消做多",
+          "進場需增加 VWAP、首 15 分鐘結構與量能確認，避免只因價格碰區間就進場",
+          "調整進場、停損或第一停利，使計畫風報比至少 2"
+        ],
+        "sox_context": {
+          "session_date": "2026-11-10",
+          "change_pct": -0.35
+        }
+      }
+    },
+    {
+      "symbol": "3037",
+      "name": "欣興",
+      "status": "take_profit",
+      "label": "✅ 達到停利點",
+      "entry_triggered": true,
+      "entry_time": "09:00",
+      "entry_price": 834,
+      "exit_time": "09:01",
+      "average_exit": 853,
+      "exits": [
+        {
+          "fraction": 1,
+          "price": 853,
+          "time": "09:01",
+          "reason": "take_profit"
+        }
+      ],
+      "ambiguous": false,
+      "pct_vs_entry": 2.28,
+      "gross_pct": 2.28,
+      "net_pct": 1.84,
+      "transaction_cost_pct": 0.44,
+      "close": 864,
+      "entry_mid": 834,
+      "stop_loss": 816,
+      "early_stop": 824,
+      "take_profit": 853,
+      "target": 883,
+      "intraday_source": "Yahoo Finance 3037.TW 1m",
+      "quality_review": {
+        "score": 100,
+        "verdict": "正確",
+        "selection": "有效",
+        "direction": "正確",
         "entry": "成功捕捉",
         "risk": "風控有效",
         "market": {
-          "open": 99.55,
-          "high": 100.5,
-          "low": 97.8,
-          "close": 99.7,
-          "close_pct": 0.15,
-          "upside_pct": 0.95,
-          "downside_pct": -1.76,
-          "range_pct": 2.76
+          "open": 830,
+          "high": 867,
+          "low": 817,
+          "close": 864,
+          "close_pct": 4.1,
+          "upside_pct": 4.46,
+          "downside_pct": -1.57,
+          "range_pct": 6.12
         },
-        "planned_risk_reward": 1.09,
+        "planned_risk_reward": 1.06,
         "reasons": [
-          "盤勢多空混合：最大上行 0.95%、最大下行 -1.76%",
-          "計畫風報比僅 1.09，低於 2"
+          "做多方向成立：最大上行 4.46%，收盤相對開盤 4.1%",
+          "計畫風報比僅 1.06，低於 2"
         ],
         "improvements": [
           "調整進場、停損或第一停利，使計畫風報比至少 2"
         ],
         "sox_context": {
-          "session_date": "2026-11-09",
-          "change_pct": 6.85
+          "session_date": "2026-11-10",
+          "change_pct": -0.35
         }
       }
     },
     {
-      "symbol": "3653",
-      "name": "健策",
+      "symbol": "2408",
+      "name": "南亞科",
       "status": "stop_loss",
       "label": "❌ 觸及停損",
       "entry_triggered": true,
-      "entry_time": "10:40",
-      "entry_price": 5690,
-      "exit_time": "11:35",
-      "average_exit": 5550,
+      "entry_time": "09:00",
+      "entry_price": 386,
+      "exit_time": "09:10",
+      "average_exit": 379.5,
       "exits": [
         {
-          "fraction": 1,
-          "price": 5550,
-          "time": "11:35",
+          "fraction": 0.5,
+          "price": 381.5,
+          "time": "09:09",
+          "reason": "early_stop"
+        },
+        {
+          "fraction": 0.5,
+          "price": 377.5,
+          "time": "09:10",
           "reason": "stop_loss"
         }
       ],
       "ambiguous": false,
-      "pct_vs_entry": -2.46,
-      "gross_pct": -2.46,
-      "net_pct": -2.89,
+      "pct_vs_entry": -1.68,
+      "gross_pct": -1.68,
+      "net_pct": -2.11,
       "transaction_cost_pct": 0.43,
-      "close": 5790,
-      "entry_mid": 5677.5,
-      "stop_loss": 5550,
-      "early_stop": 5610,
-      "take_profit": 5805,
-      "target": 6010,
-      "intraday_source": "Yahoo Finance 3653.TW 1m",
+      "close": 394,
+      "entry_mid": 386,
+      "stop_loss": 377.5,
+      "early_stop": 381.5,
+      "take_profit": 394.5,
+      "target": 408.5,
+      "intraday_source": "Yahoo Finance 2408.TW 1m",
       "quality_review": {
         "score": 0,
         "verdict": "需要改善",
@@ -492,244 +813,311 @@
         "entry": "有成交但位置不佳",
         "risk": "停損有執行，但策略失敗",
         "market": {
-          "open": 6050,
-          "high": 6190,
-          "low": 5445,
-          "close": 5790,
-          "close_pct": -4.3,
-          "upside_pct": 2.31,
-          "downside_pct": -10,
-          "range_pct": 13.68
+          "open": 392.5,
+          "high": 395,
+          "low": 373.5,
+          "close": 394,
+          "close_pct": 0.38,
+          "upside_pct": 0.64,
+          "downside_pct": -4.84,
+          "range_pct": 5.76
         },
         "planned_risk_reward": 1,
         "reasons": [
-          "做多方向錯誤：收盤相對開盤 -4.3%，最大下行 -10%",
-          "計畫風報比僅 1，低於 2",
-          "參考：美股費城半導體指數(SOX)最近一個交易日(2026-11-09)收盤上漲 6.85%，方向誤判可能與類股系統性外溢有關，非純粹選股邏輯錯誤"
+          "做多方向錯誤：收盤相對開盤 0.38%，最大下行 -4.84%",
+          "計畫風報比僅 1，低於 2"
         ],
         "improvements": [
           "降低前一日大漲後的延續假設；開盤跌破 VWAP／首 15 分鐘低點時取消做多",
           "進場需增加 VWAP、首 15 分鐘結構與量能確認，避免只因價格碰區間就進場",
-          "調整進場、停損或第一停利，使計畫風報比至少 2",
-          "候選股屬於半導體/AI供應鏈類股時，開盤前查一次美股SOX指數走勢，大跌/大漲時調降信心度或縮小部位"
-        ],
-        "sox_context": {
-          "session_date": "2026-11-09",
-          "change_pct": 6.85
-        }
-      }
-    },
-    {
-      "symbol": "2303",
-      "name": "聯電",
-      "status": "no_trade",
-      "label": "⚪ 未觸發進場",
-      "entry_triggered": false,
-      "no_trade_reason": "price_never_touched_entry",
-      "pct_vs_entry": null,
-      "gross_pct": 0,
-      "net_pct": 0,
-      "close": 100.5,
-      "entry_mid": 97.45,
-      "stop_loss": 95.2,
-      "take_profit": 99.6,
-      "target": 103,
-      "intraday_source": "Yahoo Finance 2303.TW 1m",
-      "quality_review": {
-        "score": 70,
-        "verdict": "部分正確",
-        "selection": "有效",
-        "direction": "正確",
-        "entry": "太保守，錯過上漲",
-        "risk": "未成交，不適用",
-        "market": {
-          "open": 99.4,
-          "high": 103.5,
-          "low": 98,
-          "close": 100.5,
-          "close_pct": 1.11,
-          "upside_pct": 4.12,
-          "downside_pct": -1.41,
-          "range_pct": 5.61
-        },
-        "planned_risk_reward": 0.96,
-        "reasons": [
-          "做多方向成立：最大上行 4.12%，收盤相對開盤 1.11%",
-          "計畫風報比僅 0.96，低於 2"
-        ],
-        "improvements": [
-          "保留拉回價，但增加突破回測後的小部位 B 計畫，禁止直接追價",
           "調整進場、停損或第一停利，使計畫風報比至少 2"
         ],
         "sox_context": {
-          "session_date": "2026-11-09",
-          "change_pct": 6.85
+          "session_date": "2026-11-10",
+          "change_pct": -0.35
         }
       }
     },
     {
-      "symbol": "2383",
-      "name": "台光電",
-      "status": "no_trade",
-      "label": "⚪ 未觸發進場",
-      "entry_triggered": false,
-      "no_trade_reason": "price_never_touched_entry",
-      "pct_vs_entry": null,
-      "gross_pct": 0,
-      "net_pct": 0,
-      "close": 4365,
-      "entry_mid": 4100,
-      "stop_loss": 4010,
-      "take_profit": 4190,
-      "target": 4340,
-      "intraday_source": "Yahoo Finance 2383.TW 1m",
+      "symbol": "3008",
+      "name": "大立光",
+      "status": "take_profit",
+      "label": "✅ 達到停利點",
+      "entry_triggered": true,
+      "entry_time": "09:00",
+      "entry_price": 5102.5,
+      "exit_time": "10:13",
+      "average_exit": 5127.5,
+      "exits": [
+        {
+          "fraction": 0.5,
+          "price": 5040,
+          "time": "09:09",
+          "reason": "early_stop"
+        },
+        {
+          "fraction": 0.5,
+          "price": 5215,
+          "time": "10:13",
+          "reason": "take_profit"
+        }
+      ],
+      "ambiguous": false,
+      "pct_vs_entry": 0.49,
+      "gross_pct": 0.49,
+      "net_pct": 0.05,
+      "transaction_cost_pct": 0.44,
+      "close": 5325,
+      "entry_mid": 5102.5,
+      "stop_loss": 4990,
+      "early_stop": 5040,
+      "take_profit": 5215,
+      "target": 5405,
+      "intraday_source": "Yahoo Finance 3008.TW 1m",
       "quality_review": {
-        "score": 20,
-        "verdict": "需要改善",
-        "selection": "不佳",
-        "direction": "錯誤",
-        "entry": "未成交",
-        "risk": "未成交，不適用",
+        "score": 100,
+        "verdict": "正確",
+        "selection": "有效",
+        "direction": "正確",
+        "entry": "成功捕捉",
+        "risk": "風控有效",
         "market": {
-          "open": 4370,
-          "high": 4475,
-          "low": 4160,
-          "close": 4365,
-          "close_pct": -0.11,
-          "upside_pct": 2.4,
-          "downside_pct": -4.81,
-          "range_pct": 7.57
+          "open": 5100,
+          "high": 5335,
+          "low": 5035,
+          "close": 5325,
+          "close_pct": 4.41,
+          "upside_pct": 4.61,
+          "downside_pct": -1.27,
+          "range_pct": 5.96
         },
         "planned_risk_reward": 1,
         "reasons": [
-          "做多方向錯誤：收盤相對開盤 -0.11%，最大下行 -4.81%",
-          "計畫風報比僅 1，低於 2",
-          "參考：美股費城半導體指數(SOX)最近一個交易日(2026-11-09)收盤上漲 6.85%，方向誤判可能與類股系統性外溢有關，非純粹選股邏輯錯誤"
+          "做多方向成立：最大上行 4.61%，收盤相對開盤 4.41%",
+          "計畫風報比僅 1，低於 2"
         ],
         "improvements": [
-          "降低前一日大漲後的延續假設；開盤跌破 VWAP／首 15 分鐘低點時取消做多",
-          "調整進場、停損或第一停利，使計畫風報比至少 2",
-          "候選股屬於半導體/AI供應鏈類股時，開盤前查一次美股SOX指數走勢，大跌/大漲時調降信心度或縮小部位"
+          "調整進場、停損或第一停利，使計畫風報比至少 2"
         ],
         "sox_context": {
-          "session_date": "2026-11-09",
-          "change_pct": 6.85
+          "session_date": "2026-11-10",
+          "change_pct": -0.35
         }
       }
     },
     {
       "symbol": "2308",
       "name": "台達電",
-      "status": "no_trade",
-      "label": "⚪ 未觸發進場",
-      "entry_triggered": false,
-      "no_trade_reason": "price_never_touched_entry",
-      "pct_vs_entry": null,
-      "gross_pct": 0,
-      "net_pct": 0,
-      "close": 1275,
-      "entry_mid": 1167.5,
-      "stop_loss": 1145,
-      "take_profit": 1195,
-      "target": 1235,
+      "status": "stop_loss",
+      "label": "❌ 觸及停損",
+      "entry_triggered": true,
+      "entry_time": "09:00",
+      "entry_price": 1285,
+      "exit_time": "09:03",
+      "average_exit": 1262.5,
+      "exits": [
+        {
+          "fraction": 0.5,
+          "price": 1270,
+          "time": "09:00",
+          "reason": "early_stop"
+        },
+        {
+          "fraction": 0.5,
+          "price": 1255,
+          "time": "09:03",
+          "reason": "stop_loss"
+        }
+      ],
+      "ambiguous": false,
+      "pct_vs_entry": -1.75,
+      "gross_pct": -1.75,
+      "net_pct": -2.18,
+      "transaction_cost_pct": 0.43,
+      "close": 1295,
+      "entry_mid": 1285,
+      "stop_loss": 1255,
+      "early_stop": 1270,
+      "take_profit": 1315,
+      "target": 1360,
       "intraday_source": "Yahoo Finance 2308.TW 1m",
       "quality_review": {
-        "score": 20,
+        "score": 0,
         "verdict": "需要改善",
         "selection": "不佳",
         "direction": "錯誤",
-        "entry": "未成交",
-        "risk": "未成交，不適用",
+        "entry": "有成交但位置不佳",
+        "risk": "停損有執行，但策略失敗",
         "market": {
-          "open": 1275,
-          "high": 1275,
-          "low": 1245,
-          "close": 1275,
+          "open": 1295,
+          "high": 1295,
+          "low": 1230,
+          "close": 1295,
           "close_pct": 0,
           "upside_pct": 0,
-          "downside_pct": -2.35,
-          "range_pct": 2.41
+          "downside_pct": -5.02,
+          "range_pct": 5.28
         },
-        "planned_risk_reward": 1.22,
+        "planned_risk_reward": 1,
         "reasons": [
-          "做多方向錯誤：收盤相對開盤 0%，最大下行 -2.35%",
-          "計畫風報比僅 1.22，低於 2",
-          "參考：美股費城半導體指數(SOX)最近一個交易日(2026-11-09)收盤上漲 6.85%，方向誤判可能與類股系統性外溢有關，非純粹選股邏輯錯誤"
+          "做多方向錯誤：收盤相對開盤 0%，最大下行 -5.02%",
+          "計畫風報比僅 1，低於 2"
         ],
         "improvements": [
           "降低前一日大漲後的延續假設；開盤跌破 VWAP／首 15 分鐘低點時取消做多",
-          "調整進場、停損或第一停利，使計畫風報比至少 2",
-          "候選股屬於半導體/AI供應鏈類股時，開盤前查一次美股SOX指數走勢，大跌/大漲時調降信心度或縮小部位"
+          "進場需增加 VWAP、首 15 分鐘結構與量能確認，避免只因價格碰區間就進場",
+          "調整進場、停損或第一停利，使計畫風報比至少 2"
         ],
         "sox_context": {
-          "session_date": "2026-11-09",
-          "change_pct": 6.85
+          "session_date": "2026-11-10",
+          "change_pct": -0.35
+        }
+      }
+    },
+    {
+      "symbol": "3653",
+      "name": "健策",
+      "status": "take_profit",
+      "label": "✅ 達到停利點",
+      "entry_triggered": true,
+      "entry_time": "09:31",
+      "entry_price": 5835,
+      "exit_time": "09:35",
+      "average_exit": 5965,
+      "exits": [
+        {
+          "fraction": 1,
+          "price": 5965,
+          "time": "09:35",
+          "reason": "take_profit"
+        }
+      ],
+      "ambiguous": false,
+      "pct_vs_entry": 2.23,
+      "gross_pct": 2.23,
+      "net_pct": 1.79,
+      "transaction_cost_pct": 0.44,
+      "close": 6225,
+      "entry_mid": 5835,
+      "stop_loss": 5705,
+      "early_stop": 5765,
+      "take_profit": 5965,
+      "target": 6175,
+      "intraday_source": "Yahoo Finance 3653.TW 1m",
+      "quality_review": {
+        "score": 100,
+        "verdict": "正確",
+        "selection": "有效",
+        "direction": "正確",
+        "entry": "成功捕捉",
+        "risk": "風控有效",
+        "market": {
+          "open": 6120,
+          "high": 6360,
+          "low": 5825,
+          "close": 6225,
+          "close_pct": 1.72,
+          "upside_pct": 3.92,
+          "downside_pct": -4.82,
+          "range_pct": 9.18
+        },
+        "planned_risk_reward": 1,
+        "reasons": [
+          "做多方向成立：最大上行 3.92%，收盤相對開盤 1.72%",
+          "計畫風報比僅 1，低於 2"
+        ],
+        "improvements": [
+          "調整進場、停損或第一停利，使計畫風報比至少 2"
+        ],
+        "sox_context": {
+          "session_date": "2026-11-10",
+          "change_pct": -0.35
         }
       }
     },
     {
       "symbol": "3711",
       "name": "日月光投控",
-      "status": "no_trade",
-      "label": "⚪ 未觸發進場",
-      "entry_triggered": false,
-      "no_trade_reason": "price_never_touched_entry",
-      "pct_vs_entry": null,
-      "gross_pct": 0,
-      "net_pct": 0,
-      "close": 605,
-      "entry_mid": 565.5,
-      "stop_loss": 553,
-      "take_profit": 578,
-      "target": 598,
+      "status": "stop_loss",
+      "label": "❌ 觸及停損",
+      "entry_triggered": true,
+      "entry_time": "09:00",
+      "entry_price": 609.5,
+      "exit_time": "10:06",
+      "average_exit": 599,
+      "exits": [
+        {
+          "fraction": 0.5,
+          "price": 602,
+          "time": "09:09",
+          "reason": "early_stop"
+        },
+        {
+          "fraction": 0.5,
+          "price": 596,
+          "time": "10:06",
+          "reason": "stop_loss"
+        }
+      ],
+      "ambiguous": false,
+      "pct_vs_entry": -1.72,
+      "gross_pct": -1.72,
+      "net_pct": -2.15,
+      "transaction_cost_pct": 0.43,
+      "close": 617,
+      "entry_mid": 609.5,
+      "stop_loss": 596,
+      "early_stop": 602,
+      "take_profit": 623,
+      "target": 645,
       "intraday_source": "Yahoo Finance 3711.TW 1m",
       "quality_review": {
-        "score": 70,
+        "score": 60,
         "verdict": "部分正確",
         "selection": "有效",
         "direction": "正確",
-        "entry": "太保守，錯過上漲",
-        "risk": "未成交，不適用",
+        "entry": "有成交但位置不佳",
+        "risk": "停損有執行，但策略失敗",
         "market": {
-          "open": 598,
-          "high": 617,
-          "low": 588,
-          "close": 605,
-          "close_pct": 1.17,
-          "upside_pct": 3.18,
-          "downside_pct": -1.67,
-          "range_pct": 4.93
+          "open": 605,
+          "high": 620,
+          "low": 596,
+          "close": 617,
+          "close_pct": 1.98,
+          "upside_pct": 2.48,
+          "downside_pct": -1.49,
+          "range_pct": 4.03
         },
         "planned_risk_reward": 1,
         "reasons": [
-          "做多方向成立：最大上行 3.18%，收盤相對開盤 1.17%",
+          "做多方向成立：最大上行 2.48%，收盤相對開盤 1.98%",
           "計畫風報比僅 1，低於 2"
         ],
         "improvements": [
-          "保留拉回價，但增加突破回測後的小部位 B 計畫，禁止直接追價",
+          "進場需增加 VWAP、首 15 分鐘結構與量能確認，避免只因價格碰區間就進場",
           "調整進場、停損或第一停利，使計畫風報比至少 2"
         ],
         "sox_context": {
-          "session_date": "2026-11-09",
-          "change_pct": 6.85
+          "session_date": "2026-11-10",
+          "change_pct": -0.35
         }
       }
     },
     {
-      "symbol": "00631L",
-      "name": "元大台灣50正2",
+      "symbol": "0050",
+      "name": "元大台灣50",
       "status": "take_profit",
       "label": "✅ 達到停利點",
       "entry_triggered": true,
-      "entry_time": "11:43",
-      "entry_price": 29.17,
-      "exit_time": "11:53",
-      "average_exit": 29.75,
+      "entry_time": "09:03",
+      "entry_price": 100.5,
+      "exit_time": "11:30",
+      "average_exit": 102.5,
       "exits": [
         {
           "fraction": 1,
-          "price": 29.75,
-          "time": "11:53",
+          "price": 102.5,
+          "time": "11:30",
           "reason": "take_profit"
         }
       ],
@@ -738,288 +1126,203 @@
       "gross_pct": 1.99,
       "net_pct": 1.55,
       "transaction_cost_pct": 0.44,
-      "close": 30.25,
-      "entry_mid": 29.13,
-      "stop_loss": 28.45,
-      "early_stop": 28.75,
-      "take_profit": 29.75,
-      "target": 31.5,
-      "intraday_source": "Yahoo Finance 00631L.TW 1m",
+      "close": 103.2,
+      "entry_mid": 100.25,
+      "stop_loss": 98.2,
+      "early_stop": 99.1,
+      "take_profit": 102.5,
+      "target": 106.5,
+      "intraday_source": "Yahoo Finance 0050.TW 1m",
       "quality_review": {
-        "score": 40,
-        "verdict": "需要改善",
-        "selection": "不佳",
-        "direction": "錯誤",
+        "score": 100,
+        "verdict": "正確",
+        "selection": "有效",
+        "direction": "正確",
         "entry": "成功捕捉",
         "risk": "風控有效",
         "market": {
-          "open": 30.26,
-          "high": 30.76,
-          "low": 29.15,
-          "close": 30.25,
-          "close_pct": -0.03,
-          "upside_pct": 1.65,
-          "downside_pct": -3.67,
-          "range_pct": 5.52
+          "open": 101.15,
+          "high": 103.25,
+          "low": 99.8,
+          "close": 103.2,
+          "close_pct": 2.03,
+          "upside_pct": 2.08,
+          "downside_pct": -1.33,
+          "range_pct": 3.46
         },
-        "planned_risk_reward": 0.93,
+        "planned_risk_reward": 1.1,
         "reasons": [
-          "做多方向錯誤：收盤相對開盤 -0.03%，最大下行 -3.67%",
-          "計畫風報比僅 0.93，低於 2",
-          "參考：美股費城半導體指數(SOX)最近一個交易日(2026-11-09)收盤上漲 6.85%，方向誤判可能與類股系統性外溢有關，非純粹選股邏輯錯誤"
+          "做多方向成立：最大上行 2.08%，收盤相對開盤 2.03%",
+          "計畫風報比僅 1.1，低於 2"
         ],
         "improvements": [
-          "降低前一日大漲後的延續假設；開盤跌破 VWAP／首 15 分鐘低點時取消做多",
-          "調整進場、停損或第一停利，使計畫風報比至少 2",
-          "候選股屬於半導體/AI供應鏈類股時，開盤前查一次美股SOX指數走勢，大跌/大漲時調降信心度或縮小部位"
+          "調整進場、停損或第一停利，使計畫風報比至少 2"
         ],
         "sox_context": {
-          "session_date": "2026-11-09",
-          "change_pct": 6.85
+          "session_date": "2026-11-10",
+          "change_pct": -0.35
         }
       }
     },
     {
-      "symbol": "2408",
-      "name": "南亞科",
+      "symbol": "2303",
+      "name": "聯電",
+      "status": "stop_loss",
+      "label": "❌ 觸及停損",
+      "entry_triggered": true,
+      "entry_time": "09:00",
+      "entry_price": 101.25,
+      "exit_time": "09:10",
+      "average_exit": 99.5,
+      "exits": [
+        {
+          "fraction": 0.5,
+          "price": 100,
+          "time": "09:00",
+          "reason": "early_stop"
+        },
+        {
+          "fraction": 0.5,
+          "price": 99,
+          "time": "09:10",
+          "reason": "stop_loss"
+        }
+      ],
+      "ambiguous": false,
+      "pct_vs_entry": -1.73,
+      "gross_pct": -1.73,
+      "net_pct": -2.16,
+      "transaction_cost_pct": 0.43,
+      "close": 104,
+      "entry_mid": 101.25,
+      "stop_loss": 99,
+      "early_stop": 100,
+      "take_profit": 103.5,
+      "target": 107,
+      "intraday_source": "Yahoo Finance 2303.TW 1m",
+      "quality_review": {
+        "score": 60,
+        "verdict": "部分正確",
+        "selection": "有效",
+        "direction": "正確",
+        "entry": "有成交但位置不佳",
+        "risk": "停損有執行，但策略失敗",
+        "market": {
+          "open": 101,
+          "high": 104,
+          "low": 98.6,
+          "close": 104,
+          "close_pct": 2.97,
+          "upside_pct": 2.97,
+          "downside_pct": -2.38,
+          "range_pct": 5.48
+        },
+        "planned_risk_reward": 1,
+        "reasons": [
+          "做多方向成立：最大上行 2.97%，收盤相對開盤 2.97%",
+          "計畫風報比僅 1，低於 2"
+        ],
+        "improvements": [
+          "進場需增加 VWAP、首 15 分鐘結構與量能確認，避免只因價格碰區間就進場",
+          "調整進場、停損或第一停利，使計畫風報比至少 2"
+        ],
+        "sox_context": {
+          "session_date": "2026-11-10",
+          "change_pct": -0.35
+        }
+      }
+    },
+    {
+      "symbol": "3661",
+      "name": "世芯-KY",
       "status": "take_profit",
       "label": "✅ 達到停利點",
       "entry_triggered": true,
-      "entry_time": "11:36",
-      "entry_price": 373.5,
-      "exit_time": "11:53",
-      "average_exit": 381,
+      "entry_time": "09:00",
+      "entry_price": 3445,
+      "exit_time": "09:00",
+      "average_exit": 3525,
       "exits": [
         {
           "fraction": 1,
-          "price": 381,
-          "time": "11:53",
+          "price": 3525,
+          "time": "09:00",
           "reason": "take_profit"
         }
       ],
       "ambiguous": false,
-      "pct_vs_entry": 2.01,
-      "gross_pct": 2.01,
-      "net_pct": 1.57,
+      "pct_vs_entry": 2.32,
+      "gross_pct": 2.32,
+      "net_pct": 1.88,
       "transaction_cost_pct": 0.44,
-      "close": 383,
-      "entry_mid": 372.75,
-      "stop_loss": 364.5,
-      "early_stop": 368.5,
-      "take_profit": 381,
-      "target": 395,
-      "intraday_source": "Yahoo Finance 2408.TW 1m",
+      "close": 3650,
+      "entry_mid": 3445,
+      "stop_loss": 3370,
+      "early_stop": 3405,
+      "take_profit": 3525,
+      "target": 3645,
+      "intraday_source": "Yahoo Finance 3661.TW 1m",
       "quality_review": {
-        "score": 40,
-        "verdict": "需要改善",
-        "selection": "不佳",
-        "direction": "錯誤",
+        "score": 100,
+        "verdict": "正確",
+        "selection": "有效",
+        "direction": "正確",
         "entry": "成功捕捉",
         "risk": "風控有效",
         "market": {
-          "open": 391,
-          "high": 402,
-          "low": 370.5,
-          "close": 383,
-          "close_pct": -2.05,
-          "upside_pct": 2.81,
-          "downside_pct": -5.24,
-          "range_pct": 8.5
+          "open": 3440,
+          "high": 3650,
+          "low": 3440,
+          "close": 3650,
+          "close_pct": 6.1,
+          "upside_pct": 6.1,
+          "downside_pct": 0,
+          "range_pct": 6.1
         },
-        "planned_risk_reward": 1,
+        "planned_risk_reward": 1.07,
         "reasons": [
-          "做多方向錯誤：收盤相對開盤 -2.05%，最大下行 -5.24%",
-          "計畫風報比僅 1，低於 2",
-          "參考：美股費城半導體指數(SOX)最近一個交易日(2026-11-09)收盤上漲 6.85%，方向誤判可能與類股系統性外溢有關，非純粹選股邏輯錯誤"
-        ],
-        "improvements": [
-          "降低前一日大漲後的延續假設；開盤跌破 VWAP／首 15 分鐘低點時取消做多",
-          "調整進場、停損或第一停利，使計畫風報比至少 2",
-          "候選股屬於半導體/AI供應鏈類股時，開盤前查一次美股SOX指數走勢，大跌/大漲時調降信心度或縮小部位"
-        ],
-        "sox_context": {
-          "session_date": "2026-11-09",
-          "change_pct": 6.85
-        }
-      }
-    },
-    {
-      "symbol": "1303",
-      "name": "南亞",
-      "status": "no_trade",
-      "label": "⚪ 未觸發進場",
-      "entry_triggered": false,
-      "no_trade_reason": "price_never_touched_entry",
-      "pct_vs_entry": null,
-      "gross_pct": 0,
-      "net_pct": 0,
-      "close": 289,
-      "entry_mid": 265,
-      "stop_loss": 259,
-      "take_profit": 271,
-      "target": 280.5,
-      "intraday_source": "Yahoo Finance 1303.TW 1m",
-      "quality_review": {
-        "score": 70,
-        "verdict": "部分正確",
-        "selection": "有效",
-        "direction": "正確",
-        "entry": "太保守，錯過上漲",
-        "risk": "未成交，不適用",
-        "market": {
-          "open": 278,
-          "high": 289,
-          "low": 275.5,
-          "close": 289,
-          "close_pct": 3.96,
-          "upside_pct": 3.96,
-          "downside_pct": -0.9,
-          "range_pct": 4.9
-        },
-        "planned_risk_reward": 1,
-        "reasons": [
-          "做多方向成立：最大上行 3.96%，收盤相對開盤 3.96%",
-          "計畫風報比僅 1，低於 2"
-        ],
-        "improvements": [
-          "保留拉回價，但增加突破回測後的小部位 B 計畫，禁止直接追價",
-          "調整進場、停損或第一停利，使計畫風報比至少 2"
-        ],
-        "sox_context": {
-          "session_date": "2026-11-09",
-          "change_pct": 6.85
-        }
-      }
-    },
-    {
-      "symbol": "4958",
-      "name": "臻鼎-KY",
-      "status": "no_trade",
-      "label": "⚪ 未觸發進場",
-      "entry_triggered": false,
-      "no_trade_reason": "price_never_touched_entry",
-      "pct_vs_entry": null,
-      "gross_pct": 0,
-      "net_pct": 0,
-      "close": 430.5,
-      "entry_mid": 401,
-      "stop_loss": 392,
-      "take_profit": 410,
-      "target": 424.5,
-      "intraday_source": "Yahoo Finance 4958.TW 1m",
-      "quality_review": {
-        "score": 70,
-        "verdict": "部分正確",
-        "selection": "有效",
-        "direction": "正確",
-        "entry": "太保守，錯過上漲",
-        "risk": "未成交，不適用",
-        "market": {
-          "open": 424.5,
-          "high": 437.5,
-          "low": 419,
-          "close": 430.5,
-          "close_pct": 1.41,
-          "upside_pct": 3.06,
-          "downside_pct": -1.3,
-          "range_pct": 4.42
-        },
-        "planned_risk_reward": 1,
-        "reasons": [
-          "做多方向成立：最大上行 3.06%，收盤相對開盤 1.41%",
-          "計畫風報比僅 1，低於 2"
-        ],
-        "improvements": [
-          "保留拉回價，但增加突破回測後的小部位 B 計畫，禁止直接追價",
-          "調整進場、停損或第一停利，使計畫風報比至少 2"
-        ],
-        "sox_context": {
-          "session_date": "2026-11-09",
-          "change_pct": 6.85
-        }
-      }
-    },
-    {
-      "symbol": "00663L",
-      "name": "國泰臺灣加權正2",
-      "status": "no_trade",
-      "label": "⚪ 未觸發進場",
-      "entry_triggered": false,
-      "no_trade_reason": "price_never_touched_entry",
-      "pct_vs_entry": null,
-      "gross_pct": 0,
-      "net_pct": 0,
-      "close": 86.15,
-      "entry_mid": 82.6,
-      "stop_loss": 80.8,
-      "take_profit": 84.5,
-      "target": 89.4,
-      "intraday_source": "Yahoo Finance 00663L.TW 1m",
-      "quality_review": {
-        "score": 50,
-        "verdict": "需要改善",
-        "selection": "普通",
-        "direction": "混合",
-        "entry": "未成交，沒有明顯損失",
-        "risk": "未成交，不適用",
-        "market": {
-          "open": 85.5,
-          "high": 87.95,
-          "low": 83.2,
-          "close": 86.15,
-          "close_pct": 0.76,
-          "upside_pct": 2.87,
-          "downside_pct": -2.69,
-          "range_pct": 5.71
-        },
-        "planned_risk_reward": 1.06,
-        "reasons": [
-          "盤勢多空混合：最大上行 2.87%、最大下行 -2.69%",
-          "計畫風報比僅 1.06，低於 2"
+          "做多方向成立：最大上行 6.1%，收盤相對開盤 6.1%",
+          "計畫風報比僅 1.07，低於 2"
         ],
         "improvements": [
           "調整進場、停損或第一停利，使計畫風報比至少 2"
         ],
         "sox_context": {
-          "session_date": "2026-11-09",
-          "change_pct": 6.85
+          "session_date": "2026-11-10",
+          "change_pct": -0.35
         }
       }
     }
   ],
   "sox_context": {
-    "session_date": "2026-11-09",
-    "change_pct": 6.85
+    "session_date": "2026-11-10",
+    "change_pct": -0.35
   },
   "strategy_review": {
     "reviewed_symbols": 15,
-    "average_score": 51.3,
-    "verdict": "整體需要改善",
-    "correct_count": 0,
-    "needs_improvement_count": 7,
+    "average_score": 68.7,
+    "verdict": "部分正確，需調整",
+    "correct_count": 8,
+    "needs_improvement_count": 4,
     "priority_improvements": [
       {
         "rule": "調整進場、停損或第一停利，使計畫風報比至少 2",
         "affected_count": 15
       },
       {
-        "rule": "降低前一日大漲後的延續假設；開盤跌破 VWAP／首 15 分鐘低點時取消做多",
-        "affected_count": 6
+        "rule": "進場需增加 VWAP、首 15 分鐘結構與量能確認，避免只因價格碰區間就進場",
+        "affected_count": 5
       },
       {
-        "rule": "候選股屬於半導體/AI供應鏈類股時，開盤前查一次美股SOX指數走勢，大跌/大漲時調降信心度或縮小部位",
-        "affected_count": 6
+        "rule": "降低前一日大漲後的延續假設；開盤跌破 VWAP／首 15 分鐘低點時取消做多",
+        "affected_count": 4
       },
       {
         "rule": "保留拉回價，但增加突破回測後的小部位 B 計畫，禁止直接追價",
-        "affected_count": 6
-      },
-      {
-        "rule": "進場需增加 VWAP、首 15 分鐘結構與量能確認，避免只因價格碰區間就進場",
         "affected_count": 1
       }
     ],
     "scoring_note": "0-100；綜合方向、當沖波動、進場捕捉與交易結果。未成交不直接算虧損。"
   },
-  "narrative": "南亞科（2408）：✅ 達到停利點，淨報酬 1.57%\n南亞（1303）：⚪ 未觸發進場\n臻鼎-KY（4958）：⚪ 未觸發進場\n總評：推薦 3 檔，實際觸發 1 檔，未進場 2 檔；獲利 1、虧損 0。\n策略品質：整體需要改善，平均 51.3 分。"
+  "narrative": "南亞（1303）：✅ 達到停利點，淨報酬 1.44%\n國巨*（2327）：🟡 上漲但未達停利，淨報酬 -0.44%\n南亞科（2408）：❌ 觸及停損，淨報酬 -2.11%\n元大台灣50（0050）：✅ 達到停利點，淨報酬 1.55%\n聯電（2303）：❌ 觸及停損，淨報酬 -2.16%\n總評：推薦 5 檔，實際觸發 5 檔，未進場 0 檔；獲利 3、虧損 2。\n策略品質：部分正確，需調整，平均 68.7 分。"
 }
