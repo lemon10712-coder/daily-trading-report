@@ -1,6 +1,6 @@
 {
-  "updated_at": "2026/11/16 上午11:51:07",
-  "updated_at_iso": "2026-11-16T03:51:07.923Z",
+  "updated_at": "2026/11/16 上午11:55:54",
+  "updated_at_iso": "2026-11-16T03:55:54.846Z",
   "price_type": "intraday",
   "quote_status": {
     "expected": 15,
@@ -18,7 +18,7 @@
     "1802": {
       "price": 77.9,
       "change_pct": -8.46,
-      "source": "yahoo_finance_tw",
+      "source": "twse_mis",
       "stale": false
     },
     "2308": {
@@ -28,14 +28,14 @@
       "stale": false
     },
     "2327": {
-      "price": 380.5,
-      "change_pct": -7.42,
+      "price": 381.5,
+      "change_pct": -7.18,
       "source": "yahoo_finance_tw",
       "stale": false
     },
     "2330": {
-      "price": 2270,
-      "change_pct": -3.4,
+      "price": 2275,
+      "change_pct": -3.19,
       "source": "yahoo_finance_tw",
       "stale": false
     },
@@ -48,12 +48,12 @@
     "2383": {
       "price": 3795,
       "change_pct": -9.96,
-      "source": "twse_mis",
+      "source": "yahoo_finance_tw",
       "stale": false
     },
     "2408": {
-      "price": 346.5,
-      "change_pct": -8.09,
+      "price": 347,
+      "change_pct": -7.96,
       "source": "yahoo_finance_tw",
       "stale": false
     },
@@ -72,7 +72,7 @@
     "3443": {
       "price": 7750,
       "change_pct": -9.99,
-      "source": "twse_mis",
+      "source": "yahoo_finance_tw",
       "stale": false
     },
     "3653": {
@@ -82,21 +82,21 @@
       "stale": false
     },
     "3661": {
-      "price": 3735,
-      "change_pct": -7.09,
-      "source": "yahoo_finance_tw",
+      "price": 3705,
+      "change_pct": -7.84,
+      "source": "twse_mis",
       "stale": false
     },
     "0050": {
-      "price": 98.1,
-      "change_pct": -4.29,
+      "price": 98,
+      "change_pct": -4.39,
       "source": "yahoo_finance_tw",
       "stale": false
     },
     "00631L": {
-      "price": 29.07,
-      "change_pct": -8.93,
-      "source": "twse_mis",
+      "price": 29.36,
+      "change_pct": -8.02,
+      "source": "yahoo_finance_tw",
       "stale": false
     }
   }
