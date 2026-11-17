@@ -1,279 +1,270 @@
 {
-  "date": "2026-11-13",
-  "generated_at": "2026-11-16T00:15:36.101Z",
+  "date": "2026-11-16",
+  "generated_at": "2026-11-17T00:15:44.404Z",
   "source": "twse_open_api_stock_day_all",
   "note": "這是 TWSE 現股成交量/漲跌幅排行（非 TAIFEX 個股期貨原始排行），daily-report-prompt.md 第 1 步用這份當候選池基礎，仍需 WebSearch 確認每檔是否有對應期貨合約掛牌",
-  "total_stocks": 1377,
+  "total_stocks": 1376,
   "candidates": [
     {
       "symbol": "2330",
       "name": "台積電",
-      "close": 2350,
-      "change": 10,
-      "change_pct": 0.43,
-      "volume": 30973127,
-      "turnover": 73326711390
+      "close": 2215,
+      "change": -135,
+      "change_pct": -5.74,
+      "volume": 52604545,
+      "turnover": 119305254268
     },
     {
       "symbol": "2454",
       "name": "聯發科",
-      "close": 4120,
-      "change": 270,
-      "change_pct": 7.01,
-      "volume": 15475403,
-      "turnover": 64880567010
-    },
-    {
-      "symbol": "1802",
-      "name": "台玻",
-      "close": 85.1,
-      "change": 3.4,
-      "change_pct": 4.16,
-      "volume": 443099867,
-      "turnover": 37417669604
-    },
-    {
-      "symbol": "1303",
-      "name": "南亞",
-      "close": 304,
-      "change": 11,
-      "change_pct": 3.75,
-      "volume": 103774616,
-      "turnover": 32137215125
-    },
-    {
-      "symbol": "3037",
-      "name": "欣興",
-      "close": 785,
-      "change": -7,
-      "change_pct": -0.88,
-      "volume": 29258700,
-      "turnover": 23828262602
-    },
-    {
-      "symbol": "3443",
-      "name": "創意",
-      "close": 8610,
-      "change": 750,
-      "change_pct": 9.54,
-      "volume": 2699251,
-      "turnover": 23276887395
-    },
-    {
-      "symbol": "2408",
-      "name": "南亞科",
-      "close": 377,
-      "change": -2.5,
-      "change_pct": -0.66,
-      "volume": 50143425,
-      "turnover": 19367526932
-    },
-    {
-      "symbol": "2308",
-      "name": "台達電",
-      "close": 1240,
-      "change": 0,
-      "change_pct": 0,
-      "volume": 14362066,
-      "turnover": 18173934843
-    },
-    {
-      "symbol": "3653",
-      "name": "健策",
-      "close": 5345,
-      "change": -260,
-      "change_pct": -4.64,
-      "volume": 3081691,
-      "turnover": 17410973525
-    },
-    {
-      "symbol": "3661",
-      "name": "世芯-KY",
-      "close": 4020,
-      "change": 345,
-      "change_pct": 9.39,
-      "volume": 4208801,
-      "turnover": 16942837175
-    },
-    {
-      "symbol": "2327",
-      "name": "國巨*",
-      "close": 411,
-      "change": 4,
-      "change_pct": 0.98,
-      "volume": 37299919,
-      "turnover": 15682559546
-    },
-    {
-      "symbol": "2383",
-      "name": "台光電",
-      "close": 4215,
-      "change": 110,
-      "change_pct": 2.68,
-      "volume": 3589981,
-      "turnover": 15593485770
-    },
-    {
-      "symbol": "2368",
-      "name": "金像電",
-      "close": 1030,
-      "change": 55,
-      "change_pct": 5.64,
-      "volume": 13255237,
-      "turnover": 14011489415
+      "close": 3795,
+      "change": -325,
+      "change_pct": -7.89,
+      "volume": 12752013,
+      "turnover": 49885936414
     },
     {
       "symbol": "0050",
       "name": "元大台灣50",
-      "close": 102.5,
-      "change": 1.55,
-      "change_pct": 1.54,
-      "volume": 128607213,
-      "turnover": 13308375271
+      "close": 96.45,
+      "change": -6.05,
+      "change_pct": -5.9,
+      "volume": 357525464,
+      "turnover": 35161965172
+    },
+    {
+      "symbol": "2308",
+      "name": "台達電",
+      "close": 1120,
+      "change": -120,
+      "change_pct": -9.68,
+      "volume": 21568039,
+      "turnover": 24696190300
+    },
+    {
+      "symbol": "1303",
+      "name": "南亞",
+      "close": 274,
+      "change": -30,
+      "change_pct": -9.87,
+      "volume": 86436737,
+      "turnover": 24288636417
     },
     {
       "symbol": "00631L",
       "name": "元大台灣50正2",
-      "close": 31.92,
-      "change": 0.93,
-      "change_pct": 3,
-      "volume": 378896991,
-      "turnover": 12334649312
+      "close": 27.95,
+      "change": -3.97,
+      "change_pct": -12.44,
+      "volume": 678825245,
+      "turnover": 20066673376
     },
     {
-      "symbol": "2466",
-      "name": "冠西電",
-      "close": 393,
-      "change": -43.5,
-      "change_pct": -9.97,
-      "volume": 7900686,
-      "turnover": 3414507028
+      "symbol": "2317",
+      "name": "鴻海",
+      "close": 218.5,
+      "change": -22.5,
+      "change_pct": -9.34,
+      "volume": 80611194,
+      "turnover": 18232288164
     },
     {
-      "symbol": "2468",
-      "name": "華經",
-      "close": 74.2,
-      "change": 6.7,
-      "change_pct": 9.93,
-      "volume": 32820278,
-      "turnover": 2394638257
+      "symbol": "1802",
+      "name": "台玻",
+      "close": 76.6,
+      "change": -8.5,
+      "change_pct": -9.99,
+      "volume": 225449104,
+      "turnover": 17990120963
     },
     {
-      "symbol": "2471",
-      "name": "資通",
-      "close": 71.1,
-      "change": 6.4,
-      "change_pct": 9.89,
-      "volume": 22807016,
-      "turnover": 1556885064
+      "symbol": "2327",
+      "name": "國巨*",
+      "close": 374,
+      "change": -37,
+      "change_pct": -9,
+      "volume": 42985444,
+      "turnover": 16455161966
     },
     {
-      "symbol": "7610",
-      "name": "聯友金屬-創",
-      "close": 1090,
-      "change": -120,
-      "change_pct": -9.92,
-      "volume": 1229346,
-      "turnover": 1407763025
+      "symbol": "3661",
+      "name": "世芯-KY",
+      "close": 3660,
+      "change": -360,
+      "change_pct": -8.96,
+      "volume": 4115347,
+      "turnover": 15726696810
     },
     {
-      "symbol": "6526",
-      "name": "達發",
-      "close": 756,
-      "change": 68,
-      "change_pct": 9.88,
-      "volume": 1440346,
-      "turnover": 1083365674
+      "symbol": "3037",
+      "name": "欣興",
+      "close": 707,
+      "change": -78,
+      "change_pct": -9.94,
+      "volume": 19186208,
+      "turnover": 13835300696
     },
     {
-      "symbol": "6533",
-      "name": "晶心科",
-      "close": 249.5,
-      "change": 22.5,
-      "change_pct": 9.91,
-      "volume": 1887200,
-      "turnover": 467292606
+      "symbol": "2408",
+      "name": "南亞科",
+      "close": 340,
+      "change": -37,
+      "change_pct": -9.81,
+      "volume": 39044144,
+      "turnover": 13670839494
     },
     {
-      "symbol": "6689",
-      "name": "伊雲谷",
-      "close": 82,
-      "change": 7.4,
-      "change_pct": 9.92,
-      "volume": 5509872,
-      "turnover": 446496006
+      "symbol": "2313",
+      "name": "華通",
+      "close": 193,
+      "change": -12.5,
+      "change_pct": -6.08,
+      "volume": 66032749,
+      "turnover": 13199473731
     },
     {
-      "symbol": "7765",
-      "name": "中華資安",
-      "close": 269.5,
-      "change": 24.5,
+      "symbol": "3711",
+      "name": "日月光投控",
+      "close": 550,
+      "change": -48,
+      "change_pct": -8.03,
+      "volume": 22035615,
+      "turnover": 12335812210
+    },
+    {
+      "symbol": "2383",
+      "name": "台光電",
+      "close": 3795,
+      "change": -420,
+      "change_pct": -9.96,
+      "volume": 2999172,
+      "turnover": 11649845000
+    },
+    {
+      "symbol": "4958",
+      "name": "臻鼎-KY",
+      "close": 396,
+      "change": -44,
+      "change_pct": -10,
+      "volume": 20773471,
+      "turnover": 8481427470
+    },
+    {
+      "symbol": "00685L",
+      "name": "群益臺灣加權正2",
+      "close": 9.1,
+      "change": -1.3,
+      "change_pct": -12.5,
+      "volume": 831600879,
+      "turnover": 7992061121
+    },
+    {
+      "symbol": "2368",
+      "name": "金像電",
+      "close": 927,
+      "change": -103,
+      "change_pct": -10,
+      "volume": 6592163,
+      "turnover": 6284422323
+    },
+    {
+      "symbol": "2360",
+      "name": "致茂",
+      "close": 1260,
+      "change": -140,
+      "change_pct": -10,
+      "volume": 3679720,
+      "turnover": 4742178140
+    },
+    {
+      "symbol": "00663L",
+      "name": "國泰臺灣加權正2",
+      "close": 79.3,
+      "change": -11.45,
+      "change_pct": -12.62,
+      "volume": 17721336,
+      "turnover": 1492510022
+    },
+    {
+      "symbol": "3450",
+      "name": "聯鈞",
+      "close": 328.5,
+      "change": -36.5,
+      "change_pct": -10,
+      "volume": 4008293,
+      "turnover": 1364082212
+    },
+    {
+      "symbol": "00675L",
+      "name": "富邦臺灣加權正2",
+      "close": 239.9,
+      "change": -34.5,
+      "change_pct": -12.57,
+      "volume": 4435708,
+      "turnover": 1127741589
+    },
+    {
+      "symbol": "3305",
+      "name": "昇貿",
+      "close": 103.5,
+      "change": -11.5,
+      "change_pct": -10,
+      "volume": 4976594,
+      "turnover": 539312655
+    },
+    {
+      "symbol": "3532",
+      "name": "台勝科",
+      "close": 265.5,
+      "change": -29.5,
+      "change_pct": -10,
+      "volume": 1952484,
+      "turnover": 531571544
+    },
+    {
+      "symbol": "2486",
+      "name": "一詮",
+      "close": 153,
+      "change": -17,
+      "change_pct": -10,
+      "volume": 2663677,
+      "turnover": 416407733
+    },
+    {
+      "symbol": "6449",
+      "name": "鈺邦",
+      "close": 139.5,
+      "change": -15.5,
+      "change_pct": -10,
+      "volume": 1291620,
+      "turnover": 183453499
+    },
+    {
+      "symbol": "02001L",
+      "name": "富邦蘋果正二N",
+      "close": 84.9,
+      "change": -11.45,
+      "change_pct": -11.88,
+      "volume": 309000,
+      "turnover": 26459850
+    },
+    {
+      "symbol": "1540",
+      "name": "喬福",
+      "close": 18.7,
+      "change": 1.7,
       "change_pct": 10,
-      "volume": 1232150,
-      "turnover": 328451482
-    },
-    {
-      "symbol": "6949",
-      "name": "沛爾生醫*-創",
-      "close": 45,
-      "change": 4.05,
-      "change_pct": 9.89,
-      "volume": 5593738,
-      "turnover": 250435423
-    },
-    {
-      "symbol": "4956",
-      "name": "光鋐",
-      "close": 34.65,
-      "change": 3.15,
-      "change_pct": 10,
-      "volume": 2894830,
-      "turnover": 98657430
-    },
-    {
-      "symbol": "7749",
-      "name": "意騰-KY",
-      "close": 282,
-      "change": 25.5,
-      "change_pct": 9.94,
-      "volume": 303983,
-      "turnover": 84504446
-    },
-    {
-      "symbol": "6614",
-      "name": "資拓宏宇",
-      "close": 36.85,
-      "change": 3.35,
-      "change_pct": 10,
-      "volume": 916984,
-      "turnover": 33166072
-    },
-    {
-      "symbol": "6743",
-      "name": "安普新",
-      "close": 32.55,
-      "change": 2.95,
-      "change_pct": 9.97,
-      "volume": 438613,
-      "turnover": 14092624
-    },
-    {
-      "symbol": "00702",
-      "name": "國泰標普低波高息",
-      "close": 25.79,
-      "change": 2.49,
-      "change_pct": 10.69,
-      "volume": 76008,
-      "turnover": 1963534
+      "volume": 847401,
+      "turnover": 15781401
     },
     {
       "symbol": "2314",
       "name": "台揚",
-      "close": 5.4,
-      "change": -0.6,
+      "close": 4.86,
+      "change": -0.54,
       "change_pct": -10,
-      "volume": 104031,
-      "turnover": 561745
+      "volume": 54879,
+      "turnover": 266685
     }
   ]
 }
