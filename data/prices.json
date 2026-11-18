@@ -1,6 +1,6 @@
 {
-  "updated_at": "2026/11/18 上午9:05:55",
-  "updated_at_iso": "2026-11-18T01:05:55.373Z",
+  "updated_at": "2026/11/18 上午9:11:01",
+  "updated_at_iso": "2026-11-18T01:11:01.163Z",
   "price_type": "intraday",
   "quote_status": {
     "expected": 15,
@@ -46,9 +46,9 @@
       "stale": false
     },
     "2408": {
-      "price": 329,
-      "change_pct": -3.24,
-      "source": "yahoo_finance_tw",
+      "price": 335.5,
+      "change_pct": 1.98,
+      "source": "twse_mis",
       "stale": false
     },
     "2454": {
@@ -88,15 +88,15 @@
       "stale": false
     },
     "0050": {
-      "price": 94,
-      "change_pct": -2.54,
-      "source": "yahoo_finance_tw",
+      "price": 94.6,
+      "change_pct": 0.64,
+      "source": "twse_mis",
       "stale": false
     },
     "00631L": {
-      "price": 26.86,
-      "change_pct": -3.9,
-      "source": "yahoo_finance_tw",
+      "price": 27.12,
+      "change_pct": 0.97,
+      "source": "twse_mis",
       "stale": false
     }
   }
