@@ -1,6 +1,6 @@
 {
-  "updated_at": "2026/11/23 下午12:50:59",
-  "updated_at_iso": "2026-11-23T04:50:59.885Z",
+  "updated_at": "2026/11/23 下午12:55:52",
+  "updated_at_iso": "2026-11-23T04:55:52.175Z",
   "price_type": "intraday",
   "quote_status": {
     "expected": 15,
@@ -24,7 +24,7 @@
     "2308": {
       "price": 990,
       "change_pct": 10,
-      "source": "twse_mis",
+      "source": "yahoo_finance_tw",
       "stale": false
     },
     "2317": {
@@ -34,9 +34,9 @@
       "stale": false
     },
     "2327": {
-      "price": 310,
-      "change_pct": 4.73,
-      "source": "twse_mis",
+      "price": 307.5,
+      "change_pct": 3.89,
+      "source": "yahoo_finance_tw",
       "stale": false
     },
     "2330": {
@@ -48,24 +48,24 @@
     "2383": {
       "price": 3090,
       "change_pct": 9.96,
-      "source": "yahoo_finance_tw",
+      "source": "twse_mis",
       "stale": false
     },
     "2408": {
-      "price": 278.5,
-      "change_pct": 5.29,
+      "price": 278,
+      "change_pct": 5.1,
       "source": "yahoo_finance_tw",
       "stale": false
     },
     "2454": {
       "price": 3685,
       "change_pct": 10,
-      "source": "twse_mis",
+      "source": "yahoo_finance_tw",
       "stale": false
     },
     "3008": {
-      "price": 3645,
-      "change_pct": -0.68,
+      "price": 3625,
+      "change_pct": -1.23,
       "source": "yahoo_finance_tw",
       "stale": false
     },
@@ -82,21 +82,21 @@
       "stale": false
     },
     "0050": {
-      "price": 86.95,
-      "change_pct": 2.96,
+      "price": 86.8,
+      "change_pct": 2.78,
       "source": "yahoo_finance_tw",
       "stale": false
     },
     "00631L": {
-      "price": 22.42,
-      "change_pct": 5.56,
+      "price": 22.36,
+      "change_pct": 5.27,
       "source": "yahoo_finance_tw",
       "stale": false
     },
     "00685L": {
-      "price": 7.17,
-      "change_pct": 5.44,
-      "source": "yahoo_finance_tw",
+      "price": 7.16,
+      "change_pct": 5.29,
+      "source": "twse_mis",
       "stale": false
     }
   }
