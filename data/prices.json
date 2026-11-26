@@ -1,6 +1,6 @@
 {
-  "updated_at": "2026/11/26 下午1:31:11",
-  "updated_at_iso": "2026-11-26T05:31:11.097Z",
+  "updated_at": "2026/11/26 下午1:35:33",
+  "updated_at_iso": "2026-11-26T05:35:33.460Z",
   "price_type": "close",
   "quote_status": {
     "expected": 15,
@@ -10,8 +10,8 @@
   },
   "prices": {
     "1303": {
-      "price": 244.5,
-      "change_pct": 7.95,
+      "price": 244,
+      "change_pct": 7.73,
       "source": "twse_mis",
       "stale": false
     },
@@ -28,32 +28,32 @@
       "stale": false
     },
     "2317": {
-      "price": 218.5,
-      "change_pct": 5.81,
-      "source": "yahoo_finance_tw",
+      "price": 216.5,
+      "change_pct": 4.84,
+      "source": "twse_mis",
       "stale": false
     },
     "2330": {
-      "price": 2155,
-      "change_pct": 0.23,
-      "source": "yahoo_finance_tw",
+      "price": 2145,
+      "change_pct": -0.23,
+      "source": "twse_mis",
       "stale": false
     },
     "2368": {
       "price": 995,
       "change_pct": 9.94,
-      "source": "yahoo_finance_tw",
+      "source": "twse_mis",
       "stale": false
     },
     "2383": {
-      "price": 3645,
-      "change_pct": 8.64,
-      "source": "yahoo_finance_tw",
+      "price": 3660,
+      "change_pct": 9.09,
+      "source": "twse_mis",
       "stale": false
     },
     "2454": {
-      "price": 3745,
-      "change_pct": 2.74,
+      "price": 3705,
+      "change_pct": 1.65,
       "source": "twse_mis",
       "stale": false
     },
@@ -66,13 +66,13 @@
     "3017": {
       "price": 2795,
       "change_pct": 9.82,
-      "source": "yahoo_finance_tw",
+      "source": "twse_mis",
       "stale": false
     },
     "3037": {
       "price": 643,
       "change_pct": 9.91,
-      "source": "yahoo_finance_tw",
+      "source": "twse_mis",
       "stale": false
     },
     "3189": {
@@ -82,15 +82,15 @@
       "stale": false
     },
     "0050": {
-      "price": 92.8,
-      "change_pct": 2.77,
-      "source": "yahoo_finance_tw",
+      "price": 92.85,
+      "change_pct": 2.82,
+      "source": "twse_mis",
       "stale": false
     },
     "00631L": {
       "price": 25.5,
       "change_pct": 7.23,
-      "source": "yahoo_finance_tw",
+      "source": "twse_mis",
       "stale": false
     },
     "00981A": {
